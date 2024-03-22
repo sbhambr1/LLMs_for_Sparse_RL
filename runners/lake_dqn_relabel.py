@@ -101,7 +101,7 @@ class ReplayMemory:
         return len(self.dones)
     
 
-    def relabel(self, episode_relabel_indices, episode_start_index, episode_end_index):
+    def relabel(self, episode_relabel_indices, episode_start_index, episode_end_index, relabeling_random=False):
         """
         Relabel the transitions in the replay buffer based on the episode summary.
         """
@@ -109,7 +109,10 @@ class ReplayMemory:
             for i in range(episode_start_index, episode_end_index):
                 if i in episode_relabel_indices:
                     self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
-                    
+     
+        elif relabeling_random:
+            for i in range(episode_start_index, episode_end_index):     
+                self.rewards[i] = 0.5 if np.random.random() < 0.5 else 0.0
         else:
             pass
     
@@ -352,6 +355,8 @@ class Model_TrainTest:
         self.num_states             = hyperparams["num_states"]
         self.map_size               = hyperparams["map_size"]
         self.render_fps             = hyperparams["render_fps"]
+        
+        self.relabeling_random      = hyperparams["relabeling_random"]
                         
         # Define Env
         self.env = gym.make('FrozenLake-v1', map_name=f"{self.map_size}x{self.map_size}", 
@@ -447,7 +452,7 @@ class Model_TrainTest:
             
             episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
             episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
-            self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+            self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
             
         self.plot_training(episode)
                                                                     
@@ -526,20 +531,20 @@ class Model_TrainTest:
 if __name__ == '__main__':
     # Parameters:
     train_mode = True
-    render = not train_mode
+    render = False
     map_size = 8 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}/final_weights' + '_' + '3000' + '.pth',
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}/final_weights' + '_' + '1000' + '.pth',
         "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}/final_weights',
-        "save_interval"         : 500,
+        "save_interval"         : 100,
         
         "clip_grad_norm"        : 3,
         "learning_rate"         : 6e-4,
         "discount_factor"       : 0.93,
         "batch_size"            : 32,
         "update_frequency"      : 10,
-        "max_episodes"          : 3000           if train_mode else 5,
+        "max_episodes"          : 1000           if train_mode else 5,
         "max_steps"             : 200,
         "render"                : render,
         
@@ -552,6 +557,8 @@ if __name__ == '__main__':
         "map_size"              : map_size,
         "num_states"            : map_size ** 2,
         "render_fps"            : 6,
+        "relabeling"            : True,
+        "relabeling_random"     : True
         }
     
     

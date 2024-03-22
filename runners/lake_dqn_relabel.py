@@ -42,11 +42,11 @@ class ReplayMemory:
         
         self.capacity = capacity
 
-        self.states       = list(maxlen=capacity)
-        self.actions      = list(maxlen=capacity)
-        self.next_states  = list(maxlen=capacity)
-        self.rewards      = list(maxlen=capacity)
-        self.dones        = list(maxlen=capacity)
+        self.states       = list()
+        self.actions      = list()
+        self.next_states  = list()
+        self.rewards      = list()
+        self.dones        = list()
         
     def get_ep_start_index(self):
         """
@@ -105,9 +105,13 @@ class ReplayMemory:
         """
         Relabel the transitions in the replay buffer based on the episode summary.
         """
-        for i in range(episode_start_index, episode_end_index):
-            if i in episode_relabel_indices:
-                self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+        if episode_relabel_indices is not None:
+            for i in range(episode_start_index, episode_end_index):
+                if i in episode_relabel_indices:
+                    self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+                    
+        else:
+            pass
     
     
 class DQN_Network(nn.Module):

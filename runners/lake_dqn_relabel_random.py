@@ -450,8 +450,8 @@ class Model_TrainTest:
             
             # End of episode: Invoke the LLM summarization prompt -> Call replay buffer relabeling method -> Continue training    
             episode_end_index = self.agent.replay_memory.get_ep_end_index()
-            
-            episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+            examples=[]
+            episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples)
             episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
             self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
             

@@ -54,14 +54,14 @@ class ReplayMemory:
         Get the current index of the replay buffer to determine start of new episode
         """
         
-        return len(self.states)+1
+        return len(self.states)
     
     def get_ep_end_index(self):
         """
         Get the current index of the replay buffer to determine start of new episode
         """
         
-        return len(self.states)
+        return len(self.states)-1
         
         
     def store(self, state, action, next_state, reward, done):
@@ -398,6 +398,7 @@ class Model_TrainTest:
         
         total_steps = 0
         self.reward_history = []
+        examples = []
         
         # Training loop over episodes
         for episode in range(1, self.max_episodes+1):
@@ -450,10 +451,13 @@ class Model_TrainTest:
             
             # End of episode: Invoke the LLM summarization prompt -> Call replay buffer relabeling method -> Continue training    
             episode_end_index = self.agent.replay_memory.get_ep_end_index()
-            
-            episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
-            episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
-            self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
+            if episode <= 2:
+                example = self.llm_summarizer.construct_example(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+                examples.append(example)
+            else:
+                episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples)
+                episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+                self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
             
         self.plot_training(episode)
                                                                     
@@ -540,7 +544,7 @@ if __name__ == '__main__':
     # Parameters:
     train_mode = True
     render = False
-    map_size = 8 # 4x4 or 8x8 
+    map_size = 4 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
         "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights' + '_' + '1000' + '.pth',

@@ -6,6 +6,7 @@ import os
 import gc
 import torch
 import pygame
+import pickle
 import numpy as np
 import torch.nn as nn
 import gymnasium as gym
@@ -496,6 +497,10 @@ class Model_TrainTest:
         # Calculate the Simple Moving Average (SMA) with a window size of 50
         sma = np.convolve(self.reward_history, np.ones(50)/50, mode='valid')
         
+        # Save reward history to pickle file
+        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_random' + '/reward_history.pkl', 'wb') as f:
+            pickle.dump(self.reward_history, f)
+        
         plt.figure()
         plt.title("Rewards")
         plt.plot(self.reward_history, label='Raw Reward', color='#F6CE3B', alpha=1)
@@ -506,13 +511,16 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}' + '_relabeled_random_' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_random' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()
         plt.clf()
-        plt.close() 
+        plt.close()
         
+        # Save loss history to pickle file
+        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_random' + '/loss_history.pkl', 'wb') as f:
+            pickle.dump(self.agent.loss_history, f) 
                 
         plt.figure()
         plt.title("Loss")
@@ -522,7 +530,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}' + '_relabeled_random_' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_random' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()        
@@ -535,8 +543,8 @@ if __name__ == '__main__':
     map_size = 8 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}/' + '_relabeled_random_' + 'final_weights' + '_' + '1000' + '.pth',
-        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}/' + '_relabeled_random_' + 'final_weights',
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_random/' + 'final_weights' + '_' + '1000' + '.pth',
+        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_random/' + 'final_weights',
         "save_interval"         : 100,
         
         "clip_grad_norm"        : 3,

@@ -14,6 +14,8 @@ import torch.optim as optim
 from collections import deque
 import matplotlib.pyplot as plt
 
+from utils.summarization import LLM_Summarizer
+
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
@@ -31,7 +33,7 @@ if torch.cuda.is_available():
     torch.cuda.manual_seed(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
-    
+
 
 class ReplayMemory:
     def __init__(self, capacity):
@@ -40,17 +42,31 @@ class ReplayMemory:
         """
         
         self.capacity = capacity
+
+        self.states       = list()
+        self.actions      = list()
+        self.next_states  = list()
+        self.rewards      = list()
+        self.dones        = list()
         
-        self.states       = deque(maxlen=capacity)
-        self.actions      = deque(maxlen=capacity)
-        self.next_states  = deque(maxlen=capacity)
-        self.rewards      = deque(maxlen=capacity)
-        self.dones        = deque(maxlen=capacity)
+    def get_ep_start_index(self):
+        """
+        Get the current index of the replay buffer to determine start of new episode
+        """
+        
+        return len(self.states)+1
+    
+    def get_ep_end_index(self):
+        """
+        Get the current index of the replay buffer to determine start of new episode
+        """
+        
+        return len(self.states)
         
         
     def store(self, state, action, next_state, reward, done):
         """
-        Append (store) the transitions to their respective deques
+        Append (store) the transitions to their respective lists
         """
         
         self.states.append(state)
@@ -75,7 +91,7 @@ class ReplayMemory:
         dones = torch.as_tensor([self.dones[i] for i in indices], dtype=torch.bool, device=device)
 
         return states, actions, next_states, rewards, dones
-    
+
     
     def __len__(self):
         """
@@ -84,6 +100,22 @@ class ReplayMemory:
         """
         
         return len(self.dones)
+    
+
+    def relabel(self, episode_relabel_indices, episode_start_index, episode_end_index, relabeling_random=False):
+        """
+        Relabel the transitions in the replay buffer based on the episode summary.
+        """
+        if episode_relabel_indices is not None:
+            for i in range(episode_start_index, episode_end_index):
+                if i in episode_relabel_indices:
+                    self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+     
+        elif relabeling_random:
+            for i in range(episode_start_index, episode_end_index):     
+                self.rewards[i] = 0.5 if np.random.random() < 0.5 else 0.0
+        else:
+            pass
     
     
 class DQN_Network(nn.Module):
@@ -324,6 +356,8 @@ class Model_TrainTest:
         self.num_states             = hyperparams["num_states"]
         self.map_size               = hyperparams["map_size"]
         self.render_fps             = hyperparams["render_fps"]
+        
+        self.relabeling_random      = hyperparams["relabeling_random"]
                         
         # Define Env
         self.env = gym.make('FrozenLake-v1', map_name=f"{self.map_size}x{self.map_size}", 
@@ -340,6 +374,9 @@ class Model_TrainTest:
                                 learning_rate     = self.learning_rate,
                                 discount          = self.discount_factor,
                                 memory_capacity   = self.memory_capacity)
+        
+        self.llm_summarizing_model = None
+        self.llm_summarizer = LLM_Summarizer(model=self.llm_summarizing_model, agent_replay_buffer=self.agent.replay_memory)
                 
         
     def state_preprocess(self, state:int, num_states:int):
@@ -370,6 +407,7 @@ class Model_TrainTest:
             truncation = False
             step_size = 0
             episode_reward = 0
+            episode_start_index = self.agent.replay_memory.get_ep_start_index()
                                                 
             while not done and not truncation:
                 action = self.agent.select_action(state)
@@ -409,6 +447,14 @@ class Model_TrainTest:
                       f"Raw Reward: {episode_reward:.2f}, "
                       f"Epsilon: {self.agent.epsilon_max:.2f}")
             print(result)
+            
+            # End of episode: Invoke the LLM summarization prompt -> Call replay buffer relabeling method -> Continue training    
+            episode_end_index = self.agent.replay_memory.get_ep_end_index()
+            
+            episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+            episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+            self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
+            
         self.plot_training(episode)
                                                                     
 
@@ -452,7 +498,7 @@ class Model_TrainTest:
         sma = np.convolve(self.reward_history, np.ones(50)/50, mode='valid')
         
         # Save reward history to pickle file
-        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}/reward_history.pkl', 'wb') as f:
+        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm' + '/reward_history.pkl', 'wb') as f:
             pickle.dump(self.reward_history, f)
         
         plt.figure()
@@ -465,7 +511,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()
@@ -473,9 +519,9 @@ class Model_TrainTest:
         plt.close() 
         
         # Save loss history to pickle file
-        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}/loss_history.pkl', 'wb') as f:
+        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm' + '/loss_history.pkl', 'wb') as f:
             pickle.dump(self.agent.loss_history, f)
-            
+                
         plt.figure()
         plt.title("Loss")
         plt.plot(self.agent.loss_history, label='Loss', color='#CB291A', alpha=1)
@@ -484,7 +530,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()        
@@ -493,12 +539,12 @@ class Model_TrainTest:
 if __name__ == '__main__':
     # Parameters:
     train_mode = True
-    render = not train_mode
-    map_size = 4 # 4x4 or 8x8 
+    render = False
+    map_size = 8 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}/final_weights' + '_' + '3000' + '.pth',
-        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}/final_weights',
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights' + '_' + '1000' + '.pth',
+        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights',
         "save_interval"         : 100,
         
         "clip_grad_norm"        : 3,
@@ -519,6 +565,8 @@ if __name__ == '__main__':
         "map_size"              : map_size,
         "num_states"            : map_size ** 2,
         "render_fps"            : 6,
+        "relabeling"            : True,
+        "relabeling_random"     : True
         }
     
     

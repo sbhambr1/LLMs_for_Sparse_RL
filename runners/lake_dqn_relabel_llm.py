@@ -557,7 +557,7 @@ if __name__ == '__main__':
         "discount_factor"       : 0.93,
         "batch_size"            : 32,
         "update_frequency"      : 10,
-        "max_episodes"          : 100           if train_mode else 5, #TODO: change to 3000 when training
+        "max_episodes"          : 3000           if train_mode else 5, #TODO: change to 3000 when training
         "max_steps"             : 200,
         "render"                : render,
         

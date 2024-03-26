@@ -1,5 +1,5 @@
 import json
-# from utils.conversation import Conversation
+from utils.conversation import Conversation
 # from utils.ratelimits import *
 
 class LLM_Summarizer():
@@ -14,6 +14,8 @@ class LLM_Summarizer():
             "goal_reached": [], # Goal reached or not
         }
         self.json_path = "summary_history.json" #TODO: Use domain name arguments to specify the path
+        
+        self.llm_conversation = Conversation(self.model)
 
     def _save_summary(self):
         """
@@ -52,7 +54,8 @@ class LLM_Summarizer():
         Output:
             - response [list]: Response from the LLM includes the list of good actions (preprocessed).
         """
-        return NotImplementedError
+        response = self.llm_conversation.llm_actor(prompt, stop=".")
+        return response
     
     def _preprocess(self, text):
         """
@@ -87,6 +90,20 @@ class LLM_Summarizer():
                 indices_selected.append(i)
     
         return result, indices_selected
+    
+    def _preprocess_response(self, response):
+        """
+        Input: 
+            - response: Response from the LLM
+        Output:
+            - preprocessed_response: Preprocessed response
+        Example:
+            - response: "['taking a up again at Bathroom', 'taking a down again at Entry']." 
+            - preprocessed_response: ['taking a up again at Bathroom', 'taking a down again at Entry']
+        """
+        response = response.strip("[]").strip()
+        preprocessed_response = [s.strip() for s in response.split(",")]
+        return preprocessed_response
     
     def construct_trajectory(self, positions, actions):
         """
@@ -192,7 +209,7 @@ class LLM_Summarizer():
         example = f"[Trajectory]: \n{example_trajectory}\n[Goal reached]: {success}"
         
         return example
-        
+    
     def summarize(self, episode_start_index, episode_end_index, examples):
         """
         Input: 
@@ -202,46 +219,42 @@ class LLM_Summarizer():
             - summary: Summarized text of the last episode from agent replay buffer
         """
         
-        MANUAL_SUMMARIZATION = True
-        
         # build trajectory including state and action taken at that state - in text
         # current templates: state- 'I was at {location} in the grid, and took {action}.'
         
-        if MANUAL_SUMMARIZATION:
-        
-            positions = []
-            actions = []
-            for index in range(episode_end_index-episode_start_index):
-                state = self.agent_replay_buffer.states[index]
-                positions.append(self._find_index_of_one(state))
-                actions.append(self.agent_replay_buffer.actions[index])
+        positions = []
+        actions = []
+        for index in range(episode_end_index-episode_start_index):
+            state = self.agent_replay_buffer.states[index]
+            positions.append(self._find_index_of_one(state))
+            actions.append(self.agent_replay_buffer.actions[index])
 
-            # remove duplicates from positions and actions
-            positions_unique, indices = self._remove_consecutive_duplicates(positions)
-            positions_unique.append(positions[-1]) if positions[-1] != positions_unique[-1] else None
-            actions_unique = []
-            for idx in indices:
-                if idx == 0:
-                    continue
-                else:
-                    actions_unique.append(actions[idx-1])
-            actions_unique.append(actions[-1])
+        # remove duplicates from positions and actions
+        positions_unique, indices = self._remove_consecutive_duplicates(positions)
+        positions_unique.append(positions[-1]) if positions[-1] != positions_unique[-1] else None
+        actions_unique = []
+        for idx in indices:
+            if idx == 0:
+                continue
+            else:
+                actions_unique.append(actions[idx-1])
+        actions_unique.append(actions[-1])
 
-            # construct trajectory
-            trajectory = self.construct_trajectory(positions_unique, actions_unique)
-            success = self.agent_replay_buffer.rewards[-1] == 1
-            
-            # construct prompt
-            prompt = self._get_prompt(trajectory, success, examples)
-            
-            # get LLM response
-            episode_summary = self._get_response(prompt)
-            
-            # send the preprocessed response (indices of good actions) to the agent replay buffer
-            return episode_summary            
+        # construct trajectory
+        trajectory = self.construct_trajectory(positions_unique, actions_unique)
+        success = self.agent_replay_buffer.rewards[-1] == 1
         
-        return None
-    
+        # construct prompt
+        prompt = self._get_prompt(trajectory, success, examples)
+        
+        # get LLM response
+        episode_summary = self._get_response(prompt)
+        
+        # send the preprocessed response (indices of good actions) to the agent replay buffer
+        preprocessed_response = self._preprocess_response(episode_summary)
+        
+        return preprocessed_response            
+        
     def get_relabel_indices(self, episode_summary, episode_start_index, episode_end_index):
         """
         Input: 

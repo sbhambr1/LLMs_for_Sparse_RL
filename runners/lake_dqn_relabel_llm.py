@@ -375,7 +375,7 @@ class Model_TrainTest:
                                 discount          = self.discount_factor,
                                 memory_capacity   = self.memory_capacity)
         
-        self.llm_summarizing_model = None
+        self.llm_summarizing_model = hyperparams["llm_summarizing_model"]
         self.llm_summarizer = LLM_Summarizer(model=self.llm_summarizing_model, agent_replay_buffer=self.agent.replay_memory)
                 
         
@@ -556,7 +556,7 @@ if __name__ == '__main__':
         "discount_factor"       : 0.93,
         "batch_size"            : 32,
         "update_frequency"      : 10,
-        "max_episodes"          : 3000           if train_mode else 5,
+        "max_episodes"          : 100           if train_mode else 5, #TODO: change to 3000 when training
         "max_steps"             : 200,
         "render"                : render,
         
@@ -570,7 +570,8 @@ if __name__ == '__main__':
         "num_states"            : map_size ** 2,
         "render_fps"            : 6,
         "relabeling"            : True,
-        "relabeling_random"     : True
+        "relabeling_random"     : False,
+        "llm_summarizing_model" : "gpt-3.5-turbo"
         }
     
     

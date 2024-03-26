@@ -13,56 +13,24 @@ client = OpenAI(
 )
 
 class Conversation:
-    def __init__(self, llm_actor_model, llm_human_proxy_model) -> None:
-        self.llm_actor_prompt = []
-        self.llm_human_proxy_prompt = []
-        self.log_history_actor = []
-        self.log_history_human_proxy = []
-        self.llm_actor_model =  llm_actor_model
-        self.llm_human_proxy_model = llm_human_proxy_model
-
-    # avoid using for now        
-    def construct_message(self, prompt, role, use_context, model):
+    def __init__(self, llm_model) -> None:
+        self.llm_prompt = []
+        self.log_history = []
+        self.llm_model =  llm_model
+       
+    def construct_message(self, prompt, role):
         assert role in ["user", "assistant"]
-
         new_message = {"role": role, "content": prompt}
-        if use_context:
-            if model == "llm_actor":
-                message = self.llm_actor_prompt + [new_message]
-            else:
-                message = self.llm_human_proxy_prompt + [new_message]
-        else:
-            message = [new_message]
+        message = self.llm_prompt + [new_message]
         return message
-    
-    def llm_human_proxy(self, prompt, stop, temperature=0, role="user", use_context=False):    
-        # chat model
-        
-        message = self.construct_message(prompt, role, use_context, "llm_human_proxy")  
-        
-        response = client.chat.completions.create(
-        model=self.llm_human_proxy_model,
-        messages = message,
-        temperature=temperature,
-        max_tokens=100,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-        stop=stop
-        )
 
-        answer = response.choices[0].message.content
-        self.log_history_human_proxy.append(answer)
-        self.llm_human_proxy_prompt.append(prompt + answer + "\n")
-        return answer
-
-    def llm_actor(self, prompt, stop, temperature=0, role="user", use_context=False): 
+    def llm_actor(self, prompt, stop, temperature=0, role="user"): 
         # chat model       
         
-        message = self.construct_message(prompt, role, use_context, "llm_actor")  
+        message = self.construct_message(prompt, role)  
         
         response = client.chat.completions.create(
-        model=self.llm_actor_model,
+        model=self.llm_model,
         messages = message,
         temperature=temperature,
         max_tokens=100,
@@ -73,17 +41,9 @@ class Conversation:
         )
 
         answer = response.choices[0].message.content
-        self.log_history_actor.append(answer)
-        self.llm_actor_prompt.append(prompt + answer + "\n")
+        self.log_history.append(answer)
+        self.llm_prompt.append(prompt + answer + "\n")
         return answer
-
-    def add_prompt(self, prompt, role):
-        raise NotImplementedError
-        if isinstance(prompt, client.OpenAIObject): #TODO: check this api object
-            message = {"role" : role, "content": prompt['choices'][0]['message']['content']}
-        else : 
-            message = {"role" : role, "content": prompt}
-        self.prompt.append(message)
     
     def save(self, filename):
         raise NotImplementedError

@@ -89,6 +89,12 @@ class LLM_Summarizer():
             - actions: List of actions
         Output:
             - trajectory: List of text templates
+        Notes:
+            - Current grid layout for home environement (4x4 grid):
+            Start   ,     -      , Bedroom,   -
+                -   ,     x      ,   -    ,   x
+            Bathroom,     -      , Kitchen,   x
+                x   , Living Room,   -    , Patio 
         """
         
         def calculate_row_col(index, num_cols=4):
@@ -109,8 +115,31 @@ class LLM_Summarizer():
             row, col = calculate_row_col(state)
             action = actions[index]
             action_text = action_dictionary[action]
-
-            trajectory.append(f"I was at position({row}, {col}) in the grid, and took the action to go {action_text}.")
+            
+            if row == 0:
+                if col == 0:
+                    trajectory.append(f"I am at the Entry of the house, and took the action to go {action_text}.")
+                elif col == 2:
+                    trajectory.append(f"I am in the Bedroom of the house, and took the action to go {action_text}.")
+            elif row == 1:
+                if col == 1 or col == 3:
+                    trajectory.append(f"I hit a dead end in the house.")
+            elif row == 2:
+                if col == 0:
+                    trajectory.append(f"I am in the Bathroom of the house, and took the action to go {action_text}.")
+                elif col == 2:
+                    trajectory.append(f"I am in the Kitchen of the house, and took the action to go {action_text}.")
+                elif col == 3:
+                    trajectory.append(f"I hit a dead end in the house.")
+            elif row == 3:
+                if col == 0:
+                    trajectory.append(f"I hit a dead end in the house.")
+                elif col == 1:
+                    trajectory.append(f"I am in the Living Room of the house, and took the action to go {action_text}.")
+                elif col == 3:
+                    trajectory.append(f"I have reached the Patio of the house.")
+            else:
+                trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
             
         return trajectory
             

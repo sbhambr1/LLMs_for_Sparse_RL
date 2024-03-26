@@ -27,17 +27,23 @@ class LLM_Summarizer():
         Input: 
             - trajectory: Trajectory of the episode
             - success: Whether the goal was reached or not
+            - examples: examples of bad trajectories duplicating actions, not using after construction.
         Output:
             - prompt: Prompt for the episode after adding an example of good trajectory and a bad trajectory
         """
         
-        domain_description = "[DOMAIN] You are in a grid world which involves crossing a frozen lake from start to goal without falling into any holes by walking over the frozen lake. The game starts with the you at location [0,0] of the frozen lake grid world with the goal located at far extent of the world e.g. [3,3] for the 4x4 environment.\n"
-        action_description = "[ACTION] You can take one of the following actions: 'left', 'down', 'right', 'up'. You make moves until you reach the goal or fall in a hole.\n"
-        task_description = "[TASK] You will be provided with a trajectory consisting of states and actions taken at those states, and if the goal was reached or not. Your task is to identify the bad actions taken in the trajectory. A bad action is one that leads to falling into a hole. Format your answer as shown in the following examples, and do not provide anything else in your response.\n"
-        # TODO: add example to prompt with bad action information formatted.
+        domain_description = "[DOMAIN] You are in a grid world which involves moving around a house from Entry to the Patio without hitting any dead ends in the house. The game starts with the you at the Entry location of this house grid world with the Patio located somewhere and is currently unknown.\n"
+        action_description = "[ACTION] You can take one of the following actions: 'left', 'down', 'right', 'up'. You make moves until you reach the goal, hit a dead end, or find the Patio.\n"
+        task_description = "[TASK] You will be provided with a trajectory consisting of states and actions taken at those states, and if the goal was reached or not. Your task is to identify the bad actions taken in the trajectory. A bad action is one that does not make sense based on the task of finding a way to the Patio. Format your answer as shown in the following examples, and do not provide anything else in your response.\n"
+        example_description = "[EXAMPLES] Here are some examples of trajectories:\n"
+        example1_description = "[Trajectory]: \nI am at the Entry of the house, and took the action to go right.\nI am moving in the house, and took the action to go left.\nI am at the Entry of the house, and took the action to go down.\nI am moving in the house, and took the action to go down.\nI am in the Bathroom of the house, and took the action to go up.\nI am moving in the house, and took the action to go up.\nI am at the Entry of the house, and took the action to go down.\nI am moving in the house, and took the action to go down.\nI am in the Bathroom of the house, and took the action to go down.\nI hit a dead end in the house.\n[Goal reached]: False.\n[Bad actions]: ['taking a up again at Bathroom', 'taking a down again at Entry'].\n"
+        example2_description = "[Trajectory]: \nI am at the Entry of the house, and took the action to go right.\nI am moving in the house, and took the action to go right.\nI am in the Bedroom of the house, and took the action to go left.\nI am moving in the house, and took the action to go down.\nI hit a dead end in the house.\n[Goal reached]: False.\n[Bad actions]: ['taking a left again at Bedroom'].\n"
         trajectory1 = "\n".join(trajectory)
+        current_trajectory = "[Current Trajectory]: \n" + trajectory1 + "\n[Goal reached]: " + str(success) + "\n"
         
-        return NotImplementedError
+        final_prompt = domain_description + '\n\n' + action_description + '\n\n' + task_description + '\n\n' + example_description + example1_description + '\n\n' + example2_description + '\n\n' + current_trajectory
+        
+        return final_prompt
     
     def _get_response(self, prompt):
         """
@@ -91,7 +97,7 @@ class LLM_Summarizer():
             - trajectory: List of text templates
         Notes:
             - Current grid layout for home environement (4x4 grid):
-            Start   ,     -      , Bedroom,   -
+            Entry   ,     -      , Bedroom,   -
                 -   ,     x      ,   -    ,   x
             Bathroom,     -      , Kitchen,   x
                 x   , Living Room,   -    , Patio 
@@ -121,9 +127,13 @@ class LLM_Summarizer():
                     trajectory.append(f"I am at the Entry of the house, and took the action to go {action_text}.")
                 elif col == 2:
                     trajectory.append(f"I am in the Bedroom of the house, and took the action to go {action_text}.")
+                else:
+                    trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
             elif row == 1:
                 if col == 1 or col == 3:
                     trajectory.append(f"I hit a dead end in the house.")
+                else:
+                    trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
             elif row == 2:
                 if col == 0:
                     trajectory.append(f"I am in the Bathroom of the house, and took the action to go {action_text}.")
@@ -131,6 +141,8 @@ class LLM_Summarizer():
                     trajectory.append(f"I am in the Kitchen of the house, and took the action to go {action_text}.")
                 elif col == 3:
                     trajectory.append(f"I hit a dead end in the house.")
+                else:
+                    trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
             elif row == 3:
                 if col == 0:
                     trajectory.append(f"I hit a dead end in the house.")
@@ -138,9 +150,9 @@ class LLM_Summarizer():
                     trajectory.append(f"I am in the Living Room of the house, and took the action to go {action_text}.")
                 elif col == 3:
                     trajectory.append(f"I have reached the Patio of the house.")
-            else:
-                trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
-            
+                else:
+                    trajectory.append(f"I am moving in the house, and took the action to go {action_text}.")
+                
         return trajectory
             
     def construct_example(self, episode_start_index, episode_end_index):
@@ -173,6 +185,8 @@ class LLM_Summarizer():
         # construct trajectory
         trajectory = self.construct_trajectory(positions_unique, actions_unique)
         success = self.agent_replay_buffer.rewards[-1] == 1
+        if not success:
+            trajectory.append(f"I hit a dead end in the house.")
         
         example_trajectory = "\n".join(trajectory)
         example = f"[Trajectory]: \n{example_trajectory}\n[Goal reached]: {success}"

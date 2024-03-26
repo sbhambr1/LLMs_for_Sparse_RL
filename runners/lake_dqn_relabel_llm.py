@@ -110,7 +110,7 @@ class ReplayMemory:
         if episode_relabel_indices is not None:
             for i in range(episode_start_index, episode_end_index+1):
                 if i in episode_relabel_indices:
-                    self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+                    self.rewards[i] = -0.2 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
      
         elif relabeling_random:
             for i in range(episode_start_index, episode_end_index):     

@@ -21,6 +21,7 @@ class Conversation:
     def construct_message(self, prompt, role):
         assert role in ["user", "assistant"]
         new_message = {"role": role, "content": prompt}
+        self.llm_prompt = []
         message = self.llm_prompt + [new_message]
         return message
 

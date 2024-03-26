@@ -101,8 +101,11 @@ class LLM_Summarizer():
             - response: "['taking a up again at Bathroom', 'taking a down again at Entry']." 
             - preprocessed_response: ['taking a up again at Bathroom', 'taking a down again at Entry']
         """
-        response = response.strip("[]").strip()
-        preprocessed_response = [s.strip() for s in response.split(",")]
+        response = response.lower()
+        bad_actions_index = response.find("[bad actions]:")
+        bad_actions_part = response[bad_actions_index + len('[bad actions]:'):].strip()
+        bad_actions_part = bad_actions_part.strip("[]").strip()
+        preprocessed_response = [s.strip() for s in bad_actions_part.split(",")]
         return preprocessed_response
     
     def construct_trajectory(self, positions, actions):
@@ -224,10 +227,10 @@ class LLM_Summarizer():
         
         positions = []
         actions = []
-        for index in range(episode_end_index-episode_start_index):
-            state = self.agent_replay_buffer.states[index]
+        for index in range(episode_end_index-episode_start_index+1):
+            state = self.agent_replay_buffer.states[episode_start_index+index]
             positions.append(self._find_index_of_one(state))
-            actions.append(self.agent_replay_buffer.actions[index])
+            actions.append(self.agent_replay_buffer.actions[episode_start_index+index])
 
         # remove duplicates from positions and actions
         positions_unique, indices = self._remove_consecutive_duplicates(positions)
@@ -253,13 +256,52 @@ class LLM_Summarizer():
         # send the preprocessed response (indices of good actions) to the agent replay buffer
         preprocessed_response = self._preprocess_response(episode_summary)
         
-        return preprocessed_response            
+        return positions, actions, preprocessed_response            
         
-    def get_relabel_indices(self, episode_summary, episode_start_index, episode_end_index):
+    def get_relabel_indices(self, episode_start_index, episode_end_index, positions, actions, episode_summary):
         """
         Input: 
-            - agent_replay_buffer: Agent replay buffer
+            - trajectory: Trajectory of the current episode in text (List of strings)
+            - episode_summary: Summary of the episode in text (List of strings)
         Output:
             - relabel_indices: Indices of episodes to be relabeled
         """
-        return None
+        relabel_indices = []
+        
+        state, action = [], []
+        for string in episode_summary:
+            
+            if 'entry' in string:
+                state.append(0)
+            elif 'bedroom' in string:
+                state.append(2)
+            elif 'bathroom' in string:
+                state.append(8)
+            elif 'kitchen' in string:
+                state.append(10)
+            elif 'living room' in string:
+                state.append(13)
+        
+            if 'left' in string:
+                action.append(0)
+            elif 'down' in string:
+                action.append(1)
+            elif 'right' in string:
+                action.append(2)
+            elif 'up' in string:
+                    action.append(3)
+                
+        pairs = []
+        for pair in zip(state, action):
+            pairs.append(pair)
+            
+        for pair in pairs:
+            for idx, item in enumerate(zip(positions, actions)):
+                if pair[0] == item[0] and pair[1] == item[1]:
+                    relabel_indices.append(idx)
+                    
+        for i in range(len(relabel_indices)):
+            relabel_indices[i] += episode_start_index
+            assert relabel_indices[i] >= episode_start_index and relabel_indices[i] <= episode_end_index
+                
+        return relabel_indices

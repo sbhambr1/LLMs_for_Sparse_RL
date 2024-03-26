@@ -106,8 +106,9 @@ class ReplayMemory:
         """
         Relabel the transitions in the replay buffer based on the episode summary.
         """
+    
         if episode_relabel_indices is not None:
-            for i in range(episode_start_index, episode_end_index):
+            for i in range(episode_start_index, episode_end_index+1):
                 if i in episode_relabel_indices:
                     self.rewards[i] = 0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
      
@@ -116,8 +117,8 @@ class ReplayMemory:
                 self.rewards[i] = 0.5 if np.random.random() < 0.5 else 0.0
         else:
             pass
-    
-    
+        
+        
 class DQN_Network(nn.Module):
     """
     The Deep Q-Network (DQN) model for reinforcement learning.
@@ -451,13 +452,13 @@ class Model_TrainTest:
             
             # End of episode: Invoke the LLM summarization prompt -> Call replay buffer relabeling method -> Continue training    
             episode_end_index = self.agent.replay_memory.get_ep_end_index()
-            if episode <= 2:
-                example = self.llm_summarizer.construct_example(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
-                examples.append(example)
-            else:
-                episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples)
-                episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_summary=episode_summary, episode_start_index=episode_start_index, episode_end_index=episode_end_index)
-                self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
+            # if episode <= 2:
+            #     example = self.llm_summarizer.construct_example(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
+            #     examples.append(example)
+            # else:
+            positions, actions, episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples)
+            episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_start_index=episode_start_index, episode_end_index=episode_end_index, positions=positions, actions=actions, episode_summary=episode_summary)
+            self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
             
         self.plot_training(episode)
                                                                     

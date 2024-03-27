@@ -545,12 +545,12 @@ class Model_TrainTest:
 
 if __name__ == '__main__':
     # Parameters:
-    train_mode = True
+    train_mode = False
     render = False
     map_size = 4 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights' + '_' + '1000' + '.pth',
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights' + '_' + '100' + '.pth',
         "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm/' + 'final_weights',
         "save_interval"         : 100,
         

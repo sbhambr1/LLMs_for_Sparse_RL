@@ -24,7 +24,7 @@ def plot_rewards(vanilla_dqn, relabeled_random, relabeled_llm, map_size):
     plt.ylabel("Rewards")
     plt.legend()
     
-    plt.savefig(f'./runners/plots/reward/reward_comparison_plot_{map_size}x{map_size}.png', format='png', dpi=600, bbox_inches='tight')
+    plt.savefig(f'./runners/plots/reward/reward_comparison_plot_{map_size}x{map_size}_0.1_new_examples.png', format='png', dpi=600, bbox_inches='tight')
     plt.tight_layout()
     plt.grid(True)
     plt.show()
@@ -42,7 +42,7 @@ def plot_losses(vanilla_dqn, relabeled_random, relabeled_llm, map_size):
     plt.ylabel("Losses")
     plt.legend()
     
-    plt.savefig(f'./runners/plots/loss/loss_comparison_plot_{map_size}x{map_size}.png', format='png', dpi=600, bbox_inches='tight')
+    plt.savefig(f'./runners/plots/loss/loss_comparison_plot_{map_size}x{map_size}_0.1_new_examples.png', format='png', dpi=600, bbox_inches='tight')
     plt.tight_layout()
     plt.grid(True)
     plt.show()
@@ -62,8 +62,8 @@ if __name__ == '__main__':
     relabled_random_reward_path = f'{reward_path}lake_4x4_relabeled_random/reward_history.pkl'
     relabled_random_loss_path = f'{loss_path}lake_4x4_relabeled_random/loss_history.pkl'
     
-    relabeled_llm_reward_path = f'{reward_path}lake_4x4_relabeled_llm/reward_history.pkl'
-    relabeled_llm_loss_path = f'{loss_path}lake_4x4_relabeled_llm/loss_history.pkl'
+    relabeled_llm_reward_path = f'{reward_path}lake_4x4_relabeled_llm_0.1_new_examples/reward_history.pkl'
+    relabeled_llm_loss_path = f'{loss_path}lake_4x4_relabeled_llm_0.1_new_examples/loss_history.pkl'
     
     vanilla_dqn_reward = load_pickle(vanilla_dqn_reward_path)
     vanilla_dqn_loss = load_pickle(vanilla_dqn_loss_path)

@@ -568,14 +568,14 @@ if __name__ == '__main__':
         "experiment_name"       : experiment_name,
         "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}{experiment_name}' + '/final_weights' + '_' + '100' + '.pth',
         "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}{experiment_name}' + '/final_weights',
-        "save_interval"         : 1,
+        "save_interval"         : 100,
     
         "clip_grad_norm"        : 3,
         "learning_rate"         : 6e-4,
         "discount_factor"       : 0.93,
         "batch_size"            : 32,
         "update_frequency"      : 10,
-        "max_episodes"          : 5           if train_mode else 5,
+        "max_episodes"          : 3000           if train_mode else 5,
         "max_steps"             : 200,
         "render"                : render,
         

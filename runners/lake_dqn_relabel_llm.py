@@ -506,7 +506,7 @@ class Model_TrainTest:
         sma = np.convolve(self.reward_history, np.ones(50)/50, mode='valid')
         
         # Save reward history to pickle file
-        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5' + '/reward_history.pkl', 'wb') as f:
+        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/reward_history.pkl', 'wb') as f:
             pickle.dump(self.reward_history, f)
         
         plt.figure()
@@ -519,7 +519,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()
@@ -527,7 +527,7 @@ class Model_TrainTest:
         plt.close() 
         
         # Save loss history to pickle file
-        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5' + '/loss_history.pkl', 'wb') as f:
+        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/loss_history.pkl', 'wb') as f:
             pickle.dump(self.agent.loss_history, f)
                 
         plt.figure()
@@ -538,7 +538,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()        
@@ -551,8 +551,8 @@ if __name__ == '__main__':
     map_size = 4 # 4x4 or 8x8 
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5/' + 'final_weights' + '_' + '100' + '.pth',
-        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5/' + 'final_weights',
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5_new_examples/' + 'final_weights' + '_' + '100' + '.pth',
+        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5_new_examples/' + 'final_weights',
         "save_interval"         : 100,
         
         "clip_grad_norm"        : 3,

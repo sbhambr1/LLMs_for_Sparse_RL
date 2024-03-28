@@ -1,28 +1,49 @@
+import os
 import json
 from utils.conversation import Conversation
 # from utils.ratelimits import *
 
 class LLM_Summarizer():
     
-    def __init__(self, model, agent_replay_buffer) -> None:
+    def __init__(self, model, agent_replay_buffer, map_size, experiment_name) -> None:
         self.model = model
         self.agent_replay_buffer = agent_replay_buffer
-        self.summary_history = {
-            "episode": [], # Episode number
-            "episode_length": [], # Episode length
-            "summary": [], # Summarized text
-            "goal_reached": [], # Goal reached or not
-        }
-        self.json_path = "summary_history.json" #TODO: Use domain name arguments to specify the path
-        
+        self.summary = []
+        self.experiment_name = experiment_name
+        self.map_size = map_size
+        self.json_path = f"./runners/llm_summaries/lake_{self.map_size}x{self.map_size}{self.experiment_name}/"
+        if not os.path.exists(self.json_path):
+            os.makedirs(self.json_path)
+
+        self.json_save_file = f"{self.json_path}llm_summary_history.json"
         self.llm_conversation = Conversation(self.model)
 
-    def _save_summary(self):
-        """
-        Save summary history to a json file
-        """
-        with open(self.json_path, "w") as f:
-            json.dump(self.summary_history, f)
+    def _store_and_dump(self, episode, episode_length, summary, goal_reached, preprocessed_response, end_episode):
+        # Create a dictionary with the provided data
+        data = {
+            "episode": episode,
+            "episode_length": episode_length,
+            "summary": summary,
+            "goal_reached": goal_reached,
+            "preprocessed_response": preprocessed_response
+        }
+
+        # Append the data to the summary list
+        self.summary.append(data)
+
+        # Write the summary list to the JSON file
+        with open(self.json_save_file, 'a') as f:
+            # If the file is empty, write an opening bracket
+            if f.tell() == 0:
+                f.write('[\n')
+            
+            
+            if end_episode:
+                f.write(json.dumps(data) + '\n')
+                f.write(']')
+            else:
+                f.write(json.dumps(data) + ',\n')
+            
         
     def _get_prompt(self, trajectory, success, examples):
         """
@@ -214,7 +235,7 @@ class LLM_Summarizer():
         
         return example
     
-    def summarize(self, episode_start_index, episode_end_index, examples):
+    def summarize(self, episode_start_index, episode_end_index, examples, episode_num, end_episode=False):
         """
         Input: 
             - episode_start_index: Start index of the episode in the agent replay buffer
@@ -256,6 +277,8 @@ class LLM_Summarizer():
         
         # send the preprocessed response (indices of good actions) to the agent replay buffer
         preprocessed_response = self._preprocess_response(episode_summary)
+        
+        self._store_and_dump(episode_num, episode_end_index - episode_start_index + 1, episode_summary, success, preprocessed_response, end_episode)
         
         return positions, actions, preprocessed_response            
         

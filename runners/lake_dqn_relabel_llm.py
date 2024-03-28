@@ -110,7 +110,7 @@ class ReplayMemory:
         if episode_relabel_indices is not None:
             for i in range(episode_start_index, episode_end_index+1):
                 if i in episode_relabel_indices:
-                    self.rewards[i] = -0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+                    self.rewards[i] = -0.1
      
         elif relabeling_random:
             for i in range(episode_start_index, episode_end_index):     
@@ -337,6 +337,8 @@ class Model_TrainTest:
         self.train_mode             = hyperparams["train_mode"]
         self.RL_load_path           = hyperparams["RL_load_path"]
         self.save_path              = hyperparams["save_path"]
+        if not os.path.exists(self.save_path):
+            os.makedirs(self.save_path)
         self.save_interval          = hyperparams["save_interval"]
         
         self.clip_grad_norm         = hyperparams["clip_grad_norm"]
@@ -359,6 +361,8 @@ class Model_TrainTest:
         self.render_fps             = hyperparams["render_fps"]
         
         self.relabeling_random      = hyperparams["relabeling_random"]
+        
+        self.experiment_name        = hyperparams["experiment_name"]
                         
         # Define Env
         self.env = gym.make('FrozenLake-v1', map_name=f"{self.map_size}x{self.map_size}", 
@@ -377,7 +381,7 @@ class Model_TrainTest:
                                 memory_capacity   = self.memory_capacity)
         
         self.llm_summarizing_model = hyperparams["llm_summarizing_model"]
-        self.llm_summarizer = LLM_Summarizer(model=self.llm_summarizing_model, agent_replay_buffer=self.agent.replay_memory)
+        self.llm_summarizer = LLM_Summarizer(model=self.llm_summarizing_model, agent_replay_buffer=self.agent.replay_memory, map_size=self.map_size, experiment_name=self.experiment_name)
                 
         
     def state_preprocess(self, state:int, num_states:int):
@@ -459,7 +463,8 @@ class Model_TrainTest:
             #     example = self.llm_summarizer.construct_example(episode_start_index=episode_start_index, episode_end_index=episode_end_index)
             #     examples.append(example)
             # else:
-            positions, actions, episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples)
+            end_episode = True if episode == self.max_episodes else False
+            positions, actions, episode_summary = self.llm_summarizer.summarize(episode_start_index=episode_start_index, episode_end_index=episode_end_index, examples=examples, episode_num=episode, end_episode=end_episode)
             episode_relabel_indices = self.llm_summarizer.get_relabel_indices(episode_start_index=episode_start_index, episode_end_index=episode_end_index, positions=positions, actions=actions, episode_summary=episode_summary)
             self.agent.replay_memory.relabel(episode_relabel_indices=episode_relabel_indices, episode_start_index=episode_start_index, episode_end_index=episode_end_index, relabeling_random=self.relabeling_random)
             
@@ -505,8 +510,12 @@ class Model_TrainTest:
         # Calculate the Simple Moving Average (SMA) with a window size of 50
         sma = np.convolve(self.reward_history, np.ones(50)/50, mode='valid')
         
+        reward_history_save_path = f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}{self.experiment_name}/'
+        if not os.path.exists(reward_history_save_path):
+            os.makedirs(reward_history_save_path)
+        
         # Save reward history to pickle file
-        with open(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/reward_history.pkl', 'wb') as f:
+        with open(reward_history_save_path + 'reward_history.pkl', 'wb') as f:
             pickle.dump(self.reward_history, f)
         
         plt.figure()
@@ -519,15 +528,19 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/reward/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/reward_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(reward_history_save_path + 'reward_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()
         plt.clf()
         plt.close() 
         
+        loss_history_save_path = f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}{self.experiment_name}/'
+        if not os.path.exists(loss_history_save_path):
+            os.makedirs(loss_history_save_path)
+        
         # Save loss history to pickle file
-        with open(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/loss_history.pkl', 'wb') as f:
+        with open(loss_history_save_path + 'loss_history.pkl', 'wb') as f:
             pickle.dump(self.agent.loss_history, f)
                 
         plt.figure()
@@ -538,7 +551,7 @@ class Model_TrainTest:
         
         # Only save as file if last episode
         if episode == self.max_episodes:
-            plt.savefig(f'./runners/plots/loss/lake_{self.map_size}x{self.map_size}_relabeled_llm_0.5_new_examples' + '/loss_plot.png', format='png', dpi=600, bbox_inches='tight')
+            plt.savefig(loss_history_save_path + 'loss_plot.png', format='png', dpi=600, bbox_inches='tight')
         plt.tight_layout()
         plt.grid(True)
         plt.show()        
@@ -549,18 +562,20 @@ if __name__ == '__main__':
     train_mode = True
     render = False
     map_size = 4 # 4x4 or 8x8 
+    experiment_name = "_relabeled_llm_0.1_new_examples"
     RL_hyperparams = {
         "train_mode"            : train_mode,
-        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5_new_examples/' + 'final_weights' + '_' + '100' + '.pth',
-        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}_relabeled_llm_0.5_new_examples/' + 'final_weights',
-        "save_interval"         : 100,
-        
+        "experiment_name"       : experiment_name,
+        "RL_load_path"          : f'./runners/weights/lake_{map_size}x{map_size}{experiment_name}' + '/final_weights' + '_' + '100' + '.pth',
+        "save_path"             : f'./runners/weights/lake_{map_size}x{map_size}{experiment_name}' + '/final_weights',
+        "save_interval"         : 1,
+    
         "clip_grad_norm"        : 3,
         "learning_rate"         : 6e-4,
         "discount_factor"       : 0.93,
         "batch_size"            : 32,
         "update_frequency"      : 10,
-        "max_episodes"          : 3000           if train_mode else 5,
+        "max_episodes"          : 5           if train_mode else 5,
         "max_steps"             : 200,
         "render"                : render,
         

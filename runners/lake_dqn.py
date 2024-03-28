@@ -402,6 +402,7 @@ class Model_TrainTest:
                 if episode != self.max_episodes:
                     self.plot_training(episode)
                 print('\n~~~~~~Interval Save: Model saved.\n')
+                print('[STEPS] Total Steps: ', total_steps)
     
             result = (f"Episode: {episode}, "
                       f"Total Steps: {total_steps}, "

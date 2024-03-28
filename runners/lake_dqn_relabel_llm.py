@@ -110,7 +110,7 @@ class ReplayMemory:
         if episode_relabel_indices is not None:
             for i in range(episode_start_index, episode_end_index+1):
                 if i in episode_relabel_indices:
-                    self.rewards[i] = -0.2 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
+                    self.rewards[i] = -0.5 #TODO: figure out the correct reward value - hyperparam (currently assuming normalized rewards for the domain.)
      
         elif relabeling_random:
             for i in range(episode_start_index, episode_end_index):     
@@ -444,6 +444,7 @@ class Model_TrainTest:
                 print('\n~~~~~~Interval Save: Model saved.\n')
                 print('~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n')
                 print('[LLM API] Total Cost: $',  self.llm_summarizer.llm_conversation.total_cost)
+                print('[STEPS] Total Steps: ', total_steps)
     
             result = (f"Episode: {episode}, "
                       f"Total Steps: {total_steps}, "
@@ -545,7 +546,7 @@ class Model_TrainTest:
 
 if __name__ == '__main__':
     # Parameters:
-    train_mode = False
+    train_mode = True
     render = False
     map_size = 4 # 4x4 or 8x8 
     RL_hyperparams = {

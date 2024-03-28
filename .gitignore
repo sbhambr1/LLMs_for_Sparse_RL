@@ -3,3 +3,5 @@ plots/
 *.pth
 *.json
 *.pkl
+*.ni
+*.z8

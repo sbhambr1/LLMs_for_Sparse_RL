@@ -66,9 +66,8 @@ class Conversation:
         return answer
     
     def save(self, filename):
-        raise NotImplementedError
         with open(filename, 'wb') as f:
-            object = {"prompt": self.prompt, "log_history": self.log_history, "model": self.model}
+            object = {"prompt": self.llm_prompt, "log_history": self.log_history, "model": self.llm_model}
             pkl.dump(object, f)
 
 

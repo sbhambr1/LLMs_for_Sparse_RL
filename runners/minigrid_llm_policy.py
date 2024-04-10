@@ -1,6 +1,7 @@
 import os
 import pickle as pkl
 import gymnasium as gym
+from minigrid.wrappers import SymbolicObsWrapper, ReseedWrapper
 from utils.conversation import Conversation
 
 class MinigridLLMPolicy:
@@ -11,7 +12,7 @@ class MinigridLLMPolicy:
         self.conversation = Conversation(llm_model=self.llm_model)
         
     def _construct_prompt(self, observation, backprompt):
-        prompt = f"Agent is in room {observation['agent_pos']} facing {observation['agent_dir']}. The next action that the agent should take is:"
+        # prompt = f"Agent is in room {observation['agent_pos']} facing {observation['agent_dir']}. The next action that the agent should take is:"
         return NotImplementedError
     
     def _preprocess_response(self, response):
@@ -21,19 +22,25 @@ class MinigridLLMPolicy:
         return NotImplementedError
     
     def get_action(self, observation, backprompt):
-        prompt = self._construct_prompt(observation, backprompt)
-        response = self.conversation.llm_actor(prompt, stop=["\n"], role="user")
-        response = self._preprocess_response(response)
-        return response
+        if self.llm_model is not None:
+            prompt = self._construct_prompt(observation, backprompt)
+            response = self.conversation.llm_actor(prompt, stop=["\n"], role="user")
+            response = self._preprocess_response(response)
+            return response
+        else:
+            # return sample action
+            return self.env.action_space.sample()
     
     def save(self, filename):
         self.conversation.save(filename)
         
     
 if __name__ == "__main__":
-    llm_model = "gpt-3.5-turbo"
+    llm_model = None #gpt-3.5-turbo, None
     env_name = "MiniGrid-DoorKey-5x5-v0"
     env = gym.make(env_name)
+    env = SymbolicObsWrapper(env)
+    env = ReseedWrapper(env, seeds=[0])
     policy = MinigridLLMPolicy(llm_model, env)
     
     episodes = 0
@@ -41,10 +48,12 @@ if __name__ == "__main__":
     episode_history = []
     while episodes < 10:
         episode_trajectory = []
-        observation = env.reset()
+        observation, _ = env.reset(seed=0)
+        backprompt = None
         while not done:
+            initial_obs = observation
             action = policy.get_action(observation, backprompt)
-            observation, reward, done, info = env.step(action)
+            observation, reward, done, _, info = env.step(action)
             backprompt = policy.construct_backprompt(observation, action)
             episode_trajectory.append((observation, action, reward, done, info, backprompt))
             if done:

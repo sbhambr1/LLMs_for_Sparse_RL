@@ -39,9 +39,9 @@ class BaseAlgo(ABC):
         preprocess_obss : function
             a function that takes observations returned by the environment
             and converts them into the format that the model can handle
-        reshape_reward : function
-            a function that shapes the reward, takes an
-            (observation, action, reward, done) tuple as an input
+        reshape_reward : LLM trajectory used for reward shaping function
+            a trajectory that shapes the reward for all the same transitions
+            that are stored in the buffer.
         """
 
         # Store parameters
@@ -149,11 +149,19 @@ class BaseAlgo(ABC):
             self.mask = 1 - torch.tensor(done, device=self.device, dtype=torch.float)
             self.actions[i] = action
             self.values[i] = value
-            if self.reshape_reward is not None:
-                self.rewards[i] = torch.tensor([
-                    self.reshape_reward(obs_, action_, reward_, done_)
-                    for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
-                ], device=self.device)
+            if self.reshape_reward is not []:
+                for tuple in self.reshape_reward:
+                    """
+                    tuple = (obs, action, reward, done)
+                    """
+                    if tuple[0] == self.obss[i] and tuple[1] == self.actions[i]:
+                        self.rewards[i] = torch.tensor(tuple[2], device=self.device)
+            
+            # if self.reshape_reward is not None:
+            #     self.rewards[i] = torch.tensor([
+            #         self.reshape_reward(obs_, action_, reward_, done_)
+            #         for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
+            #     ], device=self.device)
             else:
                 self.rewards[i] = torch.tensor(reward, device=self.device)
             self.log_probs[i] = dist.log_prob(action)

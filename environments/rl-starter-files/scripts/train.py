@@ -31,6 +31,8 @@ parser.add_argument("--procs", type=int, default=16,
                     help="number of processes (default: 16)")
 parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
+parser.add_argument("--stochastic", default=False, action="store_true",
+                    help="add stochastic actions with default probability of 0.9")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -98,7 +100,7 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        envs.append(utils.make_env(args.env, args.seed + 10000 * i))
+        envs.append(utils.make_env(env_key=args.env, seed=args.seed + 10000 * i, stochastic=args.stochastic))
     txt_logger.info("Environments loaded\n")
 
     # Load training status

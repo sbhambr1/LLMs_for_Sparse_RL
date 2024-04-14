@@ -83,9 +83,27 @@ def convert_obs_to_text(observation):
     OBS_DESC = f"The current observation is: \n{AGENT_DESC}\n{KEY_DESC}\n{DOOR_DESC}\n{GOAL_DESC}\n{MISC_DESC}\n"
     return OBS_DESC
 
-def get_llm_policy(env, conv, init_prompt, obs='', to_print=True):
+def convert_obs_to_grid_text(observation):
+    obs_array = observation['image']
+    row0, row1, row2 = [], [], []
+    for i in range(3):
+        # append key from OBJECT_TO_IDX
+        
+        row0.append(obs_array[1][1:4][i][2])
+        row1.append(obs_array[2][1:4][i][2])
+        row2.append(obs_array[3][1:4][i][2])
+    
+    
+    
+        
+
+
+def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False):
     if to_print:
-        print(convert_obs_to_text(obs))
+        if grid_text:
+            print(convert_obs_to_grid_text(obs))
+        else:
+            print(convert_obs_to_text(obs))
     for i in range(NUM_AGENT_STEPS):
         if llm_model != "None":
             if i == 0:
@@ -111,7 +129,7 @@ def main():
     obs, _ = env.reset(seed=SEED)
     
     init_prompt = get_initial_prompt(obs)
-    total_reward = get_llm_policy(env, conv, init_prompt, obs)
+    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=True, grid_text=True)
     print('-----------------')
     print(f"Total reward: {total_reward}")
     

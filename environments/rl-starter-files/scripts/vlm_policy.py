@@ -5,7 +5,6 @@ import cv2  # We're using OpenCV to read video, to install !pip install opencv-p
 import base64
 import time
 from openai import OpenAI
-import os
 import requests
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
@@ -89,11 +88,6 @@ def get_prompt():
         prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         return prompt
     
-# def get_step_prompt():
-#     OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the key by the yellow key, the door by the yellow door, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing. You have to be in an adjacent cell to the key facing it to pick it up, and in an adjacent cell as the door facing it to toggle/open it, and to be in the same cell as the goal to finish the task."
-#     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
-#     step_prompt = f"{OBS_DESC}\n{QUERY_DESC}\n"
-#     return step_prompt
 
 def get_vlm_policy(env, image_save_dir):
     obs, _ = env.reset(seed=SEED)

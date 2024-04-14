@@ -1,6 +1,3 @@
-import os
-import sys
-import minigrid
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
 from utils.conversation import Conversation
@@ -93,7 +90,6 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True):
         if llm_model != "None":
             if i == 0:
                 prompt = init_prompt
-                response = conv.llm_actor(prompt, stop=["\n"], role="user")
             else:
                 prompt = get_step_prompt(obs)
             response = conv.llm_actor(prompt, stop=["\n"]).lower()

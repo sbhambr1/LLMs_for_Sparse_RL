@@ -103,6 +103,37 @@ class BaseAlgo(ABC):
         self.log_reshaped_return = [0] * self.num_procs
         self.log_num_frames = [0] * self.num_procs
 
+    def reward_reshaping(self, obs, action, reward, done):
+        """
+        Reshape the reward based on the LLM trajectory.
+
+        Parameters:
+        ----------
+        obs : dict
+            the observation
+        action : int
+            the action
+        reward : float
+            the reward
+        done : bool
+            whether the episode is done
+
+        Returns:
+        -------
+        reshaped_reward : float
+            the reshaped reward for parallel environments -> self.rewards[i]
+        """
+        for i in range(len(self.reshape_reward)):
+            # if not done: # do not shape reward for last transition # expt (14)15
+            comparison_state1 = self.reshape_reward[i][0]['image'] == obs['image']
+            if comparison_state1.all() and self.reshape_reward[i][1] == action:
+                # print('[RESHAPING]')
+                # return reward+0.1 # base case expt 9 
+                # return reward + self.reshape_reward[i][2] # expt 10
+                alpha = 0.9 # expt 11=0.5, expt 12=0.1, expt 13=0.9, expt 14=0
+                return alpha*reward + (1-alpha)*self.reshape_reward[i][2]
+        return reward
+    
     def collect_experiences(self):
         """Collects rollouts and computes advantages.
 
@@ -150,18 +181,10 @@ class BaseAlgo(ABC):
             self.actions[i] = action
             self.values[i] = value
             if self.reshape_reward is not []:
-                for tuple in self.reshape_reward:
-                    """
-                    tuple = (obs, action, reward, done)
-                    """
-                    if tuple[0] == self.obss[i] and tuple[1] == self.actions[i]:
-                        self.rewards[i] = torch.tensor(tuple[2], device=self.device)
-            
-            # if self.reshape_reward is not None:
-            #     self.rewards[i] = torch.tensor([
-            #         self.reshape_reward(obs_, action_, reward_, done_)
-            #         for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
-            #     ], device=self.device)
+                self.rewards[i] = torch.tensor([
+                    self.reward_reshaping(obs_, action_, reward_, done_)
+                    for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
+                ], device=self.device)
             else:
                 self.rewards[i] = torch.tensor(reward, device=self.device)
             self.log_probs[i] = dist.log_prob(action)

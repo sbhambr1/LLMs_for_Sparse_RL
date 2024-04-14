@@ -22,8 +22,8 @@ parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
 parser.add_argument("--model", default=None,
                     help="name of the model (default: {ENV}_{ALGO}_{TIME})")
-parser.add_argument("--seed", type=int, default=1,
-                    help="random seed (default: 1)")
+parser.add_argument("--seed", type=int, default=0,
+                    help="random seed (default: 0)")
 parser.add_argument("--log-interval", type=int, default=1,
                     help="number of updates between two logs (default: 1)")
 parser.add_argument("--save-interval", type=int, default=10,
@@ -34,7 +34,7 @@ parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
 parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
-parser.add_argument("--llm_rs", default=[], action="store_true",
+parser.add_argument("--llm-rs", default='', type=str,
                     help="pkl file path to llm plan for reward shaping")
 
 # Parameters for main algorithm
@@ -103,7 +103,7 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        envs.append(utils.make_env(env_key=args.env, seed=args.seed + 10000 * i, stochastic=args.stochastic))
+        envs.append(utils.make_env(env_key=args.env, seed=args.seed, stochastic=args.stochastic))
     txt_logger.info("Environments loaded\n")
 
     # Load training status

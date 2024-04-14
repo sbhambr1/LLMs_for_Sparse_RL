@@ -26,7 +26,6 @@ if not os.path.exists(image_save_dir):
 policy_save_file = f"{policy_save_dir}manual_policy.pkl"
 
 env = gym.make("MiniGrid-DoorKey-5x5-v0", render_mode='rgb_array')
-env = SymbolicObsWrapper(env)
 
 manual_policy = [] # list to store (state, action, shaped_reward) tuples for manual policy
 

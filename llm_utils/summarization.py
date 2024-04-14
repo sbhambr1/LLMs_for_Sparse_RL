@@ -1,6 +1,6 @@
 import os
 import json
-from utils.conversation import Conversation
+from llm_utils.conversation import Conversation
 # from utils.ratelimits import *
 
 class LLM_Summarizer():

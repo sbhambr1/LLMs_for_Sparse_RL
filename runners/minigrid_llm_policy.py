@@ -2,7 +2,7 @@ import os
 import pickle as pkl
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, ReseedWrapper
-from utils.conversation import Conversation
+from llm_utils.conversation import Conversation
 
 class MinigridLLMPolicy:
     

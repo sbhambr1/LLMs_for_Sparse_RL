@@ -14,7 +14,7 @@ import torch.optim as optim
 from collections import deque
 import matplotlib.pyplot as plt
 
-from utils.summarization import LLM_Summarizer
+from llm_utils.summarization import LLM_Summarizer
 
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

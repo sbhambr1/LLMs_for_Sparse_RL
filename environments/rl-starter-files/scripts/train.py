@@ -2,6 +2,7 @@ import argparse
 import time
 import datetime
 import torch_ac
+import pickle
 import tensorboardX
 import sys
 
@@ -34,7 +35,7 @@ parser.add_argument("--frames", type=int, default=10**7,
 parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
 parser.add_argument("--llm_rs", default=[], action="store_true",
-                    help="llm plan for reward shaping")
+                    help="pkl file path to llm plan for reward shaping")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -128,17 +129,23 @@ if __name__ == "__main__":
     acmodel.to(device)
     txt_logger.info("Model loaded\n")
     txt_logger.info("{}\n".format(acmodel))
+    
+    # load llm reward shaping plan
+    if args.llm_rs:
+        with open(args.llm_rs, 'rb') as f:
+            llm_rs = pickle.load(f)
+        txt_logger.info("LLM reward shaping plan loaded.\n")
 
     # Load algo
 
     if args.algo == "a2c":
         algo = torch_ac.A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_alpha, args.optim_eps, preprocess_obss, args.llm_rs)
+                                args.optim_alpha, args.optim_eps, preprocess_obss, llm_rs)
     elif args.algo == "ppo":
         algo = torch_ac.PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, args.llm_rs)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, llm_rs)
     else:
         raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 

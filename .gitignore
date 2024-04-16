@@ -6,6 +6,11 @@ plots/
 *.ni
 *.z8
 *.png
+*__pycache__
+*egg-info
+.vscode
+build/*
+dist/*
 *.pyc
 *.csv
 *.pt

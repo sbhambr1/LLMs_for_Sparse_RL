@@ -11,3 +11,8 @@ plots/
 .vscode
 build/*
 dist/*
+*.pyc
+*.csv
+*.pt
+*.txt
+events.out.tfevents*

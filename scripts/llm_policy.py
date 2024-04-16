@@ -1,6 +1,6 @@
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
-from llm_utils.conversation import Conversation
+from utils.conversation import Conversation
 import warnings
 warnings.filterwarnings("ignore")
 

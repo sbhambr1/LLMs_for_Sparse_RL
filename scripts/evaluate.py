@@ -1,7 +1,7 @@
 import argparse
 import time
 import torch
-from torch_ac.utils.penv import ParallelEnv
+from algorithms.utils.penv import ParallelEnv
 
 import utils
 from utils import device

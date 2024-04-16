@@ -2,7 +2,7 @@ import numpy
 import torch
 import torch.nn.functional as F
 
-from torch_ac.algos.base import BaseAlgo
+from algorithms.algos.base import BaseAlgo
 
 class A2CAlgo(BaseAlgo):
     """The Advantage Actor-Critic algorithm."""

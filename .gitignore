@@ -6,3 +6,8 @@ plots/
 *.ni
 *.z8
 *.png
+*.pyc
+*.csv
+*.pt
+*.txt
+events.out.tfevents*

@@ -16,3 +16,4 @@ dist/*
 *.pt
 *.txt
 events.out.tfevents*
+storage/

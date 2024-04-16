@@ -1,2 +1,2 @@
-from torch_ac.utils.dictlist import DictList
-from torch_ac.utils.penv import ParallelEnv
+from algorithms.utils.dictlist import DictList
+from algorithms.utils.penv import ParallelEnv

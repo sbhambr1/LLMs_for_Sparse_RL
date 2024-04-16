@@ -42,3 +42,7 @@ pip install -r requirements.txt
 2. `scripts/manual_policy.py`: Generate the LLM policy that can be used by the RL agent by manually specifying the actions.
 
 3. `scripts/vlm_policy.py`: Generate the VLM policy directly from the VLM model.
+
+4. `llm_modulo/llm_modulo.py`: Contains the LLM-Modulo implementation that contains critic/verifier functions for each (env, seed) pair.
+
+5. `llm_modulo/env_constraints.py`: Contains the environment constraints for each environment. Modify to add constraints for new environments and seeds.

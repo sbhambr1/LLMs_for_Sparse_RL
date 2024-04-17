@@ -22,9 +22,9 @@ ACTION_DICT = {
     0: 'turn left', 
     1: 'turn right', 
     2: 'move forward', 
-    3: 'pickup', 
+    3: 'pickup key', 
     4: 'drop', 
-    5: 'toggle', 
+    5: 'open door', 
     6: 'done'}
 OBJECT_TO_IDX = {
     "unseen": -1,
@@ -39,9 +39,9 @@ OBJECT_TO_IDX = {
     "lava": 9,
     "agent": 10,
 }
-NUM_AGENT_STEPS = 20
+NUM_AGENT_STEPS = 30
 STOCHASTIC = False
-image_save_dir = "./storage/visualization/DoorKey_VLM/"
+image_save_dir = f"./storage/visualization/DoorKey_VLM_seed_{SEED}/"
 if not os.path.exists(image_save_dir):
     os.makedirs(image_save_dir)
     
@@ -82,9 +82,9 @@ def get_vlm_response(prompt, img, model):
     return response.json()['choices'][0]['message']['content']
 
 def get_prompt():
-        TASK_DESC = "You are a decision making AI agent in a 3x3 grid world. You will encounter objects like key, door, and goal in the environment, along with walls. The task is 'use the key to open the door and then get to the goal'."
-        OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the key by the yellow key, the door by the yellow door, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing. You have to be in an adjacent cell to the key facing it to pick it up, and in an adjacent cell as the door facing it to toggle/open it, and to be in the same cell as the goal to finish the task."
-        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. The available actions are 'turn left', 'turn right', 'move forward', 'pickup', 'drop', 'toggle', and 'done'. Note that 'turn left' and 'turn right' actions will turn the direction of the red arrow (agent). Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
+        TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction."
+        OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the key by the yellow key, the door by the yellow door, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing."
+        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'. Note that 'turn left' and 'turn right' actions will turn the direction of the red arrow (agent). Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
         prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         return prompt
     

@@ -1,3 +1,4 @@
+import numpy as np
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
 from utils.conversation import Conversation
@@ -29,6 +30,11 @@ OBJECT_TO_IDX = {
     "lava": 9,
     "agent": 10,
 }
+DIRECTION_DICT = {
+    'right': 0,
+    'down': 1,
+    'left': 2,
+    'up': 3}
 NUM_AGENT_STEPS = 20
 STOCHASTIC = False
 
@@ -96,17 +102,31 @@ def convert_obs_to_text(observation):
 
 def convert_obs_to_grid_text(observation):
     obs_array = observation['image']
-    row0, row1, row2 = [], [], []
+    agent_dir = observation['direction']
+    agent_dir = list(DIRECTION_DICT.keys())[list(DIRECTION_DICT.values()).index(agent_dir)]
+    col0, col1, col2 = [], [], []
     for i in range(3):
-        # append key from OBJECT_TO_IDX
+        # append key from OBJECT_TO_IDX    
+        col0.append(obs_array[1][1:4][i][2])
+        col1.append(obs_array[2][1:4][i][2])
+        col2.append(obs_array[3][1:4][i][2])
         
-        row0.append(obs_array[1][1:4][i][2])
-        row1.append(obs_array[2][1:4][i][2])
-        row2.append(obs_array[3][1:4][i][2])
-    # TODO
+     # transpose numpy array
+    obs_matrix = np.array([col0, col1, col2])
+    obs_matrix = np.transpose(obs_matrix)
+    row0, row1, row2 = list(obs_matrix[0]), list(obs_matrix[1]), list(obs_matrix[2])
     
+    for i in range(3):
+        row0[i] = list(OBJECT_TO_IDX.keys())[list(OBJECT_TO_IDX.values()).index(row0[i])]
+        row1[i] = list(OBJECT_TO_IDX.keys())[list(OBJECT_TO_IDX.values()).index(row1[i])]
+        row2[i] = list(OBJECT_TO_IDX.keys())[list(OBJECT_TO_IDX.values()).index(row2[i])]
+            
+    GRID_HEADER = "The current maze looks like this:\n"
+    grid_text = f"{' '.join(row0)}\n{' '.join(row1)}\n{' '.join(row2)}\n"
+    AGENT_DIR = f"You (agent) are currently facing {agent_dir}.\n"    
     
-        
+    text_obs = f"{GRID_HEADER}\n{grid_text}\n{AGENT_DIR}"
+    return text_obs
 
 
 def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False):
@@ -126,7 +146,13 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
                     prompt = init_prompt
                 else:
                     prompt = get_step_prompt(obs, llm_modulo, llm_actions)
-                response, FEASIBLE = conv.llm_actor(prompt, stop=["\n"]).lower()
+                response = conv.llm_actor(prompt, stop=["\n"]).lower()
+                llm_actions.append(response)
+                backprompt = llm_modulo.action_critic(llm_actions, obs)
+                if backprompt == '':
+                    FEASIBLE = True
+                else:
+                    print(backprompt) # TODO: add backprompt to prompt and query again
                 all_actions.append(response)
                 if FEASIBLE:
                     break

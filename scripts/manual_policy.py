@@ -8,7 +8,12 @@ warnings.filterwarnings("ignore")
 
 SEED=0
 STOCHASTIC=False
-ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward', 'done']
+# optimal policy
+ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward'] 
+# sub-optimal policy 1
+ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward'] 
+# sub-optimal policy 2
+ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward']
 ACTION_DICT = {
     0: 'turn left', 
     1: 'turn right', 
@@ -19,7 +24,7 @@ ACTION_DICT = {
     6: 'done'}
 ACTIONS_ENV = [list(ACTION_DICT.keys())[list(ACTION_DICT.values()).index(action)] for action in ACTIONS_TO_TAKE]
 
-image_save_dir = policy_save_dir = f"./storage/visualization/DoorKey_manual/seed_{SEED}/"
+image_save_dir = policy_save_dir = f"./storage/visualization/DoorKey_manual/seed_{SEED}_suboptimal2/"
 if not os.path.exists(image_save_dir):
     os.makedirs(image_save_dir)
     

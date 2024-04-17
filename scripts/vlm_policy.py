@@ -41,7 +41,7 @@ OBJECT_TO_IDX = {
 }
 NUM_AGENT_STEPS = 20
 STOCHASTIC = False
-image_save_dir = "./storage/DoorKey_VLM/"
+image_save_dir = "./storage/visualization/DoorKey_VLM/"
 if not os.path.exists(image_save_dir):
     os.makedirs(image_save_dir)
     

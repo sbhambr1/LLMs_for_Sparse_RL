@@ -10,9 +10,9 @@ class LLM_Modulo:
         
     def action_critic(self, action, state):
         """
-        Returns true if actions is feasible in the environment in the current state.
-        Input: action, state (symbolic observation)
-        Output: boolean
+        Returns backprompt if actions is feasible in the environment in the current state.
+        Input: action taken by LLM, state (symbolic observation), feasible actions from env_constraints
+        Output: backprompt (str)
         """
         raise NotImplementedError
     

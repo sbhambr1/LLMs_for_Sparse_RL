@@ -131,7 +131,7 @@ class BaseAlgo(ABC):
                 # print('[RESHAPING]')
                 # return reward+0.1 # base case expt 9 
                 # return reward + self.reshape_reward[i][2] # expt 10
-                alpha = 0.9 # expt 11=0.5, expt 12=0.1, expt 13=0.9, expt 14=0
+                alpha = 0.5 # expt 11=0.5, expt 12=0.1, expt 13=0.9, expt 14=0
                 return alpha*reward + (1-alpha)*self.reshape_reward[i][2]
         return reward
     

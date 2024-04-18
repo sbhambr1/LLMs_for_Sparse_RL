@@ -43,24 +43,24 @@ llm_modulo = LLM_Modulo(env_name, seed=0)
 def get_initial_prompt(observation):
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
         
-        OBS_DESC = convert_obs_to_text(observation)
+        OBS_DESC = convert_obs_to_grid_text(observation)
         
         QUERY_DESC = "What is the next action that you should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.\n"
         initial_prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         
         return initial_prompt
     
-def get_step_prompt(obs, llm_modulo, llm_actions):
-    FEASIBLE=False
-    backprompt = llm_modulo.action_critic(llm_actions, obs)
+def get_step_prompt(obs):
     OBS_DESC = convert_obs_to_grid_text(obs)
     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
-    if backprompt != '':
-        step_prompt = f"{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n"
-    else:
-        FEASIBLE=True
-        step_prompt = f"{OBS_DESC}\n{QUERY_DESC}\n"
-    return step_prompt, FEASIBLE
+    step_prompt = f"{OBS_DESC}\n{QUERY_DESC}\n"
+    return step_prompt
+
+def get_prompt_with_backprompt(obs, backprompt):
+    OBS_DESC = convert_obs_to_grid_text(obs)
+    QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
+    prompt_with_backprompt = f"{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n"
+    return prompt_with_backprompt
 
 def _convert_pos_to_3x3(pos):
     return (pos[0]-1, pos[1]-1)
@@ -123,7 +123,13 @@ def convert_obs_to_grid_text(observation):
             
     GRID_HEADER = "The current maze looks like this:\n"
     grid_text = f"{' '.join(row0)}\n{' '.join(row1)}\n{' '.join(row2)}\n"
-    AGENT_DIR = f"You (agent) are currently facing {agent_dir}.\n"    
+    AGENT_DIR = f"You (agent) are currently facing {agent_dir}.\n"
+    
+    # TODO: make obs more descriptive
+    # Additional information if agent has picked up the key or opened the door
+    if 'key' not in row0 and 'key' not in row1 and 'key' not in row2:
+        ADDITIONAL_INFO = "You have already picked up the key.\n"
+        AGENT_DIR += ADDITIONAL_INFO
     
     text_obs = f"{GRID_HEADER}\n{grid_text}\n{AGENT_DIR}"
     return text_obs
@@ -141,21 +147,26 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
     for i in range(NUM_AGENT_STEPS):
         if llm_model != "None":
             FEASIBLE = False
-            for _ in range(5):
-                if i == 0:
+            for j in range(5):
+                if i == 0 and j == 0:
                     prompt = init_prompt
                 else:
-                    prompt = get_step_prompt(obs, llm_modulo, llm_actions)
+                    if backprompt == '':
+                        prompt = get_step_prompt(obs)
+                    else:
+                        prompt = get_prompt_with_backprompt(obs, backprompt)
+                print(prompt)
                 response = conv.llm_actor(prompt, stop=["\n"]).lower()
-                llm_actions.append(response)
-                backprompt = llm_modulo.action_critic(llm_actions, obs)
+                backprompt = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs)
                 if backprompt == '':
                     FEASIBLE = True
-                else:
-                    print(backprompt) # TODO: add backprompt to prompt and query again
+                    llm_actions.append(response)
                 all_actions.append(response)
                 if FEASIBLE:
                     break
+            if not FEASIBLE:
+                print('LLM could not find a feasible action.')
+                break
             llm_actions.append(response)
             action = [k for k, v in ACTION_DICT.items() if v in response][0]
         else:
@@ -163,9 +174,6 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         
         print('LLM Response:', response)
         obs, reward, done, _, _ = env.step(action)
-        #TODO: FIX
-        # text_obs = convert_obs_to_text(obs)
-        # prompt += f'Your action: {response}\n{obs}\n'
         if done:
             return reward
     return 0
@@ -177,7 +185,7 @@ def main():
     obs, _ = env.reset(seed=SEED)
     
     init_prompt = get_initial_prompt(obs)
-    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=True, grid_text=True)
+    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=False, grid_text=True)
     print('-----------------')
     print(f"Total reward: {total_reward}")
     

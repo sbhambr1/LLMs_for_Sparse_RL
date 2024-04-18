@@ -19,6 +19,14 @@ ACTION_DICT = {
     4: 'drop', 
     5: 'open door', 
     6: 'done'}
+TEXT_ACTION_DICT = {
+    'turn left': 0,
+    'turn right': 1,
+    'move forward': 2,
+    'pickup key': 3,
+    'drop': 4,
+    'open door': 5,
+    'done': 6}
 DIRECTION_DICT = {
     'right': 0,
     'down': 1,
@@ -46,10 +54,9 @@ class DoorKey5x5(EnvironmentConstraints):
         agent_dir = observation['direction']
         for i in range(5):
             for j in range(5):
-                for k in range(5):
-                    if agent_obs[i][j][k] == OBJECT_TO_IDX['agent']:
-                        agent_pos = (i, j)                        
-                        return agent_pos, agent_dir
+                if agent_obs[i][j][2] == OBJECT_TO_IDX['agent']:
+                    agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
+                    return agent_pos, agent_dir
         
         raise ValueError("Agent not found in the observation.")
         
@@ -66,7 +73,7 @@ class DoorKey5x5(EnvironmentConstraints):
                     # agent has picked key already, can open door if facing it, and can move forward if door is opened
                     if agent_dir == DIRECTION_DICT['right']:
                         for j in range(len(action_history)):
-                            if ACTION_DICT[action_history[j]] == 'open door':
+                            if action_history[j] == 'open door':
                                 actions.append(['move forward'])
                                 break
                             else:
@@ -92,7 +99,7 @@ class DoorKey5x5(EnvironmentConstraints):
                     # agent is in the initial state, can pickup key if facing up (correct) direction, and move forward facing up if key is picked
                     if agent_dir == DIRECTION_DICT['up']:
                         for j in range(len(action_history)):
-                            if ACTION_DICT[action_history[j]] == 'pickup key':
+                            if action_history[j] == 'pickup key':
                                 actions.append(['move forward'])
                                 break
                             else:

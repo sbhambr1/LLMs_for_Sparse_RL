@@ -8,12 +8,35 @@ warnings.filterwarnings("ignore")
 
 SEED=0
 STOCHASTIC=False
-# optimal policy
-ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward'] 
-# sub-optimal policy 1
-ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward'] 
-# sub-optimal policy 2
-ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward']
+choose_policy = 'LLM_5' # {optimal, suboptimal_1/2, LLM_1/2/3/4/5}
+
+if choose_policy == 'optimal':
+    # optimal policy
+    ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward'] 
+    
+elif choose_policy == 'suboptimal_1':
+    # sub-optimal policy 1
+    ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward'] 
+elif choose_policy == 'suboptimal_2':
+    # sub-optimal policy 2
+    ACTIONS_TO_TAKE = ['turn right', 'turn left', 'turn right', 'turn left', 'turn right', 'pickup', 'turn left', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'toggle', 'move forward', 'turn left', 'turn right', 'move forward', 'turn right', 'turn left', 'turn right', 'move forward', 'turn left', 'turn right', 'move forward']
+elif choose_policy == 'LLM_1':
+    #LLM policy 1
+    ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn left', 'turn right', 'turn right', 'move forward', 'move forward']
+elif choose_policy == 'LLM_2':
+    #LLM policy 2
+    ACTIONS_TO_TAKE = ['turn right', 'pickup', 'move forward', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward']
+elif choose_policy == 'LLM_3':
+    #LLM policy 3
+    ACTIONS_TO_TAKE = ['turn left', 'turn right', 'turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn left', 'turn right', 'turn right', 'move forward', 'move forward']
+elif choose_policy == 'LLM_4':
+    #LLM policy 4
+    ACTIONS_TO_TAKE = ['turn left', 'turn right', 'turn left', 'turn right', 'turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward']
+elif choose_policy == 'LLM_5':
+    #LLM policy 5
+    ACTIONS_TO_TAKE = ['turn left', 'turn right', 'turn right', 'pickup', 'move forward', 'move forward', 'turn right', 'toggle', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward']
+
+
 ACTION_DICT = {
     0: 'turn left', 
     1: 'turn right', 
@@ -24,7 +47,7 @@ ACTION_DICT = {
     6: 'done'}
 ACTIONS_ENV = [list(ACTION_DICT.keys())[list(ACTION_DICT.values()).index(action)] for action in ACTIONS_TO_TAKE]
 
-image_save_dir = policy_save_dir = f"./storage/visualization/DoorKey_manual/seed_{SEED}_suboptimal2/"
+image_save_dir = policy_save_dir = f"./storage/visualization/DoorKey_GuidePolicy/seed_{SEED}_{choose_policy}/"
 if not os.path.exists(image_save_dir):
     os.makedirs(image_save_dir)
     

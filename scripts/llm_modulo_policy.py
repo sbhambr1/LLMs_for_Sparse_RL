@@ -35,7 +35,7 @@ DIRECTION_DICT = {
     'down': 1,
     'left': 2,
     'up': 3}
-NUM_AGENT_STEPS = 20
+NUM_AGENT_STEPS = 30
 STOCHASTIC = False
 
 llm_modulo = LLM_Modulo(env_name, seed=0)
@@ -171,16 +171,15 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         if llm_model != "None":
             FEASIBLE = False
             tried_actions = []
-            for j in range(5):
-                # if i == 0 and j == 0:
-                #     prompt = init_prompt
-                # else:
-                if len(tried_actions) == 0: # move to next step: try - if FEASIBLE or len(tried_actions) == 0
-                    # additional text desc when agent has picked up the key or opened the door should be added here as this ensures a prompt for a new (state, action)
+            for j in range(10):
+                if len(tried_actions) == 0: # move to next step
                     prompt = get_step_prompt(obs, add_text_desc)
+                    print('-----------------')
+                    print('[STEP PROMPTING]---->')
                 else:
                     prompt = get_prompt_with_backprompt(obs, backprompt, tried_actions)
-                print('-----------------')
+                    print('------[BACK PROMPTING]---->')
+                
                 print(prompt)
                 response = conv.llm_actor(prompt, stop=["\n"]).lower()
                 backprompt, FEASIBLE = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs)
@@ -201,6 +200,7 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         print('LLM Response:', response)
         obs, reward, done, _, _ = env.step(action)
         if done:
+            print('[LLM ACTIONS:] ---> ',llm_actions)
             return reward
     return 0
 

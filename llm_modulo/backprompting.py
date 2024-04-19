@@ -23,7 +23,7 @@ class LLM_Modulo:
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
-        if current_llm_action in feasible_actions[0]:
+        if current_llm_action in feasible_actions:
             FEASIBLE=True
             return backprompt, FEASIBLE
         else:

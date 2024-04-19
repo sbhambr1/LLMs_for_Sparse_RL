@@ -76,7 +76,7 @@ class DoorKey5x5(EnvironmentConstraints):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
                                 break
-                        actions.append(['open door'])
+                        actions.append('open door')
                     elif agent_dir == DIRECTION_DICT['down']: # agent is facing down (wrong direction)
                         actions.append('move forward')
                 elif agent_pos[1]==2:

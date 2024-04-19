@@ -50,16 +50,19 @@ def get_initial_prompt(observation):
         
         return initial_prompt
     
-def get_step_prompt(obs):
+def get_step_prompt(obs, add_text_desc):
+    TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
     OBS_DESC = convert_obs_to_grid_text(obs)
     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
-    step_prompt = f"{OBS_DESC}\n{QUERY_DESC}\n"
+    step_prompt = f"{TASK_DESC}\n{add_text_desc}\n{OBS_DESC}\n{QUERY_DESC}\n"
     return step_prompt
 
-def get_prompt_with_backprompt(obs, backprompt):
+def get_prompt_with_backprompt(obs, backprompt, tried_actions):
+    TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
     OBS_DESC = convert_obs_to_grid_text(obs)
     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
-    prompt_with_backprompt = f"{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n"
+    RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
+    prompt_with_backprompt = f"{TASK_DESC}\n{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n{RETRY}\n"
     return prompt_with_backprompt
 
 def _convert_pos_to_3x3(pos):
@@ -134,7 +137,26 @@ def convert_obs_to_grid_text(observation):
     text_obs = f"{GRID_HEADER}\n{grid_text}\n{AGENT_DIR}"
     return text_obs
 
-
+def get_desc_obs(feasible_action):
+    """
+    Returns additional text description of information when agent has picked up the key or opened the door.
+    Input: observation, feasible_action
+    Output: additional text description
+    """
+    if feasible_action == 'turn left':
+        return 'You have turned left.'
+    elif feasible_action == 'turn right':
+        return 'You have turned right.'
+    elif feasible_action == 'move forward':
+        return 'You have moved forward.' 
+    elif feasible_action == 'pickup key':
+        return 'You have picked up the key.'
+    elif feasible_action == 'open door':
+        return 'You have opened the door.'
+     
+    else:
+        return ''
+    
 def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False):
     if to_print:
         if grid_text:
@@ -144,30 +166,34 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         
     llm_actions = []
     all_actions = []
+    add_text_desc = ''
     for i in range(NUM_AGENT_STEPS):
         if llm_model != "None":
             FEASIBLE = False
+            tried_actions = []
             for j in range(5):
-                if i == 0 and j == 0:
-                    prompt = init_prompt
+                # if i == 0 and j == 0:
+                #     prompt = init_prompt
+                # else:
+                if len(tried_actions) == 0: # move to next step: try - if FEASIBLE or len(tried_actions) == 0
+                    # additional text desc when agent has picked up the key or opened the door should be added here as this ensures a prompt for a new (state, action)
+                    prompt = get_step_prompt(obs, add_text_desc)
                 else:
-                    if backprompt == '':
-                        prompt = get_step_prompt(obs)
-                    else:
-                        prompt = get_prompt_with_backprompt(obs, backprompt)
+                    prompt = get_prompt_with_backprompt(obs, backprompt, tried_actions)
+                print('-----------------')
                 print(prompt)
                 response = conv.llm_actor(prompt, stop=["\n"]).lower()
-                backprompt = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs)
-                if backprompt == '':
-                    FEASIBLE = True
-                    llm_actions.append(response)
-                all_actions.append(response)
+                backprompt, FEASIBLE = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs)
                 if FEASIBLE:
+                    llm_actions.append(response)
+                    add_text_desc = get_desc_obs(response)
                     break
-            if not FEASIBLE:
+                else:
+                    tried_actions.append(response)
+                all_actions.append(response)
+            if not FEASIBLE: # LLM could not find a feasible action in 5 (j) attempts
                 print('LLM could not find a feasible action.')
                 break
-            llm_actions.append(response)
             action = [k for k, v in ACTION_DICT.items() if v in response][0]
         else:
             action = env.action_space.sample()

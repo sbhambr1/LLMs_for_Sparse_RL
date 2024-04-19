@@ -1,4 +1,5 @@
 from llm_modulo.env_constraints import *
+import random
 
 class LLM_Modulo:
     
@@ -19,9 +20,12 @@ class LLM_Modulo:
         agent_pos, agent_dir = self.env_critics.get_agent_pos(state)
         current_llm_action = llm_response
         feasible_actions = self.env_critics.feasible_actions(agent_pos, agent_dir, llm_actions)
+        random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
+        FEASIBLE=False
         if current_llm_action in feasible_actions[0]:
-            return backprompt
+            FEASIBLE=True
+            return backprompt, FEASIBLE
         else:
             if current_llm_action == 'move forward':
                 backprompt = "Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action."
@@ -35,8 +39,10 @@ class LLM_Modulo:
                     backprompt = "Information: You have already opened the door. Please choose another action."
                 else:
                     backprompt = "Information: You cannot 'open door' in this state as you are not facing the door. Please choose another action."
-            
-        return backprompt
+                            
+        feasible = f'The following actions are feasible in this state: {feasible_actions}.'
+        backprompt += feasible
+        return backprompt, FEASIBLE
                 
     
     

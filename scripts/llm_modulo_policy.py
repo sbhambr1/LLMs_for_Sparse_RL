@@ -1,6 +1,7 @@
 import numpy as np
 import argparse
 import os
+import sys
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper
 from utils.conversation import Conversation
@@ -12,10 +13,12 @@ parser = argparse.ArgumentParser()
 
 parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
 parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
+parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
 parser.add_argument("--llm-model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
 parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")
 parser.add_argument("--give_feasible_actions", default=True, help="Whether to give feasible actions in backprompt")
 parser.add_argument("--give_tried_actions", default=True, help="Whether to give tried actions in backprompt")
+parser.add_argument("--additional_expt_info", default="", help="Additional information for experiment")
 
 ACTION_DICT = {
     0: 'left', 
@@ -44,8 +47,6 @@ DIRECTION_DICT = {
     'left': 2,
     'up': 3}
 NUM_AGENT_STEPS = 30
-
-
 
 def get_initial_prompt(observation):
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
@@ -83,6 +84,7 @@ def _convert_pos_to_3x3(pos):
 
 def convert_obs_to_text(observation):
     # Convert observation to text
+    # this has bugs due to the way the observation is structured (rows and cols are inverse in the observation array)
     obs_array = observation['image']
     
     walls = []
@@ -170,7 +172,7 @@ def get_desc_obs(feasible_action):
     else:
         return ''
     
-def get_llm_policy(env, env_name, seed, llm_model, llm_modulo, conv, init_prompt, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True):
+def get_llm_policy(env, llm_model, llm_modulo, conv, init_prompt, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True, save_dir=None):
     if to_print:
         if grid_text:
             print(convert_obs_to_grid_text(obs))
@@ -201,10 +203,11 @@ def get_llm_policy(env, env_name, seed, llm_model, llm_modulo, conv, init_prompt
                     llm_actions.append(response)
                     if give_add_text_desc:
                         add_text_desc = get_desc_obs(response)
-                    all_actions_formatted.append(tried_actions)
+                    
                     break
                 else:
                     tried_actions.append(response)
+                all_actions_formatted.append(tried_actions)
                 all_actions.append(response)
             if not FEASIBLE: # LLM could not find a feasible action in 10 (j) attempts
                 print('LLM could not find a feasible action.')
@@ -218,7 +221,7 @@ def get_llm_policy(env, env_name, seed, llm_model, llm_modulo, conv, init_prompt
         if done:
             print('[LLM ACTIONS:] ---> ',llm_actions)
             
-            policy_save_path = f'./llm_modulo_results/{env_name}/seed_{seed}/llm_policy.txt'
+            policy_save_path = f'{save_dir}/llm_policy.txt'
             if not os.path.exists(os.path.dirname(policy_save_path)):
                 os.makedirs(os.path.dirname(policy_save_path))
             with open(policy_save_path, 'w') as f:
@@ -226,11 +229,11 @@ def get_llm_policy(env, env_name, seed, llm_model, llm_modulo, conv, init_prompt
                     f.write("%s\n" % action)
             print('LLM policy has been saved to:', policy_save_path)
             
-            all_tried_actions_save_path = f'./llm_modulo_results/{env_name}/seed_{seed}/all_tried_actions.txt'
+            all_tried_actions_save_path = f'{save_dir}/all_tried_actions.txt'
             if not os.path.exists(os.path.dirname(all_tried_actions_save_path)):
                 os.makedirs(os.path.dirname(all_tried_actions_save_path))
             with open(all_tried_actions_save_path, 'w') as f:
-                for actions in all_actions_formatted:
+                for actions in all_actions:
                     f.write("%s\n" % actions)
             print('All actions tried by the LLM have been saved to:', all_tried_actions_save_path)
             return reward
@@ -240,14 +243,25 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    if args.additional_expt_info == '':
+        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/variation_{args.variation}'
+    else:
+        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
+    if not os.path.exists(save_dir):
+        os.makedirs(save_dir)
+    log_file = open(f'{save_dir}/log.txt', 'w')
+    sys.stdout = log_file
+    
     env = gym.make(args.env)
     env = SymbolicObsWrapper(env)
     conv = Conversation(args.llm_model)
     obs, _ = env.reset(seed=args.seed)
     llm_modulo = LLM_Modulo(args.env, seed=args.seed)
     init_prompt = get_initial_prompt(obs) # not using this for now (step prompt is used instead with TASK_DESC)
-    total_reward = get_llm_policy(env=env, env_name=args.env, seed=args.seed, llm_model=args.llm_model, llm_modulo=llm_modulo, conv=conv, init_prompt=init_prompt, obs=obs, to_print=False, grid_text=True, add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions)
+    total_reward = get_llm_policy(env=env, llm_model=args.llm_model, llm_modulo=llm_modulo, conv=conv, init_prompt=init_prompt, obs=obs, to_print=False, grid_text=True, give_add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions, save_dir=save_dir)
     
     print('-----------------')
     print(f"Total reward: {total_reward}")
+    
+    log_file.close()
     

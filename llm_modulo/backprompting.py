@@ -9,7 +9,7 @@ class LLM_Modulo:
         else:
             raise NotImplementedError
         
-    def action_critic(self, llm_actions, llm_response, state):
+    def action_critic(self, llm_actions, llm_response, state, give_feasible_actions=True):
         """
         Returns backprompt if actions is feasible in the environment in the current state.
         Input: llm_actions: actions taken by LLM (only actions that have been successfully executed in the environment so far) (list), 
@@ -40,8 +40,10 @@ class LLM_Modulo:
                 else:
                     backprompt = "Information: You cannot 'open door' in this state as you are not facing the door. Please choose another action."
                             
-        feasible = f'The following actions are feasible in this state: {feasible_actions}.'
-        backprompt += feasible
+        if give_feasible_actions:                            
+            feasible = f'The following actions are feasible in this state: {feasible_actions}.'
+            backprompt += feasible
+            
         return backprompt, FEASIBLE
                 
     

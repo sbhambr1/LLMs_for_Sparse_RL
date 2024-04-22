@@ -54,15 +54,21 @@ def get_step_prompt(obs, add_text_desc):
     TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
     OBS_DESC = convert_obs_to_grid_text(obs)
     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
-    step_prompt = f"{TASK_DESC}\n{add_text_desc}\n{OBS_DESC}\n{QUERY_DESC}\n"
+    if add_text_desc != '':
+        step_prompt = f"{TASK_DESC}\n{add_text_desc}\n{OBS_DESC}\n{QUERY_DESC}\n"
+    else:
+        step_prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
     return step_prompt
 
-def get_prompt_with_backprompt(obs, backprompt, tried_actions):
+def get_prompt_with_backprompt(obs, backprompt, tried_actions, give_tried_actions=True):
     TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
     OBS_DESC = convert_obs_to_grid_text(obs)
     QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
     RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
-    prompt_with_backprompt = f"{TASK_DESC}\n{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n{RETRY}\n"
+    if give_tried_actions:
+        prompt_with_backprompt = f"{TASK_DESC}\n{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n{RETRY}\n"
+    else:
+        prompt_with_backprompt = f"{TASK_DESC}\n{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n"
     return prompt_with_backprompt
 
 def _convert_pos_to_3x3(pos):
@@ -157,7 +163,7 @@ def get_desc_obs(feasible_action):
     else:
         return ''
     
-def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False):
+def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True):
     if to_print:
         if grid_text:
             print(convert_obs_to_grid_text(obs))
@@ -177,15 +183,16 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
                     print('-----------------')
                     print('[STEP PROMPTING]---->')
                 else:
-                    prompt = get_prompt_with_backprompt(obs, backprompt, tried_actions)
+                    prompt = get_prompt_with_backprompt(obs, backprompt, tried_actions, give_tried_actions=give_tried_actions)
                     print('------[BACK PROMPTING]---->')
                 
                 print(prompt)
                 response = conv.llm_actor(prompt, stop=["\n"]).lower()
-                backprompt, FEASIBLE = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs)
+                backprompt, FEASIBLE = llm_modulo.action_critic(llm_actions=llm_actions, llm_response=response, state=obs, give_feasible_actions=give_feasible_actions)
                 if FEASIBLE:
                     llm_actions.append(response)
-                    add_text_desc = get_desc_obs(response)
+                    if give_add_text_desc:
+                        add_text_desc = get_desc_obs(response)
                     break
                 else:
                     tried_actions.append(response)
@@ -210,8 +217,8 @@ def main():
     conv = Conversation(llm_model)
     obs, _ = env.reset(seed=SEED)
     
-    init_prompt = get_initial_prompt(obs)
-    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=False, grid_text=True)
+    init_prompt = get_initial_prompt(obs) # not using this for now (step prompt is used instead with TASK_DESC)
+    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=False, grid_text=True, add_text_desc=True, give_feasible_actions=True, give_tried_actions=True)
     print('-----------------')
     print(f"Total reward: {total_reward}")
     

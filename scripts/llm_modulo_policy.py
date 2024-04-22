@@ -1,14 +1,22 @@
 import numpy as np
+import argparse
+import os
 import gymnasium as gym
-from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
+from minigrid.wrappers import SymbolicObsWrapper
 from utils.conversation import Conversation
 from llm_modulo.backprompting import *
 import warnings
 warnings.filterwarnings("ignore")
 
-env_name = "MiniGrid-DoorKey-5x5-v0"
-llm_model = "gpt-3.5-turbo" # "gpt-3.5-turbo", "None" for testing
-SEED = 0
+parser = argparse.ArgumentParser()
+
+parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
+parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
+parser.add_argument("--llm-model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
+parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")
+parser.add_argument("--give_feasible_actions", default=True, help="Whether to give feasible actions in backprompt")
+parser.add_argument("--give_tried_actions", default=True, help="Whether to give tried actions in backprompt")
+
 ACTION_DICT = {
     0: 'left', 
     1: 'right', 
@@ -36,9 +44,8 @@ DIRECTION_DICT = {
     'left': 2,
     'up': 3}
 NUM_AGENT_STEPS = 30
-STOCHASTIC = False
 
-llm_modulo = LLM_Modulo(env_name, seed=0)
+
 
 def get_initial_prompt(observation):
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.\n"
@@ -163,7 +170,7 @@ def get_desc_obs(feasible_action):
     else:
         return ''
     
-def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True):
+def get_llm_policy(env, env_name, seed, llm_model, llm_modulo, conv, init_prompt, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True):
     if to_print:
         if grid_text:
             print(convert_obs_to_grid_text(obs))
@@ -172,6 +179,7 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         
     llm_actions = []
     all_actions = []
+    all_actions_formatted = []
     add_text_desc = ''
     for i in range(NUM_AGENT_STEPS):
         if llm_model != "None":
@@ -193,11 +201,12 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
                     llm_actions.append(response)
                     if give_add_text_desc:
                         add_text_desc = get_desc_obs(response)
+                    all_actions_formatted.append(tried_actions)
                     break
                 else:
                     tried_actions.append(response)
                 all_actions.append(response)
-            if not FEASIBLE: # LLM could not find a feasible action in 5 (j) attempts
+            if not FEASIBLE: # LLM could not find a feasible action in 10 (j) attempts
                 print('LLM could not find a feasible action.')
                 break
             action = [k for k, v in ACTION_DICT.items() if v in response][0]
@@ -208,19 +217,37 @@ def get_llm_policy(env, conv, init_prompt, obs='', to_print=True, grid_text=Fals
         obs, reward, done, _, _ = env.step(action)
         if done:
             print('[LLM ACTIONS:] ---> ',llm_actions)
+            
+            policy_save_path = f'./llm_modulo_results/{env_name}/seed_{seed}/llm_policy.txt'
+            if not os.path.exists(os.path.dirname(policy_save_path)):
+                os.makedirs(os.path.dirname(policy_save_path))
+            with open(policy_save_path, 'w') as f:
+                for action in llm_actions:
+                    f.write("%s\n" % action)
+            print('LLM policy has been saved to:', policy_save_path)
+            
+            all_tried_actions_save_path = f'./llm_modulo_results/{env_name}/seed_{seed}/all_tried_actions.txt'
+            if not os.path.exists(os.path.dirname(all_tried_actions_save_path)):
+                os.makedirs(os.path.dirname(all_tried_actions_save_path))
+            with open(all_tried_actions_save_path, 'w') as f:
+                for actions in all_actions_formatted:
+                    f.write("%s\n" % actions)
+            print('All actions tried by the LLM have been saved to:', all_tried_actions_save_path)
             return reward
     return 0
 
-def main():
-    env = gym.make("MiniGrid-DoorKey-5x5-v0")
-    env = SymbolicObsWrapper(env)
-    conv = Conversation(llm_model)
-    obs, _ = env.reset(seed=SEED)
+if __name__ == "__main__":
     
+    args = parser.parse_args()
+    
+    env = gym.make(args.env)
+    env = SymbolicObsWrapper(env)
+    conv = Conversation(args.llm_model)
+    obs, _ = env.reset(seed=args.seed)
+    llm_modulo = LLM_Modulo(args.env, seed=args.seed)
     init_prompt = get_initial_prompt(obs) # not using this for now (step prompt is used instead with TASK_DESC)
-    total_reward = get_llm_policy(env, conv, init_prompt, obs, to_print=False, grid_text=True, add_text_desc=True, give_feasible_actions=True, give_tried_actions=True)
+    total_reward = get_llm_policy(env=env, env_name=args.env, seed=args.seed, llm_model=args.llm_model, llm_modulo=llm_modulo, conv=conv, init_prompt=init_prompt, obs=obs, to_print=False, grid_text=True, add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions)
+    
     print('-----------------')
     print(f"Total reward: {total_reward}")
     
-if __name__ == "__main__":
-    main()

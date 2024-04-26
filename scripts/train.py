@@ -38,6 +38,8 @@ parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
 parser.add_argument("--llm-rs", default='', type=str,
                     help="pkl file path to llm plan for reward shaping")
+parser.add_argument("--symbolic", default=False, action="store_true",
+                    help="use symbolic observation (default: False)")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -105,7 +107,7 @@ if __name__ == "__main__":
 
     envs = []
     for i in range(args.procs):
-        envs.append(utils.make_env(env_key=args.env, seed=args.seed, stochastic=args.stochastic))
+        envs.append(utils.make_env(env_key=args.env, seed=args.seed, stochastic=args.stochastic, symbolic=args.symbolic))
     txt_logger.info("Environments loaded\n")
 
     # Load training status
@@ -125,7 +127,7 @@ if __name__ == "__main__":
 
     # Load model
 
-    acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text)
+    acmodel = ACModel(obs_space, envs[0].action_space, args.mem, args.text, args.symbolic)
     if "model_state" in status:
         acmodel.load_state_dict(status["model_state"])
     acmodel.to(device)
@@ -137,6 +139,8 @@ if __name__ == "__main__":
         with open(args.llm_rs, 'rb') as f:
             llm_rs = pickle.load(f)
         txt_logger.info("LLM reward shaping plan loaded.\n")
+    else:
+        llm_rs = []
 
     # Load algo
 

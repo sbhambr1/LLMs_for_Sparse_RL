@@ -108,5 +108,82 @@ class DoorKey5x5(EnvironmentConstraints):
         
             return actions
         
+        elif self.seed == 1:
+            if agent_pos[0]==1:
+                if agent_pos[1]==1 or agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==2:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+                    elif agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'open door':
+                                actions.append('move forward')
+                                break
+                        actions.append('open door')
+                    elif agent_dir == DIRECTION_DICT['down']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['left'] or agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==3:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+                        
+            else:
+                raise ValueError("Agent position not recognized.")
+        
+            return actions
+        
+        elif self.seed == 2:
+            if agent_pos[0]==1:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'open door':
+                                actions.append('move forward')
+                                break
+                        actions.append('open door')
+                    elif agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+            elif agent_pos[0]==2:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+                    elif agent_dir == DIRECTION_DICT['down']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==3:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+            
+            else:
+                raise ValueError("Agent position not recognized.")
+        
+            return actions
+        
         else:
             raise NotImplementedError("Seed not implemented.")

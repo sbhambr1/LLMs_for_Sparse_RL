@@ -11,6 +11,10 @@ python3 -m venv venv
 pip install -r requirements.txt
 ```
 
+### Tensorboard Aggregator (Optional)
+
+To use the tensorboard aggregator, clone [this](https://github.com/Spenhouet/tensorboard-aggregator) repository and install the requirements.
+
 ## Usage
 
 ### Baseline Experiments

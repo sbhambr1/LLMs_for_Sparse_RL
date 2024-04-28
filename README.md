@@ -4,6 +4,8 @@ This repository contains the code for the paper "Reward Shaping using Large Lang
 
 ## Installation
 
+@TODO: Update requirements.txt
+
 ```bash
 git clone https://github.com/sbhambr1/llm_modulo_sparse_rl
 cd llm_modulo_sparse_rl

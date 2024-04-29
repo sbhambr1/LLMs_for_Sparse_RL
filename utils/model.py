@@ -27,19 +27,19 @@ class ACModel(nn.Module, RecurrentACModel):
         if self.use_symbolic:
             obs_height, obs_width, obs_channels = obs_space['image'][0], obs_space['image'][1], obs_space['image'][2]
             self.symbolic_conv = nn.Sequential(
-                nn.Conv2d(obs_channels, 32, kernel_size=2, stride=1, padding=1),
+                nn.Conv2d(3, 16, (1,1)),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Conv2d(32, 64, kernel_size=2, stride=1, padding=1),
+                nn.Conv2d(16, 32, (1,1)),
                 nn.ReLU(),
                 nn.MaxPool2d(kernel_size=2, stride=2),
-                nn.Conv2d(64, 64, kernel_size=2, stride=1, padding=1),
+                nn.Conv2d(32, 64, (1,1)),
                 nn.ReLU(),
-                nn.MaxPool2d(kernel_size=2, stride=1),
+                # nn.MaxPool2d(kernel_size=2, stride=1),
             )
             n = obs_space["image"][0]
             m = obs_space["image"][1]
-            self.image_embedding_size = (n-3)*(m-3)*64
+            self.image_embedding_size = ((n-1)//2-1)*((m-1)//2-1)*64
         else:
             # Define image embedding
             self.image_conv = nn.Sequential(

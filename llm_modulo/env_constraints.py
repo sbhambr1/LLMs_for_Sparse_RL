@@ -38,12 +38,7 @@ class EnvironmentConstraints:
     def __init__(self, env, seed):
         self.env = env
         self.seed = seed
-        
-class DoorKey5x5(EnvironmentConstraints):
-    
-    def __init__(self, env, seed):
-        super().__init__(env, seed)
-        
+       
     def get_agent_pos(self, observation):
         """
         Returns the agent position from the observation.
@@ -58,12 +53,17 @@ class DoorKey5x5(EnvironmentConstraints):
                     agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
                     return agent_pos, agent_dir
         
-        raise ValueError("Agent not found in the observation.")
+        raise ValueError("Agent not found in the observation.") 
+        
+class DoorKey5x5(EnvironmentConstraints):
+    
+    def __init__(self, env, seed):
+        super().__init__(env, seed)
         
     def feasible_actions(self, agent_pos, agent_dir, action_history):
         """
         Returns the feasible actions in the current state.
-        Input: agent_pos (x,y) from symbolic obs, agent_dir
+        Input: agent_pos (x,y) from symbolic obs, agent_dir, valid actions taken by the agent
         Output: list of actions
         """       
         actions = ['turn left', 'turn right'] # actions that are always valid
@@ -187,3 +187,49 @@ class DoorKey5x5(EnvironmentConstraints):
         
         else:
             raise NotImplementedError("Seed not implemented.")
+        
+    
+class EmptyRandom5x5(EnvironmentConstraints):
+    
+    def __init__(self, env, seed):
+        super().__init__(env, seed)
+        
+    def feasible_actions(self, agent_pos, agent_dir, action_history):
+        """
+        Returns the feasible actions in the current state.
+        Input: agent_pos (x,y) from symbolic obs, agent_dir, valid actions taken by the agent
+        Output: list of actions
+        (All seeds have the same constraints, as the agent's initial position is randomized but the goal location is fixed.)
+        """
+        actions = ['turn left', 'turn right'] # actions that are always valid
+        if agent_pos[0]==1:
+            if agent_pos[1]==1:
+                if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['down']:
+                    actions.append('move forward')
+            elif agent_pos[1]==2:
+                if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left'] or agent_dir == DIRECTION_DICT['down']:
+                    actions.append('move forward')
+            elif agent_pos[1]==3:
+                if agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
+                    actions.append('move forward')
+        elif agent_pos[0]==2:
+            if agent_pos[1]==1:
+                if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['down']:
+                    actions.append('move forward')
+            elif agent_pos[1]==2:
+                actions.append('move forward')
+            elif agent_pos[1]==3:
+                if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['left'] or agent_dir == DIRECTION_DICT['down']:
+                    actions.append('move forward')
+        elif agent_pos[0]==3:
+            if agent_pos[1]==1:
+                if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['right']:
+                    actions.append('move forward')
+            elif agent_pos[1]==2:
+                if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                    actions.append('move forward')
+        
+        else:
+            raise ValueError("Agent position not recognized.")
+        
+        return actions

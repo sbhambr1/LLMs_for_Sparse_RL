@@ -6,6 +6,12 @@ class LLM_Modulo:
     def __init__(self, env, seed):
         if env == 'MiniGrid-DoorKey-5x5-v0':
             self.env_critics = DoorKey5x5(env, seed)
+        elif env == 'MiniGrid-Empty-Random-5x5-v0':
+            self.env_critics = EmptyRandom5x5(env, seed)
+        elif env == 'MiniGrid-LavaGapS5-v0':
+            self.env_critics = LavaGapS5(env, seed)
+        elif env == 'MiniGrid-KeyCorridorS3R1-v0':
+            self.env_critics = KeyCorridorS3R1(env, seed)
         else:
             raise NotImplementedError
         

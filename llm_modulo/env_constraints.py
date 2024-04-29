@@ -292,3 +292,64 @@ class LavaGapS5(EnvironmentConstraints):
             raise NotImplementedError("Seed not implemented.")
         
         return actions
+    
+class KeyCorridorS3R1(EnvironmentConstraints):
+    
+    def __init__(self, env, seed):
+        super().__init__(env, seed)
+        
+    def feasible_actions(self, agent_pos, agent_dir, action_history):
+        """
+        Returns the feasible actions in the current state.
+        Input: agent_pos (x,y) from symbolic obs, agent_dir, valid actions taken by the agent
+        Output: list of actions
+        (All seeds have the same constraints, as the door and key colors are randomized but the goal location and configuration is fixed.)
+        """
+        actions = ['turn left', 'turn right'] # actions that are always valid
+        if agent_pos[0]==1:
+            if agent_pos[1]==1:
+                if agent_dir == DIRECTION_DICT['right']:
+                    actions.append('move forward')
+            elif agent_pos[1]==2:
+                if agent_dir == DIRECTION_DICT['right']:
+                    actions.append('move forward')
+                elif agent_dir == DIRECTION_DICT['left']:
+                    for j in range(len(action_history)):
+                        if action_history[j] == 'pickup key':
+                            actions.append('move forward')
+                            break
+                    actions.append('pickup key')
+            elif agent_pos[1]==3:
+                if agent_dir == DIRECTION_DICT['left']:
+                    for j in range(len(action_history)):
+                        if action_history[j] == 'open door':
+                            actions.append('move forward')
+                            break
+                    actions.append('open door')
+                elif agent_dir == DIRECTION_DICT['right']:
+                    for j in range(len(action_history)):
+                        if action_history[j] == 'pickup key':
+                            open_door_count = 0
+                            for k in range(j, len(action_history)):
+                                if action_history[k] == 'open door':
+                                    open_door_count += 1
+                            if open_door_count == 1:
+                                actions.append('open door')
+                            elif open_door_count == 2:
+                                actions.append('move forward')
+                            break
+            elif agent_pos[1]==4:
+                if agent_dir == DIRECTION_DICT['left'] or agent_dir == DIRECTION_DICT['right']:
+                    actions.append('move forward')
+        
+        else:
+            raise ValueError("Agent position not recognized.")
+        
+        return actions
+    
+class KeyCorridorS3R2(EnvironmentConstraints):
+    
+    def __init__(self, env, seed):
+        super().__init__(env, seed)
+        
+    

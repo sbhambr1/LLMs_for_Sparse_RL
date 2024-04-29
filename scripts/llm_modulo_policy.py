@@ -53,7 +53,7 @@ def get_llm_policy(env, llm_model, llm_modulo, env_prompter, conv, obs='', to_pr
                 if FEASIBLE:
                     llm_actions.append(response)
                     if give_add_text_desc:
-                        add_text_desc = get_desc_obs(response)
+                        add_text_desc = env_prompter.get_desc_obs(response)
                     
                     break
                 else:

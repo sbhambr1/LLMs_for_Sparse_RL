@@ -25,3 +25,6 @@ class MinigridPromptConstructor:
     
     def convert_obs_to_grid_text(self, observation):
         return self.prompt_constructor.convert_obs_to_grid_text(observation)
+
+    def get_desc_obs(self, feasible_action):
+        return self.prompt_constructor.get_desc_obs(feasible_action)

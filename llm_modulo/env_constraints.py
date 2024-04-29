@@ -346,10 +346,5 @@ class KeyCorridorS3R1(EnvironmentConstraints):
             raise ValueError("Agent position not recognized.")
         
         return actions
-    
-class KeyCorridorS3R2(EnvironmentConstraints):
-    
-    def __init__(self, env, seed):
-        super().__init__(env, seed)
         
     

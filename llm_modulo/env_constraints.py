@@ -47,8 +47,8 @@ class EnvironmentConstraints:
         """
         agent_obs = observation['image']
         agent_dir = observation['direction']
-        for i in range(1,6):
-            for j in range(3):
+        for i in range(5):
+            for j in range(5):
                 if agent_obs[i][j][2] == OBJECT_TO_IDX['agent']:
                     agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
                     return agent_pos, agent_dir
@@ -146,7 +146,7 @@ class DoorKey5x5(EnvironmentConstraints):
         
             return actions
         
-        elif self.seed == 2:
+        elif self.seed == 2 or self.seed == 3:
             if agent_pos[0]==1:
                 if agent_pos[1]==1:
                     if agent_dir == DIRECTION_DICT['right']:
@@ -174,6 +174,78 @@ class DoorKey5x5(EnvironmentConstraints):
                                 break
                         actions.append('pickup key')
                 elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==3:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+            
+            else:
+                raise ValueError("Agent position not recognized.")
+        
+            return actions
+        
+        elif self.seed == 4:
+            if agent_pos[0]==1:
+                if agent_pos[1]==1 or agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==2:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+                    elif agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'open door':
+                                actions.append('move forward')
+                                break
+                        actions.append('open door')
+                    elif agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['left'] or agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==3:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+                        
+            else:
+                raise ValueError("Agent position not recognized.")
+        
+            return actions
+        
+        elif self.seed == 5:
+            if agent_pos[0]==1:
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'open door':
+                                actions.append('move forward')
+                                break
+                        actions.append('open door')
+                    elif agent_dir == DIRECTION_DICT['down']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+            elif agent_pos[0]==2:
+                if agent_pos[1]==1 or agent_pos[1]==3:
                     if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
                         actions.append('move forward')
             elif agent_pos[0]==3:
@@ -298,6 +370,22 @@ class KeyCorridorS3R1(EnvironmentConstraints):
     def __init__(self, env, seed):
         super().__init__(env, seed)
         
+    def get_agent_pos(self, observation):
+        """
+        Returns the agent position from the observation.
+        Input: symbolic observation['image']
+        Output: agent position
+        """
+        agent_obs = observation['image']
+        agent_dir = observation['direction']
+        for i in range(1,6):
+            for j in range(3):
+                if agent_obs[i][j][2] == OBJECT_TO_IDX['agent']:
+                    agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
+                    return agent_pos, agent_dir
+        
+        raise ValueError("Agent not found in the observation.")
+    
     def feasible_actions(self, agent_pos, agent_dir, action_history):
         """
         Returns the feasible actions in the current state.

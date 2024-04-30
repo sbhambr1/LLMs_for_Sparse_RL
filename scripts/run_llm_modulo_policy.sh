@@ -7,7 +7,7 @@
 rundir = $(pwd)
 export PYTHONPATH=$PYTHONPATH:$rundir
 
-for seed in 1; do
+for seed in 3 4 5; do
     for variation in 1 2 3 4 5 6 7 8 9 10; do
         python scripts/llm_modulo_policy.py \
             --env "MiniGrid-DoorKey-5x5-v0" \

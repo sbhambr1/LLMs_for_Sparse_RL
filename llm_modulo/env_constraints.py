@@ -47,8 +47,8 @@ class EnvironmentConstraints:
         """
         agent_obs = observation['image']
         agent_dir = observation['direction']
-        for i in range(5):
-            for j in range(5):
+        for i in range(1,6):
+            for j in range(3):
                 if agent_obs[i][j][2] == OBJECT_TO_IDX['agent']:
                     agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
                     return agent_pos, agent_dir

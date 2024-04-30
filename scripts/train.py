@@ -11,7 +11,7 @@ from algorithms.algos.ppo import PPOAlgo
 import utils
 from utils import device
 from utils.model import ACModel
-
+import wandb
 
 # Parse arguments
 
@@ -22,8 +22,12 @@ parser.add_argument("--algo", required=True,
                     help="algorithm to use: a2c | ppo (REQUIRED)")
 parser.add_argument("--env", required=True,
                     help="name of the environment to train on (REQUIRED)")
+parser.add_argument("--env_config_seed", required=True, type=int, default=0,
+                    help="seed for environment configuration (REQUIRED)")
 parser.add_argument("--model", default=None,
                     help="name of the model (default: {ENV}_{ALGO}_{TIME})")
+# parser.add_argument("--expt_name", default=None, type=str,
+#                     help="name of the experiment (default: {ALGO}_{ENV}_{ENV_CONFIG_SEED})")
 parser.add_argument("--seed", type=int, default=0,
                     help="random seed (default: 0)")
 parser.add_argument("--log-interval", type=int, default=1,
@@ -38,6 +42,8 @@ parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
 parser.add_argument("--llm-rs", default='', type=str,
                     help="pkl file path to llm plan for reward shaping")
+parser.add_argument("--additional_info", default='Experiment', type=str,
+                    help="additional info to be added to model name for saving")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -70,7 +76,17 @@ parser.add_argument("--text", action="store_true", default=False,
                     help="add a GRU to the model to handle text input")
 
 if __name__ == "__main__":
+    
     args = parser.parse_args()
+    
+    args.model = args.model or f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/expt_seed_{args.seed}"
+    
+    wandb.init(project="neurips_24",
+               config=args,
+               name=f"{args.algo}_{args.env}_EnvSeed_{args.env_config_seed}_{args.additional_info}",
+               dir=f"./storage/{args.model}",
+               sync_tensorboard=True,
+               )
 
     args.mem = args.recurrence > 1
 
@@ -79,7 +95,7 @@ if __name__ == "__main__":
     date = datetime.datetime.now().strftime("%y-%m-%d-%H-%M-%S")
     default_model_name = f"{args.env}_{args.algo}_seed{args.seed}_{date}"
 
-    model_name = args.model or default_model_name
+    model_name = args.model
     model_dir = utils.get_model_dir(model_name)
 
     # Load loggers and Tensorboard writer
@@ -137,6 +153,8 @@ if __name__ == "__main__":
         with open(args.llm_rs, 'rb') as f:
             llm_rs = pickle.load(f)
         txt_logger.info("LLM reward shaping plan loaded.\n")
+    else:
+        llm_rs = []
 
     # Load algo
 
@@ -214,3 +232,5 @@ if __name__ == "__main__":
                 status["vocab"] = preprocess_obss.vocab.vocab
             utils.save_status(status, model_dir)
             txt_logger.info("Status saved")
+
+    wandb.finish()

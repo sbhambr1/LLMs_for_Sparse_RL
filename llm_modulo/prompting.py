@@ -11,6 +11,8 @@ class MinigridPromptConstructor:
             self.prompt_constructor = LavaGapS5Prompts(env, seed)
         elif env == 'MiniGrid-KeyCorridorS3R1-v0':
             self.prompt_constructor = KeyCorridorS3R1Prompts(env, seed)
+        elif env == 'MiniGrid-DoorKey-6x6-v0':
+            self.prompt_constructor = DoorKey6x6Prompts(env, seed)
         else:
             raise NotImplementedError 
         

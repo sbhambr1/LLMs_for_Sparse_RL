@@ -12,6 +12,8 @@ class LLM_Modulo:
             self.env_critics = LavaGapS5(env, seed)
         elif env == 'MiniGrid-KeyCorridorS3R1-v0':
             self.env_critics = KeyCorridorS3R1(env, seed)
+        elif env == 'MiniGrid-DoorKey-6x6-v0':
+            self.env_critics = DoorKey6x6(env, seed)
         else:
             raise NotImplementedError
         

@@ -260,8 +260,7 @@ class DoorKey5x5(EnvironmentConstraints):
         
         else:
             raise NotImplementedError("Seed not implemented.")
-        
-    
+            
 class EmptyRandom5x5(EnvironmentConstraints):
     
     def __init__(self, env, seed):
@@ -308,7 +307,6 @@ class EmptyRandom5x5(EnvironmentConstraints):
         
         return actions
     
-
 class LavaGapS5(EnvironmentConstraints):
     
     def __init__(self, env, seed):
@@ -435,4 +433,97 @@ class KeyCorridorS3R1(EnvironmentConstraints):
         
         return actions
         
+class DoorKey6x6(EnvironmentConstraints):
+    
+    def __init__(self, env, seed):
+        super().__init__(env, seed)
+        
+    def get_agent_pos(self, observation):
+        """
+        Returns the agent position from the observation.
+        Input: symbolic observation['image']
+        Output: agent position
+        """
+        agent_obs = observation['image']
+        agent_dir = observation['direction']
+        for i in range(6):
+            for j in range(6):
+                if agent_obs[i][j][2] == OBJECT_TO_IDX['agent']:
+                    agent_pos = (j, i) # (x,y) based on the image of the state in the observation                       
+                    return agent_pos, agent_dir
+        
+        raise ValueError("Agent not found in the observation.")
+    
+    def feasible_actions(self, agent_pos, agent_dir, action_history):
+        """
+        Returns the feasible actions in the current state.
+        Input: agent_pos (x,y) from symbolic obs, agent_dir, valid actions taken by the agent
+        Output: list of actions
+        """       
+        actions = ['turn left', 'turn right'] # actions that are always valid
+        
+        if self.seed == 0:
+            if agent_pos[0]==1: # agent is in the second row
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'open door':
+                                actions.append('move forward')
+                                break
+                        actions.append('open door')
+                    elif agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==3:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]==4:
+                    if agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+            elif agent_pos[0]==2: # agent is in the third row
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['right'] or agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['up']:
+                        actions.append('move forward')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                elif agent_pos[1]== 4:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==3: # agent is in the fourth row
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+                    elif agent_dir == DIRECTION_DICT['right']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+                elif agent_pos[1]==2 or agent_pos[1]==4:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['down']:
+                        actions.append('move forward')
+            elif agent_pos[0]==4: # agent is in the fifth row
+                if agent_pos[1]==1:
+                    if agent_dir == DIRECTION_DICT['up'] or agent_dir == DIRECTION_DICT['right']:
+                        actions.append('move forward')
+                elif agent_pos[1]==2:
+                    if agent_dir == DIRECTION_DICT['left']:
+                        actions.append('move forward')
+                    elif agent_dir == DIRECTION_DICT['up']:
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('move forward')
+                                break
+                        actions.append('pickup key')
+
+            else:
+                raise ValueError("Agent position not recognized.")
+        
+            return actions
+        
+        else:
+            raise NotImplementedError("Seed not implemented.")
     

@@ -79,7 +79,10 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    args.model = args.model or f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/expt_seed_{args.seed}"
+    args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/expt_seed_{args.seed}"
+    
+    if args.text:
+        args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/text/expt_seed_{args.seed}"
     
     wandb.init(project="neurips_24",
                config=args,

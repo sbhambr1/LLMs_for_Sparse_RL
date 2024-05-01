@@ -4,18 +4,14 @@ This repository contains the code for the paper "Reward Shaping using Large Lang
 
 ## Installation
 
-@TODO: Update requirements.txt
+@TODO: Update requirements.txt and requirements.yml file
 
 ```bash
 git clone https://github.com/sbhambr1/llm_modulo_sparse_rl
 cd llm_modulo_sparse_rl
-python3 -m venv venv
+conda create -n llm_modulo_sparse_rl python=3.10 --file requirements.yml
 pip install -r requirements.txt
 ```
-
-### Tensorboard Aggregator (Optional)
-
-To use the tensorboard aggregator, clone [this](https://github.com/Spenhouet/tensorboard-aggregator) repository and install the requirements.
 
 ## Usage
 

@@ -17,6 +17,7 @@ for env_cfg_seed in 0 2 3 5; do
             --frames 100000 \
             --stochastic \
             --text \
+            --llm_rs \
             --additional_info "LLMRewardShaping_Text"
     done
 done

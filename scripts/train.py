@@ -40,8 +40,8 @@ parser.add_argument("--frames", type=int, default=10**7,
                     help="number of frames of training (default: 1e7)")
 parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
-parser.add_argument("--llm-rs", default='', type=str,
-                    help="pkl file path to llm plan for reward shaping")
+parser.add_argument("--llm_rs", default=False, action="store_true",
+                    help="uses the stored llm-modulo policy for reward shaping")
 parser.add_argument("--additional_info", default='Experiment', type=str,
                     help="additional info to be added to model name for saving")
 
@@ -79,10 +79,15 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
+    # TODO: add vanilla as subdirectory to args.env
     args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/expt_seed_{args.seed}"
+    
+    if args.llm_rs:
+        args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/reward_shaping/expt_seed_{args.seed}"
     
     if args.text:
         args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/text/expt_seed_{args.seed}"
+            
     
     wandb.init(project="neurips_24",
                config=args,
@@ -153,22 +158,23 @@ if __name__ == "__main__":
     
     # load llm reward shaping plan
     if args.llm_rs:
-        with open(args.llm_rs, 'rb') as f:
-            llm_rs = pickle.load(f)
-        txt_logger.info("LLM reward shaping plan loaded.\n")
+        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_1/lm_modulo_policy.pkl"
+        with open(llm_rs_file, 'rb') as f:
+            llm_rs_policy = pickle.load(f)
+        txt_logger.info(f"LLM reward shaping plan loaded from {llm_rs_file}.\n")
     else:
-        llm_rs = []
+        llm_rs_policy = []
 
     # Load algo
 
     if args.algo == "a2c":
         algo = A2CAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_alpha, args.optim_eps, preprocess_obss, llm_rs)
+                                args.optim_alpha, args.optim_eps, preprocess_obss, llm_rs_policy)
     elif args.algo == "ppo":
         algo = PPOAlgo(envs, acmodel, device, args.frames_per_proc, args.discount, args.lr, args.gae_lambda,
                                 args.entropy_coef, args.value_loss_coef, args.max_grad_norm, args.recurrence,
-                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, llm_rs)
+                                args.optim_eps, args.clip_eps, args.epochs, args.batch_size, preprocess_obss, llm_rs_policy)
     else:
         raise ValueError("Incorrect algorithm name: {}".format(args.algo))
 

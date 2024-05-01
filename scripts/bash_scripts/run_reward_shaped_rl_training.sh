@@ -16,6 +16,7 @@ for env_cfg_seed in 0 2 3 5; do
             --save-interval 10 \
             --frames 100000 \
             --stochastic \
+            --llm_rs \
             --additional_info "LLMRewardShaping"
     done
 done

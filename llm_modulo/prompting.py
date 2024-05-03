@@ -16,11 +16,11 @@ class MinigridPromptConstructor:
         else:
             raise NotImplementedError 
         
-    def get_step_prompt(self, obs, add_text_desc):
-        return self.prompt_constructor.get_step_prompt(obs, add_text_desc)
+    def get_step_prompt(self, obs, add_text_desc, vision):
+        return self.prompt_constructor.get_step_prompt(obs, add_text_desc, vision)
     
-    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True):
-        return self.prompt_constructor.get_prompt_with_backprompt(obs, backprompt, tried_actions, give_tried_actions)
+    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, vision, give_tried_actions=True):
+        return self.prompt_constructor.get_prompt_with_backprompt(obs, backprompt, tried_actions, vision, give_tried_actions)
 
     def convert_obs_to_text(self, observation):
         return self.prompt_constructor.convert_obs_to_text(observation)

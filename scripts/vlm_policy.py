@@ -8,12 +8,17 @@ from openai import OpenAI
 import requests
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper, StochasticActionWrapper
+import os
+import sys
+sys.path.insert(0,os.getcwd())
 from utils.conversation import Conversation
 import warnings
 warnings.filterwarnings("ignore")
 
 
-API_KEY=os.environ.get("OPENAI_API_KEY", "<your OpenAI API key if not set as env var>")
+# API_KEY=os.environ.get("OPENAI_API_KEY", "<your OpenAI API key if not set as env var>")
+key_file = open(os.getcwd()+'key.txt', 'r')
+API_KEY = key_file.readline().rstrip()
 
 env_name = "MiniGrid-DoorKey-5x5-v0"
 llm_model = "gpt-4-vision-preview" # "gpt-4-vision-preview", "None" for testing
@@ -84,7 +89,7 @@ def get_vlm_response(prompt, img, model):
 def get_prompt():
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction."
         OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the key by the yellow key, the door by the yellow door, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing."
-        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'. Note that 'turn left' and 'turn right' actions will turn the direction of the red arrow (agent). Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
+        QUERY_DESC = "What is the next action that you should take? Only choose from the list of available actions. The available actions are: ['turn left', 'turn right', 'move forward', 'pickup key', 'open door']. Note that 'turn left' and 'turn right' actions will turn the direction of the red arrow (you). Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
         prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         return prompt
     

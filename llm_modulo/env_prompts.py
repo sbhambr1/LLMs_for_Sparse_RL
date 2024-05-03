@@ -161,9 +161,12 @@ class EmptyRandom5x5Prompts(EnvPrompts):
     def __init__(self, env, seed):
         super().__init__(env, seed)
         
-    def get_step_prompt(self, obs, add_text_desc):
+    def get_step_prompt(self, obs, add_text_desc, vision=False):
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.\n"
-        OBS_DESC = self.convert_obs_to_grid_text(obs)
+        if vision:
+            OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing."
+        else:
+            OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
         if add_text_desc != '':
             step_prompt = f"{TASK_DESC}\n{add_text_desc}\n{OBS_DESC}\n{QUERY_DESC}\n"
@@ -171,9 +174,12 @@ class EmptyRandom5x5Prompts(EnvPrompts):
             step_prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         return step_prompt
 
-    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True):
+    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True, vision=False):
         TASK_DESC = "You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.\n"
-        OBS_DESC = self.convert_obs_to_grid_text(obs)
+        if vision:
+            OBS_DESC = "The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing."
+        else:
+            OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response."
         RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
         if give_tried_actions:

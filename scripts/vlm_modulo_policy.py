@@ -17,13 +17,15 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-key_file = open(os.getcwd()+'key.txt', 'r')
+key_file = open(os.getcwd()+'/key.txt', 'r')
 API_KEY = key_file.readline().rstrip()
 
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
+# default = "MiniGrid-DoorKey-5x5-v0"
+
+parser.add_argument("--env", default="MiniGrid-Empty-Random-5x5-v0", help="name of the environment to get LLM policy for")
 parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
 parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
 parser.add_argument("--vlm_model", default="gpt-4-vision-preview", help="VLM model to use for policy generation")
@@ -82,7 +84,7 @@ def get_vlm_response(prompt, img, model):
 
 def get_vlm_policy(env, vlm_model, llm_modulo, env_prompter, to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True, save_dir=None, num_agent_steps=30, num_backprompt_steps=10):
     # init
-    image_save_dir = f"./storage/visualization/DoorKey_VLM_seed_{args.seed}/"
+    image_save_dir = f"./storage/visualization/{args.env}_VLM_seed_{args.seed}/"
     if not os.path.exists(image_save_dir):
         os.makedirs(image_save_dir)
 
@@ -115,6 +117,7 @@ def get_vlm_policy(env, vlm_model, llm_modulo, env_prompter, to_print=True, grid
 
                 print(prompt)
                 response = get_vlm_response(prompt, vlm_input_img, vlm_model).lower()
+                print(response)
                 backprompt, FEASIBLE = llm_modulo.action_critic(llm_actions=vlm_actions, llm_response=response, state=obs, give_feasible_actions=give_feasible_actions)
                 if FEASIBLE:
                     vlm_actions.append(response)
@@ -151,6 +154,8 @@ def get_vlm_policy(env, vlm_model, llm_modulo, env_prompter, to_print=True, grid
                     f.write("%s\n" % actions)
             print('All actions tried by the VLM have been saved to:', all_tried_actions_save_path)
             return reward
+        else:
+            print("Sequence of VLM actions till failure: ", vlm_actions)
     return 0
 
 

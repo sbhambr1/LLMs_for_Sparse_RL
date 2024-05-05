@@ -14,7 +14,7 @@ dist/*
 *.pyc
 *.csv
 *.pt
-*.txt
+# *.txt
 events.out.tfevents*
 # llm_modulo_results/
 storage/

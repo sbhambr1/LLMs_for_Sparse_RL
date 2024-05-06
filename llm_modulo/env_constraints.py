@@ -488,7 +488,10 @@ class DoorKey6x6(EnvironmentConstraints):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
                                 break
-                        actions.append('open door')
+                        for j in range(len(action_history)):
+                            if action_history[j] == 'pickup key':
+                                actions.append('open door')
+                                break
                     elif agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
                         actions.append('move forward')
                 elif agent_pos[1]==3:

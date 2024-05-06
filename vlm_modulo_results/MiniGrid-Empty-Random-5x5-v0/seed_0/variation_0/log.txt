@@ -1,0 +1,274 @@
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+Sequence of VLM actions till failure:  ['turn right', 'move forward']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn right
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward', 'turn right', 'turn right']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+turn left
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward', 'turn right', 'turn right', 'turn left']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+Sequence of VLM actions till failure:  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward', 'turn right', 'turn right', 'turn left', 'move forward']
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The following image represents the current state of the environment. The agent is represented by the red arrow, the goal by the green goal, walls by the grey blocks, and unseen areas by the black blocks. The agent is facing in the direction of the red arrow, and can only move in the direction it is facing.
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+move forward
+[VLM ACTIONS:] --->  ['turn right', 'move forward', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn left', 'turn right', 'turn left', 'turn right', 'turn left', 'turn left', 'move forward', 'move forward', 'turn right', 'turn right', 'turn left', 'move forward', 'move forward']
+VLM policy has been saved to: ./vlm_modulo_results/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_0/vlm_policy.txt
+All actions tried by the VLM have been saved to: ./vlm_modulo_results/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_0/all_tried_actions.txt
+-----------------
+Total reward: 0.739

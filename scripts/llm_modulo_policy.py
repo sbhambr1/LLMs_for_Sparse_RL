@@ -2,6 +2,7 @@ import numpy as np
 import argparse
 import os
 import sys
+sys.path.insert(0,os.getcwd())
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper
 from utils.conversation import Conversation
@@ -10,12 +11,15 @@ from llm_modulo.prompting import *
 import warnings
 warnings.filterwarnings("ignore")
 
+# key_file = open(os.getcwd()+'/key.txt', 'r')
+# API_KEY = key_file.readline().rstrip()
+
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
 parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
 parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
-parser.add_argument("--llm-model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
+parser.add_argument("--llm-model", default="gpt-4-turbo", help="LLM model to use for policy generation")
 parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")
 parser.add_argument("--give_feasible_actions", default=True, help="Whether to give feasible actions in backprompt")
 parser.add_argument("--give_tried_actions", default=True, help="Whether to give tried actions in backprompt")
@@ -95,9 +99,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.additional_expt_info == '':
-        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/variation_{args.variation}'
     else:
-        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     log_file = open(f'{save_dir}/log.txt', 'w')

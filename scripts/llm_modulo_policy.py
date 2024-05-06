@@ -2,6 +2,7 @@ import numpy as np
 import argparse
 import os
 import sys
+sys.path.insert(0,os.getcwd())
 import gymnasium as gym
 from minigrid.wrappers import SymbolicObsWrapper
 from utils.conversation import Conversation
@@ -9,6 +10,9 @@ from llm_modulo.backprompting import *
 from llm_modulo.prompting import *
 import warnings
 warnings.filterwarnings("ignore")
+
+# key_file = open(os.getcwd()+'/key.txt', 'r')
+# API_KEY = key_file.readline().rstrip()
 
 parser = argparse.ArgumentParser()
 
@@ -95,9 +99,9 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.additional_expt_info == '':
-        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/variation_{args.variation}'
     else:
-        save_dir = f'./llm_modulo_results/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     log_file = open(f'{save_dir}/log.txt', 'w')

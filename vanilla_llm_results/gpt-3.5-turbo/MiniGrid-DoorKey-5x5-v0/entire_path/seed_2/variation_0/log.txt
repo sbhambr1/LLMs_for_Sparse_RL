@@ -1,0 +1,15 @@
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. The available actions at each step are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+True
+The current maze looks like this:
+
+agent door unseen
+unseen wall unseen
+key wall goal
+
+You (agent) are currently facing right.
+
+What is the sequence of actions you will take to reach the goal? Output as a comma separated list. Do not include anything else in your response.
+
+LLM Response: turn right, move forward, pickup key, turn left, move forward, open door, move forward
+-----------------

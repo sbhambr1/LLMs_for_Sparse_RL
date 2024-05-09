@@ -1,0 +1,27 @@
+The current maze looks like this:
+
+agent lava unseen
+unseen lava unseen
+unseen unseen goal
+
+You (agent) are currently facing right.
+
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter lava and walls. Your task is 'avoid the lava and get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
+
+The current maze looks like this:
+
+agent lava unseen
+unseen lava unseen
+unseen unseen goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+LLM Response: move forward
+[LLM ACTIONS:] --->  ['move forward']
+LLM policy has been saved to: ./vanilla_llm_results/gpt-3.5-turbo/MiniGrid-LavaGapS5-v0/seed_0/variation_0/llm_policy.txt
+-----------------
+Total reward: 0

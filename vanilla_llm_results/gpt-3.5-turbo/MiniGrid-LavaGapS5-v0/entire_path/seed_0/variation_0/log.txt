@@ -1,0 +1,15 @@
+You are tasked with solving a 3x3 maze where you will encounter lava and walls. Your task is 'avoid the lava and get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. The available actions at each step are 'turn left', 'turn right', 'move forward'.
+
+True
+The current maze looks like this:
+
+agent lava unseen
+unseen lava unseen
+unseen unseen goal
+
+You (agent) are currently facing right.
+
+What is the sequence of actions you will take to reach the goal? Output as a comma separated list. Do not include anything else in your response.
+
+LLM Response: turn right, move forward, move forward, move forward, turn left, move forward
+-----------------

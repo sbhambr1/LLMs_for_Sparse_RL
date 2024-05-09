@@ -42,8 +42,10 @@ parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
 parser.add_argument("--llm_rs", default=False, action="store_true",
                     help="uses the stored llm-modulo policy for reward shaping")
+parser.add_argument("--llm_variation", default=1, type=int,
+                    help="variation of the llm policy to be used for reward shaping (default: 1). Allowed values: 1, 2, 3")
 parser.add_argument("--additional_info", default='Experiment', type=str,
-                    help="additional info to be added to model name for saving")
+                    help="additional info to be added to model name for saving. E.g. - Baseline, RewardShaping, Text etc. (default: Experiment)")
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -79,21 +81,17 @@ if __name__ == "__main__":
     
     args = parser.parse_args()
     
-    # TODO: add vanilla as subdirectory to args.env
     args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/expt_seed_{args.seed}"
-    
     if args.llm_rs:
-        args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/reward_shaping/expt_seed_{args.seed}"
-    
-    if args.text:
-        args.model = f"{args.algo}/{args.env}/env_config_seed_{args.env_config_seed}/text/expt_seed_{args.seed}"
-    
-    if args.additional_info:
-        args.model = f"{args.model}/{args.additional_info}"        
-    
+        args.model = f"{args.additional_info}/LLM_Variation_{args.llm_variation}/{args.model}"
+        expt_name = f"{args.additional_info}_LLM_Variation_{args.llm_variation}_{args.algo}_{args.env}_EnvSeed_{args.env_config_seed}"
+    else:
+        args.model = f"{args.additional_info}/{args.model}"
+        expt_name = f"{args.additional_info}_{args.algo}_{args.env}_EnvSeed_{args.env_config_seed}"
+
     wandb.init(project="neurips_24",
                config=args,
-               name=f"{args.algo}_{args.env}_EnvSeed_{args.env_config_seed}_{args.additional_info}",
+               name=expt_name,
                dir=f"./storage/{args.model}",
                sync_tensorboard=True,
                )
@@ -160,7 +158,7 @@ if __name__ == "__main__":
     
     # load llm reward shaping plan
     if args.llm_rs:
-        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_1/lm_modulo_policy.pkl"
+        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_{args.llm_variation}/lm_modulo_policy.pkl"
         with open(llm_rs_file, 'rb') as f:
             llm_rs_policy = pickle.load(f)
         txt_logger.info(f"LLM reward shaping plan loaded from {llm_rs_file}.\n")

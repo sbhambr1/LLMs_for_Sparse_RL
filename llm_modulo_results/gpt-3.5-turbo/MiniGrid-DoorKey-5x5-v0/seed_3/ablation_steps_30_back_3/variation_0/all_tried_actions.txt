@@ -1,0 +1,11 @@
+pickup key
+open door
+open door
+open door
+open door
+open door
+open door
+open door
+open door
+open door
+open door

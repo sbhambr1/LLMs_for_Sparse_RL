@@ -1,4 +1,4 @@
-name: llm_modulo_sparse_rl
+name: llm_medic_sparse_rl
 channels:
   - conda-forge
   - https://conda.anaconda.org/gurobi
@@ -220,4 +220,3 @@ dependencies:
       - wsproto==1.2.0
       - zope-event==5.0
       - zope-interface==6.2
-prefix: /home/local/ASUAD/sbhambr1/anaconda3/envs/rollout_llm

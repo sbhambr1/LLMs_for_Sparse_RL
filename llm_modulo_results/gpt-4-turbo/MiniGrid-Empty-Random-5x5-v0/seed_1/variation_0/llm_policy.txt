@@ -1,6 +1,0 @@
-turn right
-move forward
-turn left
-turn left
-turn left
-move forward

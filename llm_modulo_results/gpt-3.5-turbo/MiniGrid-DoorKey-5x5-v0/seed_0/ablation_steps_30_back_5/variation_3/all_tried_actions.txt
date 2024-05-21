@@ -1,0 +1,14 @@
+pickup key
+move forward
+pickup key
+move forward
+move forward
+move forward
+pickup key
+open door
+open door
+open door
+open door
+open door
+open door
+open door

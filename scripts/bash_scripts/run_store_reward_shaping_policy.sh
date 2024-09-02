@@ -5,6 +5,8 @@ for seed in 0; do
         python scripts/store_reward_shaping_policy.py \
             --env "MiniGrid-DoorKey-5x5-v0" \
             --seed $seed \
-            --variation $variation
+            --variation $variation \
+            --same_rewards_same_states False \
+            --llm_model "gpt-3.5-turbo"
     done
 done

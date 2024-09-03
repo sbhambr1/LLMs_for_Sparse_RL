@@ -12,6 +12,6 @@ for env_cfg_seed in 0; do
             --stochastic \
             --llm_rs \
             --llm_variation 1 \
-            --additional_info "LLMRewardShaping"
+            --additional_info "LLMpbrs_nsrss"
     done
 done

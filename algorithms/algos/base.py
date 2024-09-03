@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import numpy as np
 import torch
 
 from algorithms.format import default_preprocess_obss
@@ -103,6 +104,108 @@ class BaseAlgo(ABC):
         self.log_return = [0] * self.num_procs
         self.log_reshaped_return = [0] * self.num_procs
         self.log_num_frames = [0] * self.num_procs
+        
+    # def potential_based_reward_reshaping(self, obs_t, action_t, reward_t):
+    #     """
+    #     Reshape the reward based on the LLM trajectory.
+
+    #     Parameters:
+    #     ----------
+    #     obss : 128 observations, len(obss) = 128
+    #     actions : 128 actions, len(actions) = 128
+    #     rewards : 128 rewards, len(rewards) = 128
+
+    #     Returns:
+    #     -------
+    #     reshaped_reward : 128 reshaped rewards, len(reshaped_reward) = 128
+    #     """
+    
+    #     traj_len = len(obs_t)
+    #     shaped_rewards_t = []
+    #     for i in range(traj_len):
+    #         if i == 0:
+    #             prev_state_action_potential = 0
+    #         else:
+    #             prev_state = obs_t[i-1]
+    #             prev_action = action_t[i-1]
+    #             prev_state_action_potential = 0
+    #             for j in range(len(self.reshape_reward)):
+    #                 if prev_state['image'] == self.reshape_reward[j][0]['image'] and prev_action == self.reshape_reward[j][1]:
+    #                     prev_state_action_potential = self.reshape_reward[j][2]
+    #                     break
+    #         current_state = obs_t[i]
+    #         current_action = action_t[i]
+    #         current_state_action_potential = 0
+    #         for j in range(len(self.reshape_reward)):
+    #             if current_state['image'] == self.reshape_reward[j][0]['image'] and current_action == self.reshape_reward[j][1]:
+    #                 current_state_action_potential = self.reshape_reward[j][2]
+    #                 break
+    #         reward_t = reward_t + current_state_action_potential - (1/self.discount)*prev_state_action_potential
+    #         shaped_rewards_t.append(reward_t)
+    #     return torch.tensor(shaped_rewards_t, device=self.device, dtype=torch.float)
+                    
+    def potential_based_reward_reshaping(self, obss, actions, rewards):
+        """
+        Reshape the reward based on the LLM trajectory.
+
+        Parameters:
+        ----------
+        obss : 128 observations across 16 environments, shape (128, 16)
+        actions : 128 actions across 16 environments, shape (128, 16)
+        rewards : 128 rewards across 16 environments, shape (128, 16)
+
+        Returns:
+        -------
+        reshaped_reward : 128 reshaped rewards across 16 environments, shape (128, 16)
+        """
+        num_envs = len(obss[0])
+        shaped_rewards = np.zeros((len(obss), num_envs))
+        
+        def shape_trajectory_rewards(obs_t, action_t, reward_t):
+            traj_len = len(obs_t)
+            shaped_rewards_t = []
+            for i in range(traj_len):
+                if i == 0:
+                    prev_state_action_potential = 0
+                else:
+                    prev_state = obs_t[i-1]
+                    prev_action = action_t[i-1]
+                    prev_state_action_potential = 0
+                    for j in range(len(self.reshape_reward)):
+                        prev_state_match = prev_state['image'] == self.reshape_reward[j][0]['image']
+                        prev_action_match = prev_action == self.reshape_reward[j][1]
+                        if prev_state_match.all() and prev_action_match.item():
+                            prev_state_action_potential = self.reshape_reward[j][2]
+                            break
+                current_state = obs_t[i]
+                current_action = action_t[i]
+                current_state_action_potential = 0
+                for j in range(len(self.reshape_reward)):
+                    state_match = current_state['image'] == self.reshape_reward[j][0]['image']
+                    action_match = current_action == self.reshape_reward[j][1]
+                    if state_match.all() and action_match.item():
+                        current_state_action_potential = self.reshape_reward[j][2]
+                        break
+                shaped_reward = reward_t[i].item() + current_state_action_potential - (1/self.discount)*prev_state_action_potential
+                shaped_rewards_t.append(shaped_reward)
+            return shaped_rewards_t
+        
+        def get_trajectory_data(env_idx, obss, actions, rewards):
+            obs_t = []
+            action_t = []
+            reward_t = []
+            for i in range(len(obss)):
+                obs_t.append(obss[i][env_idx])
+                action_t.append(actions[i][env_idx])
+                reward_t.append(rewards[i][env_idx])
+            return obs_t, action_t, reward_t
+                
+        for i in range(num_envs):
+            # shape rewards for each agent-environment interaction by taking the trajectory of the agent in the i-th environment
+            obss_t, actions_t, rewards_t = get_trajectory_data(i, obss, actions, rewards)
+            shaped_rewards[:, i] = shape_trajectory_rewards(obss_t, actions_t, rewards_t)
+                
+        return torch.tensor(shaped_rewards, device=self.device, dtype=torch.float)
 
     def reward_reshaping(self, obs, action, reward, done):
         """
@@ -124,6 +227,18 @@ class BaseAlgo(ABC):
         reshaped_reward : float
             the reshaped reward for parallel environments -> self.rewards[i]
         """
+        # for i in range(len(self.reshape_reward)):
+        #     # if not done: # do not shape reward for last transition # expt (14)15
+        #     comparison_state = self.reshape_reward[i][0]['image'] == obs['image']
+        #     final_state_potential = self.reshape_reward[-1][2]
+            
+        #     if comparison_state.all() and self.reshape_reward[i][1] == action:
+        #         current_state_potential = self.reshape_reward[i][2]
+        #         reward = reward + final_state_potential - current_state_potential
+        #         return reward
+        
+        # return reward 
+        
         for i in range(len(self.reshape_reward)):
             # if not done: # do not shape reward for last transition # expt (14)15
             comparison_state1 = self.reshape_reward[i][0]['image'] == obs['image']
@@ -131,7 +246,10 @@ class BaseAlgo(ABC):
                 # print('[RESHAPING]')
                 # return reward+0.1 # base case expt 9 
                 # return reward + self.reshape_reward[i][2] # expt 10
-                alpha = 0.5 # expt 11=0.5, expt 12=0.1, expt 13=0.9, expt 14=0
+                # alpha = 0.5 # expt 11=0.5, expt 12=0.1, expt 13=0.9, expt 14=0
+                
+                #implementing PBRS
+                alpha = 0.5
                 return alpha*reward + (1-alpha)*self.reshape_reward[i][2]
         return reward
     
@@ -181,13 +299,8 @@ class BaseAlgo(ABC):
             self.mask = 1 - torch.tensor(done, device=self.device, dtype=torch.float)
             self.actions[i] = action
             self.values[i] = value
-            if self.reshape_reward is not []:
-                self.rewards[i] = torch.tensor([
-                    self.reward_reshaping(obs_, action_, reward_, done_)
-                    for obs_, action_, reward_, done_ in zip(obs, action, reward, done)
-                ], device=self.device)
-            else:
-                self.rewards[i] = torch.tensor(reward, device=self.device)
+            
+            self.rewards[i] = torch.tensor(reward, device=self.device)
             self.log_probs[i] = dist.log_prob(action)
 
             # Update log values
@@ -206,6 +319,10 @@ class BaseAlgo(ABC):
             self.log_episode_return *= self.mask
             self.log_episode_reshaped_return *= self.mask
             self.log_episode_num_frames *= self.mask
+            
+        # Perform PBRS (s,a) reward shaping here since we need to traverse within k environments to get consecutive state, action pairs
+
+        self.rewards = self.potential_based_reward_reshaping(self.obss, self.actions, self.rewards)
 
         # Add advantage and return to experiences
 

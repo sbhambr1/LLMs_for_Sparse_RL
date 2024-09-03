@@ -1,3 +1,4 @@
+import os
 import argparse
 import time
 import datetime
@@ -12,6 +13,10 @@ import utils
 from utils import device
 from utils.model import ACModel
 import wandb
+
+# If you don't want your script to sync to the cloud
+os.environ["WANDB_MODE"] = "online"
+WANDB_PROJECT = "neurips_24" # neurips_24, iclr_25
 
 # Parse arguments
 
@@ -89,7 +94,7 @@ if __name__ == "__main__":
         args.model = f"{args.additional_info}/{args.model}"
         expt_name = f"{args.additional_info}_{args.algo}_{args.env}_EnvSeed_{args.env_config_seed}"
 
-    wandb.init(project="neurips_24",
+    wandb.init(project=WANDB_PROJECT,
                config=args,
                name=expt_name,
                dir=f"./storage/{args.model}",
@@ -158,7 +163,7 @@ if __name__ == "__main__":
     
     # load llm reward shaping plan
     if args.llm_rs:
-        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_{args.llm_variation}/lm_modulo_policy.pkl"
+        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_{args.llm_variation}/lm_modulo_policy_pbrs_nsrss.pkl"
         with open(llm_rs_file, 'rb') as f:
             llm_rs_policy = pickle.load(f)
         txt_logger.info(f"LLM reward shaping plan loaded from {llm_rs_file}.\n")

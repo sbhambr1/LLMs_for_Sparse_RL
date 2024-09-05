@@ -15,7 +15,7 @@ from utils.model import ACModel
 import wandb
 
 # If you don't want your script to sync to the cloud
-os.environ["WANDB_MODE"] = "offline"
+os.environ["WANDB_MODE"] = "online"
 WANDB_PROJECT = "neurips_24" # neurips_24, iclr_25
 
 # Parse arguments

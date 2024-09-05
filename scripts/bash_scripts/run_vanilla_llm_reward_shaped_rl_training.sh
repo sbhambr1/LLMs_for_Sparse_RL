@@ -10,7 +10,7 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for env_cfg_seed in 0; do
     for expt_seed in 1 2 3 4 5; do
-        python scripts/train.py \
+        python scripts/train_vanilla_llm.py \
             --algo "ppo" \
             --env "MiniGrid-DoorKey-5x5-v0" \
             --env_config_seed $env_cfg_seed \
@@ -20,8 +20,8 @@ for env_cfg_seed in 0; do
             --stochastic \
             --llm_rs \
             --llm_variation 0 \
-            --additional_info "VanillaLLMpbrs" \
             --llm_model "gpt-3.5-turbo" \
-            --query_type "entire_path"
+            --query_type "entire_path" \
+            --additional_info "VanillaLLMpbrs"
     done
 done

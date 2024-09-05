@@ -11,7 +11,7 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--env', type=str, default='MiniGrid-DoorKey-5x5-v0', help='Environment to use')
 parser.add_argument('--seed', type=int, default=0, help='Seed for environment configuration')
 parser.add_argument('--variation', type=int, default=1, help='Variation of the LM policy')
-parser.add_argument('--same_rewards_same_states', type=bool, default=False, help='Set this to True if you want to store the same rewards for the same states in the trajectory')
+parser.add_argument('--same_rewards_same_states', type=bool, default=True, help='Set this to True if you want to store the same rewards for the same states in the trajectory')
 parser.add_argument('--llm_model', type=str, default='gpt-3.5-turbo', help='LLM model to use')
 
 if __name__ == '__main__':

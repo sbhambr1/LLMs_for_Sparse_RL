@@ -6,10 +6,10 @@
 
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
-for seed in 0; do
-    for variation in 1 2 3; do
-        python scripts/store_reward_shaping_policy.py \
-            --env "MiniGrid-DoorKey-6x6-v0" \
+for seed in 2 3 5; do
+    for variation in 0; do
+        python scripts/store_vanilla_llm_reward_shaping_policy.py \
+            --env "MiniGrid-DoorKey-5x5-v0" \
             --seed $seed \
             --variation $variation \
             --llm_model "gpt-3.5-turbo" \

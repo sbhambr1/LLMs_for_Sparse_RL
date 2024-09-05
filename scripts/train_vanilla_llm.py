@@ -15,7 +15,7 @@ from utils.model import ACModel
 import wandb
 
 # If you don't want your script to sync to the cloud
-os.environ["WANDB_MODE"] = "online"
+os.environ["WANDB_MODE"] = "offline"
 WANDB_PROJECT = "neurips_24" # neurips_24, iclr_25
 
 # Parse arguments
@@ -51,6 +51,8 @@ parser.add_argument("--llm_variation", default=1, type=int,
                     help="variation of the llm policy to be used for reward shaping (default: 1). Allowed values: 1, 2, 3")
 parser.add_argument("--additional_info", default='Experiment', type=str,
                     help="additional info to be added to model name for saving. E.g. - Baseline, RewardShaping, Text etc. (default: Experiment)")
+parser.add_argument('--llm_model', type=str, default='gpt-3.5-turbo', help='LLM model to use')
+parser.add_argument('--query_type', type=str, default='entire_path', help='Query type for LLM: entire_path or step_wise')
 
 # Parameters for main algorithm
 parser.add_argument("--epochs", type=int, default=4,
@@ -163,7 +165,7 @@ if __name__ == "__main__":
     
     # load llm reward shaping plan
     if args.llm_rs:
-        llm_rs_file = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.env_config_seed}/variation_{args.llm_variation}/lm_modulo_policy_pbrs_nsrss.pkl"
+        llm_rs_file = f"./storage/vanilla_llm_visualization/{args.llm_model}/{args.env}/{args.query_type}/seed_{args.env_config_seed}/variation_{args.llm_variation}/vanilla_llm_policy.pkl"
         with open(llm_rs_file, 'rb') as f:
             llm_rs_policy = pickle.load(f)
         txt_logger.info(f"LLM reward shaping plan loaded from {llm_rs_file}.\n")

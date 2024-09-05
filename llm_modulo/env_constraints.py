@@ -76,11 +76,13 @@ class DoorKey5x5(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down']: # agent is facing down (wrong direction)
                         actions.append('move forward')
                 elif agent_pos[1]==2:
@@ -125,11 +127,13 @@ class DoorKey5x5(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down']:
                         for j in range(len(action_history)):
                             if action_history[j] == 'pickup key':
@@ -159,11 +163,13 @@ class DoorKey5x5(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down']:
                         actions.append('move forward')
                 elif agent_pos[1]==2:
@@ -212,11 +218,13 @@ class DoorKey5x5(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down']:
                         actions.append('move forward')
                 elif agent_pos[1]==2:
@@ -242,11 +250,13 @@ class DoorKey5x5(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down']:
                         for j in range(len(action_history)):
                             if action_history[j] == 'pickup key':
@@ -425,8 +435,10 @@ class KeyCorridorS3R1(EnvironmentConstraints):
                     for j in range(len(action_history)):
                         if action_history[j] == 'open door':
                             actions.append('move forward')
+                            DOOR_OPENED = True
                             break
-                    actions.append('open door')
+                    if not DOOR_OPENED:
+                        actions.append('open door')
                 elif agent_dir == DIRECTION_DICT['right']:
                     for j in range(len(action_history)):
                         if action_history[j] == 'pickup key':
@@ -487,11 +499,13 @@ class DoorKey6x6(EnvironmentConstraints):
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
+                                DOOR_OPENED = True
                                 break
-                        for j in range(len(action_history)):
-                            if action_history[j] == 'pickup key':
-                                actions.append('open door')
-                                break
+                        if not DOOR_OPENED:
+                            for j in range(len(action_history)):
+                                if action_history[j] == 'pickup key':
+                                    actions.append('open door')
+                                    break
                     elif agent_dir == DIRECTION_DICT['down'] or agent_dir == DIRECTION_DICT['left']:
                         actions.append('move forward')
                 elif agent_pos[1]==3:

@@ -8,11 +8,11 @@
 
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
-for env_cfg_seed in 2 3 5; do
+for env_cfg_seed in 0; do
     for expt_seed in 1 2 3 4 5; do
         python scripts/train_vanilla_llm.py \
             --algo "ppo" \
-            --env "MiniGrid-DoorKey-5x5-v0" \
+            --env "MiniGrid-DoorKey-6x6-v0" \
             --env_config_seed $env_cfg_seed \
             --seed $expt_seed \
             --save-interval 10 \

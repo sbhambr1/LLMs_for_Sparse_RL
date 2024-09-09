@@ -13,6 +13,8 @@ class MinigridPromptConstructor:
             self.prompt_constructor = KeyCorridorS3R1Prompts(env, seed)
         elif env == 'MiniGrid-DoorKey-6x6-v0':
             self.prompt_constructor = DoorKey6x6Prompts(env, seed)
+        elif env == "Mario-8x11":
+            self.prompt_constructor = Mario8x11Prompts(env)
         else:
             raise NotImplementedError 
         

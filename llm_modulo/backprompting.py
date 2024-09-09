@@ -53,9 +53,3 @@ class LLM_Modulo:
             backprompt += feasible
             
         return backprompt, FEASIBLE
-                
-    
-    
-    
-        
-    

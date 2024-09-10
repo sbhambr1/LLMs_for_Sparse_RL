@@ -1,4 +1,5 @@
 from llm_modulo.env_constraints import *
+from utils.env_mario import Env_Mario
 import random
 
 class LLM_Modulo:
@@ -14,6 +15,9 @@ class LLM_Modulo:
             self.env_critics = KeyCorridorS3R1(env, seed)
         elif env == 'MiniGrid-DoorKey-6x6-v0':
             self.env_critics = DoorKey6x6(env, seed)
+        elif env == "Mario-8x11":
+            env = Env_Mario(use_state=True, info_img=False)
+            self.env_critics = Mario8x11(env)
         else:
             raise NotImplementedError
         
@@ -25,9 +29,9 @@ class LLM_Modulo:
                 state (symbolic observation),
         Output: backprompt (str)
         """
-        agent_pos, agent_dir = self.env_critics.get_agent_pos(state)
+        agent_pos = self.env_critics.get_agent_pos(state)
         current_llm_action = llm_response
-        feasible_actions = self.env_critics.feasible_actions(agent_pos, agent_dir, llm_actions)
+        feasible_actions = self.env_critics.feasible_actions(agent_pos, llm_actions)
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
@@ -35,18 +39,14 @@ class LLM_Modulo:
             FEASIBLE=True
             return backprompt, FEASIBLE
         else:
-            if current_llm_action == 'move forward':
-                backprompt = "Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action."
-            elif current_llm_action == 'pickup key':
-                if 'pickup key' in llm_actions:
-                    backprompt = "Information: You have already picked up the key. Please choose another action."
-                else:
-                    backprompt = "Information: You cannot 'pickup key' in this state as you are not facing the key. Please choose another action."
-            elif current_llm_action == 'open door':
-                if 'open door' in llm_actions:
-                    backprompt = "Information: You have already opened the door. Please choose another action."
-                else:
-                    backprompt = "Information: You cannot 'open door' in this state as you are not facing the door. Please choose another action."
+            if current_llm_action == 'up':
+                backprompt = "Information: You cannot 'up' action in this state as you are facing a wall. Please choose another action."
+            elif current_llm_action == 'down':
+                backprompt = "Information: You cannot 'down' action in this state as you are facing a wall. Please choose another action."
+            elif current_llm_action == 'left':
+                backprompt = "Information: You cannot 'left' action in this state as you are facing a wall. Please choose another action."
+            elif current_llm_action == 'right':
+                backprompt = "Information: You cannot 'right' action in this state as you are facing a wall. Please choose another action."
                             
         if give_feasible_actions:                            
             feasible = f'The following actions are feasible in this state: {feasible_actions}.'

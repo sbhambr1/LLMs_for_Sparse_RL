@@ -1,4 +1,5 @@
-#env_constraints.py
+import numpy as np
+
 OBJECT_TO_IDX = {
     "walkable_area": 0,
     "agent": 1,
@@ -38,9 +39,27 @@ TEXT_ACTION_DICT = {
 # 6    2 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 2 |
 #------------------------------------------------------
 # 7    2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
- ######################################################   
+ ###################################################### 
+
+ class EnvironmentConstraints:
+    
+    def __init__(self, env):
+        self.env = env
+       
+    def get_agent_pos(self, observation):
+        """
+        Returns the agent position from the observation.
+        Input: symbolic observation['image'] - (8x11)
+        Output: agent position (x,y)
+        """
+        observation = observation.reshape(8,11)
+        pos = np.where(observation == OBJECT_TO_IDX['agent']) # (x,y) based on the image of the state in the observation    
+        agent_pos = (pos[0][0],pos[1][0])                   
+        return agent_pos
+        
+        raise ValueError("Agent not found in the observation.")   
    
-class Mario8x11():
+class Mario8x11(EnvironmentConstraints):
     
     def __init__(self, env):
         self.env = env

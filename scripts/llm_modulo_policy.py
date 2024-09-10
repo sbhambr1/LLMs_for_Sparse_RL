@@ -10,6 +10,7 @@ from llm_modulo.backprompting import *
 from llm_modulo.prompting import *
 import warnings
 warnings.filterwarnings("ignore")
+from utils.env_mario import Env_Mario
 
 # key_file = open(os.getcwd()+'/key.txt', 'r')
 # API_KEY = key_file.readline().rstrip()
@@ -106,9 +107,11 @@ if __name__ == "__main__":
         os.makedirs(save_dir)
     log_file = open(f'{save_dir}/log.txt', 'w')
     sys.stdout = log_file
-    
-    env = gym.make(args.env)
-    env = SymbolicObsWrapper(env)
+    if args.env == "Mario-8x11":
+        env = Env_Mario(use_state=True, info_img=False)
+    else:
+        env = gym.make(args.env)
+        env = SymbolicObsWrapper(env)
     conv = Conversation(args.llm_model)
     obs, _ = env.reset(seed=args.seed)
     llm_modulo = LLM_Modulo(args.env, seed=args.seed)

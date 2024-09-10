@@ -1,16 +1,11 @@
-# Reward Shaping using Large Language Models for Text-based Reinforcement Learning
+# Efficient Reinforcement Learning via Large Language Model-based Search
 
-This repository contains the code for the paper "Reward Shaping using Large Language Models for Text-based Reinforcement Learning". The code is based on the PPO and A2C implementation on Minigrid environments from the [rl-starter-files](https://github.com/lcswillems/rl-starter-files) repository.
+This repository contains the code for the paper "Efficient Reinforcement Learning via Large Language Model-based Search". The code is based on the PPO and A2C implementation on Minigrid environments from the [rl-starter-files](https://github.com/lcswillems/rl-starter-files) repository.
 
 ## Installation
 
-@TODO: Update requirements.txt and requirements.yml file
-
 ```bash
-git clone https://github.com/sbhambr1/llm_modulo_sparse_rl
-cd llm_modulo_sparse_rl
 conda create -n llm_modulo_sparse_rl python=3.10 --file requirements.yml
-pip install -r requirements.txt
 ```
 
 ## Usage
@@ -35,16 +30,24 @@ pip install -r requirements.txt
     python3 -m scripts.evaluate --env MiniGrid-DoorKey-5x5-v0 --model DoorKey
     ```
 
-### LLM-Modulo Experiments (W.I.P.)
+### MEDIC-augmented LLM Experiments
 
-#### Important files
+Note, that you will have to use an OpenAI API key to run the experiments. The following can be run for one layout of the DoorKey-5x5 environment. Please change the `--env` and `--model` arguments to run the experiments on other environments. See bash scripts in the `scripts` directory for more examples.
 
-1. `scripts/llm_policy.py`: Generate the LLM policy directly from the LLM model.
+1. Obtaining a plan for the relaxed problem:
 
-2. `scripts/manual_policy.py`: Generate the LLM policy that can be used by the RL agent by manually specifying the actions.
+    ```bash
+    ./scripts/bash_scripts/run_llm_modulo_policy.sh
+    ```
 
-3. `scripts/vlm_policy.py`: Generate the VLM policy directly from the VLM model.
+2. Construct and store the reward shaping function:
 
-4. `llm_modulo/llm_modulo.py`: Contains the LLM-Modulo implementation that contains critic/verifier functions for each (env, seed) pair.
+    ```bash
+    ./scripts/bash_scripts/run_store_reward_shaping_policy.sh
+    ```
 
-5. `llm_modulo/env_constraints.py`: Contains the environment constraints for each environment. Modify to add constraints for new environments and seeds.
+3. Training the agent with the reward shaping function:
+
+    ```bash
+    ./scripts/bash_scripts/run_reward_shaped_rl_training.sh
+    ```

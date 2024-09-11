@@ -41,7 +41,7 @@ TEXT_ACTION_DICT = {
 # 7    2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 | 2 |
  ###################################################### 
 
- class EnvironmentConstraints:
+class EnvironmentConstraints:
     
     def __init__(self, env):
         self.env = env
@@ -76,49 +76,49 @@ class Mario8x11(EnvironmentConstraints):
            if agent_pos[1] == 1:
                actions.append("right")
            elif agent_pos[1] in [2,3,4,6,8]:
-               acction.extend(["right","left"])
+               actions.extend(["right","left"])
            elif agent_pos[1] in [5,7]:
-               action.extend(["right","left","down"])
+               actions.extend(["right","left","down"])
         elif agent_pos[0] == 6:
             if agent_pos[1] in [2,4,6,7,8]:
-                action.extend(["right","left"])
+                actions.extend(["right","left"])
             elif agent_pos[1] == 9:
-                action.append("left")
+                actions.append("left")
             elif agent_pos[1] == 3:
-                action.extend(["right","left","up"])
+                actions.extend(["right","left","up"])
             elif agent_pos[1] == 1:
-                action.extend(["right","up"])
+                actions.extend(["right","up"])
             elif agent_pos[1] == 5:
-                action.extend(["right","left"])
-                if env.grid[5, 5] == env.objects.ladder.id:
-                    action.append("up")
+                actions.extend(["right","left"])
+                if self.env.grid[5, 5] == self.env.objects.ladder.id:
+                    actions.append("up")
         elif agent_pos[1] == 7:
             if agent_pos[0] in [2,3,4,5]:
-                action.append("down")
+                actions.append("down")
         elif agent_pos[1] == 5:
             if agent_pos[0] == 2:
-                if env.grid[3, 5] == env.objects.ladder.id:
-                    action.append("down")
+                if self.env.grid[3, 5] == self.env.objects.ladder.id:
+                    actions.append("down")
                 else:
-                    action.append("up")
+                    actions.append("up")
             elif agent_pos[0] == 3:
-                if env.grid[2, 5] == env.objects.ladder.id:
-                    action.append("up")
-                if env.grid[4, 5] == env.objects.ladder.id:
-                    action.append("down")
+                if self.env.grid[2, 5] == self.env.objects.ladder.id:
+                    actions.append("up")
+                if self.env.grid[4, 5] == self.env.objects.ladder.id:
+                    actions.append("down")
             elif agent_pos[0] == 4:
-                if env.grid[3, 5] == env.objects.ladder.id:
-                    action.append("up")
-                if env.grid[5, 5] == env.objects.ladder.id:
-                    action.append("down")
+                if self.env.grid[3, 5] == self.env.objects.ladder.id:
+                    actions.append("up")
+                if self.env.grid[5, 5] == self.env.objects.ladder.id:
+                    actions.append("down")
             elif agent_pos[0] == 5:    
-                if env.grid[4, 5] == env.objects.ladder.id:
-                    action.append("up")
+                if self.env.grid[4, 5] == self.env.objects.ladder.id:
+                    actions.append("up")
                 else:
-                    action.append("down")
+                    actions.append("down")
         elif agent_pos[0]==5:
             if agent_pos[1] in [1,3]:
-                action.append("down")
+                actions.append("down")
         else:
             raise ValueError("Agent position not recognized.")
     

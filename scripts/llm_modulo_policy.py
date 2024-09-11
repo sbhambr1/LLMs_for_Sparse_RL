@@ -17,8 +17,8 @@ from utils.env_mario import Env_Mario
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
-parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
+parser.add_argument("--env_name", default="Mario-8x11", help="name of the environment to get LLM policy for")
+# parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
 parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
 parser.add_argument("--llm-model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
 parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")
@@ -93,6 +93,11 @@ def get_llm_policy(env, llm_model, llm_modulo, env_prompter, conv, obs='', to_pr
                     f.write("%s\n" % actions)
             print('All actions tried by the LLM have been saved to:', all_tried_actions_save_path)
             return reward
+        else:
+            print('Done:', done)
+            print('Reward:', reward)
+            print('-----------------')
+            
     return 0
 
 if __name__ == "__main__":
@@ -100,22 +105,21 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     if args.additional_expt_info == '':
-        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env_name}/variation_{args.variation}'
     else:
-        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
+        save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env_name}/{args.additional_expt_info}/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     log_file = open(f'{save_dir}/log.txt', 'w')
     sys.stdout = log_file
-    if args.env == "Mario-8x11":
+    if args.env_name == "Mario-8x11":
         env = Env_Mario(use_state=True, info_img=False)
     else:
-        env = gym.make(args.env)
-        env = SymbolicObsWrapper(env)
+        raise Exception("Environment not supported")
     conv = Conversation(args.llm_model)
-    obs, _ = env.reset(seed=args.seed)
-    llm_modulo = LLM_Modulo(args.env, seed=args.seed)
-    env_prompter = MinigridPromptConstructor(args.env, seed=args.seed)
+    obs = env.reset()
+    llm_modulo = LLM_Modulo(args.env_name, env)
+    env_prompter = MarioPromptConstructor(args.env_name, env)
     total_reward = get_llm_policy(env=env, llm_model=args.llm_model, llm_modulo=llm_modulo, env_prompter=env_prompter, conv=conv, obs=obs, to_print=False, grid_text=True, give_add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions, save_dir=save_dir, num_agent_steps=args.num_agent_steps, num_backprompt_steps=args.num_backprompt_steps)
     
     print('-----------------')

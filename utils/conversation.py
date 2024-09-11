@@ -4,9 +4,9 @@ from openai import OpenAI
 import pickle as pkl 
 from ratelimit import limits, sleep_and_retry
 
-# api_key = os.environ["OPENAI_API_KEY"]
-key_file = open(os.getcwd()+'/key.txt', 'r')
-api_key = key_file.readline().rstrip()
+api_key = os.environ["OPENAI_API_KEY"]
+# key_file = open(os.getcwd()+'/key.txt', 'r')
+# api_key = key_file.readline().rstrip()
 
 if api_key is None:
     raise Exception("Please insert your OpenAI API key in conversation.py")

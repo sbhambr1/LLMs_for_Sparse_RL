@@ -1,0 +1,177 @@
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,        and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to        open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The        ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description        of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down. Please choose another action.
+
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right, move right, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right, move right, move right, move right, move right. Please choose another action.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description         of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.
+
+The following actions are feasible in this state: ['right'].
+The current maze looks like this:
+
+agent walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area walkable_area
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response.
+You have already tried the following actions: move down, move right, move right, move right, move right, move right, move right, move right, move right. Please choose another action.
+
+LLM could not find a feasible action.
+-----------------
+Total reward: 0

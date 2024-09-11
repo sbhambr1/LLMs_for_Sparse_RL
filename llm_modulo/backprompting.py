@@ -4,19 +4,9 @@ import random
 
 class LLM_Modulo:
     
-    def __init__(self, env, seed):
-        if env == 'MiniGrid-DoorKey-5x5-v0':
-            self.env_critics = DoorKey5x5(env, seed)
-        elif env == 'MiniGrid-Empty-Random-5x5-v0':
-            self.env_critics = EmptyRandom5x5(env, seed)
-        elif env == 'MiniGrid-LavaGapS5-v0':
-            self.env_critics = LavaGapS5(env, seed)
-        elif env == 'MiniGrid-KeyCorridorS3R1-v0':
-            self.env_critics = KeyCorridorS3R1(env, seed)
-        elif env == 'MiniGrid-DoorKey-6x6-v0':
-            self.env_critics = DoorKey6x6(env, seed)
-        elif env == "Mario-8x11":
-            env = Env_Mario(use_state=True, info_img=False)
+    def __init__(self, env_name, env):
+        if env_name == "Mario-8x11":
+            self.env = env
             self.env_critics = Mario8x11(env)
         else:
             raise NotImplementedError

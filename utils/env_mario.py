@@ -6,7 +6,7 @@ import os
 import numpy as np
 import plotly.colors as colors
 from skimage.transform import resize
-from grid_renderer import Grid_Renderer
+from utils.grid_renderer import Grid_Renderer
 
 
 class Env_Mario:

@@ -8,8 +8,8 @@ warnings.filterwarnings("ignore")
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument('--env', type=str, default='MiniGrid-DoorKey-5x5-v0', help='Environment to use')
-parser.add_argument('--seed', type=int, default=0, help='Seed for environment configuration')
+parser.add_argument('--env', type=str, default='Mario-8x11', help='Environment to use')
+# parser.add_argument('--seed', type=int, default=0, help='Seed for environment configuration')
 parser.add_argument('--variation', type=int, default=1, help='Variation of the LM policy')
 parser.add_argument('--same_rewards_same_states', type=bool, default=True, help='Set this to True if you want to store the same rewards for the same states in the trajectory')
 parser.add_argument('--llm_model', type=str, default='gpt-3.5-turbo', help='LLM model to use')
@@ -26,7 +26,7 @@ if __name__ == '__main__':
     
     root_dir = os.getcwd()
 
-    search_dir = f"{root_dir}/llm_modulo_results/{args.llm_model}/{args.env}/seed_{args.seed}/variation_{args.variation}/"
+    search_dir = f"{root_dir}/llm_modulo_results/{args.llm_model}/{args.env}/variation_{args.variation}/"
     policy_file = search_dir + "llm_policy.txt"
     
     policy = []
@@ -39,7 +39,7 @@ if __name__ == '__main__':
                 action = 'toggle'
             policy.append(action)
             
-    image_save_dir = policy_save_dir = f"./storage/lm_modulo_visualization/{args.env}/seed_{args.seed}/variation_{args.variation}/"
+    image_save_dir = policy_save_dir = f"./storage/lm_modulo_visualization/{args.env}/variation_{args.variation}/"
     if not os.path.exists(image_save_dir):
         os.makedirs(image_save_dir)
         
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 
     store_policy = [] # list to store (state, action, shaped_reward) tuples for manual policy
 
-    obs, _ = env.reset(seed=args.seed)
+    obs, _ = env.reset()
     done = False
     rewards = 0
     while not done:

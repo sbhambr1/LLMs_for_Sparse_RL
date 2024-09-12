@@ -21,7 +21,7 @@ class LLM_Modulo:
         """
         agent_pos = self.env_critics.get_agent_pos(state)
         current_llm_action = llm_response
-        feasible_actions = self.env_critics.feasible_actions(agent_pos, llm_actions)
+        feasible_actions,message = self.env_critics.feasible_actions(agent_pos, llm_actions)
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
@@ -30,13 +30,25 @@ class LLM_Modulo:
             return backprompt, FEASIBLE
         else:
             if current_llm_action == 'up':
-                backprompt = "Information: You cannot 'up' action in this state as you are facing a wall. Please choose another action."
+                if message["up"] == "wall":
+                    backprompt = "Information: You cannot take 'up' action in this state as you are facing a wall. Please choose another action."
+                elif message["up"] == "tube":
+                    backprompt = "Information: You cannot take 'up' action in this state as you are in the tube. Please choose another action."
+                elif message["up"] == "warn_ladder":
+                    backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
+                else:
+                    ValueError("Bug in constrain.py file") 
             elif current_llm_action == 'down':
-                backprompt = "Information: You cannot 'down' action in this state as you are facing a wall. Please choose another action."
+                if message["down"] == "wall":
+                    backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
+                elif message["up"] == "warn_ladder":
+                    backprompt = "Information: You cannot take 'down' action in this state as the below ladder step is broken. Please choose another action."
+                else:
+                    ValueError("Bug in constrain.py file") 
             elif current_llm_action == 'left':
-                backprompt = "Information: You cannot 'left' action in this state as you are facing a wall. Please choose another action."
+                backprompt = "Information: You cannot take 'left' action in this state as you are facing a wall. Please choose another action."
             elif current_llm_action == 'right':
-                backprompt = "Information: You cannot 'right' action in this state as you are facing a wall. Please choose another action."
+                backprompt = "Information: You cannot take 'right' action in this state as you are facing a wall. Please choose another action."
                             
         if give_feasible_actions:                            
             feasible = f'The following actions are feasible in this state: {feasible_actions}.'

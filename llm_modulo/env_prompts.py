@@ -68,9 +68,9 @@ class Mario8x11Prompts(EnvPrompts):
         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to\
         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The\
         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description\
-        of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.\n"
+        of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
-        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response."
+        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         if add_text_desc != '':
             step_prompt = f"{TASK_DESC}\n{add_text_desc}\n{OBS_DESC}\n{QUERY_DESC}\n"
         else:
@@ -82,9 +82,9 @@ class Mario8x11Prompts(EnvPrompts):
         and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to \
         open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The \
         ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description \
-        of the maze at every step and you need to choose the next action to take. The available actions are 'move left', 'move right', 'move up', 'move down'.\n"
+        of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
-        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move up', then only write 'move up' in your response."
+        QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
         if give_tried_actions:
             prompt_with_backprompt = f"{TASK_DESC}\n{backprompt}\n{OBS_DESC}\n{QUERY_DESC}\n{RETRY}\n"
@@ -154,7 +154,9 @@ class Mario8x11Prompts(EnvPrompts):
             ADDITIONAL_INFO = "You have already picked up the hidden key.\n"
         elif self.env.picked_key:
             ADDITIONAL_INFO = "You have already picked up the key.\n"
+        else:
+            ADDITIONAL_INFO = ""
         
-        #text_obs = f"{GRID_HEADER}\n{grid_text}\n{AGENT_DIR}"
-        text_obs = f"{GRID_HEADER}\n{grid_text}"
+        text_obs = f"{GRID_HEADER}\n{grid_text}\n{ADDITIONAL_INFO}"
+        # text_obs = f"{GRID_HEADER}\n{grid_text}"
         return text_obs

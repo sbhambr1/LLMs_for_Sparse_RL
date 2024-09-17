@@ -13,9 +13,9 @@ import utils
 from utils import device
 from utils.model import ACModel
 import wandb
-
+from utils.env_mario import *
 # If you don't want your script to sync to the cloud
-os.environ["WANDB_MODE"] = "online"
+os.environ["WANDB_MODE"] = "offline"
 WANDB_PROJECT = "neurips_24" # neurips_24, iclr_25
 
 # Parse arguments
@@ -132,9 +132,10 @@ if __name__ == "__main__":
 
     # Load environments
 
-    envs = []
-    for i in range(args.procs):
-        envs.append(utils.make_env(env_key=args.env, seed=args.seed, stochastic=args.stochastic))
+    envs = [Env_Mario(info_img=True)]
+    # for i in range(args.procs):
+    #     envs.append(utils.make_env(env_key=args.env, seed=args.seed, stochastic=args.stochastic))
+
     txt_logger.info("Environments loaded\n")
 
     # Load training status
@@ -147,7 +148,9 @@ if __name__ == "__main__":
 
     # Load observations preprocessor
 
-    obs_space, preprocess_obss = utils.get_obss_preprocessor(envs[0].observation_space)
+    #obs_space, preprocess_obss = utils.get_obss_preprocessor(envs[0].observation_space)
+    obs_space = np.array([8,11])
+    preprocess_obss = None
     if "vocab" in status:
         preprocess_obss.vocab.load_vocab(status["vocab"])
     txt_logger.info("Observations preprocessor loaded")

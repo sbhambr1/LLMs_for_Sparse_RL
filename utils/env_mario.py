@@ -6,7 +6,7 @@ import os
 import numpy as np
 import plotly.colors as colors
 from skimage.transform import resize
-from utils.grid_renderer import Grid_Renderer
+# from grid_renderer import Grid_Renderer
 
 
 class Env_Mario:
@@ -24,6 +24,8 @@ class Env_Mario:
 
         self.img_h = 84
         self.img_w = 84
+        # self.max_steps = 500
+        # self.count = 0
         self.use_state = use_state
         if self.use_state:
             self.observation_space = spaces.Box(low=0, high=1, shape=(88, ), dtype=np.int16)
@@ -188,6 +190,7 @@ class Env_Mario:
             return self._get_grid_obs()
 
     def step(self, action):
+        # self.count += 1
         def _go_to(x, y):
             old_pos = tuple(self.agent_pos)
             self.agent_pos = (x, y)
@@ -265,6 +268,10 @@ class Env_Mario:
             self.info['next_img_state'] = np.copy(self._get_img_obs())
         done = early_stop_done or self.door_opened
         reward = self.success_reward if self.door_opened else 0
+        # if self.count >= self.max_steps:
+        #     truncated = True
+        # else: 
+        #     truncated = False
         return self._obs(), float(reward), done, addict.Dict(self.info)
 
     def reset(self, **kwargs):

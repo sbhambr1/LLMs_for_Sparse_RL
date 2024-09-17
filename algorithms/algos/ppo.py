@@ -9,9 +9,9 @@ class PPOAlgo(BaseAlgo):
     ([Schulman et al., 2015](https://arxiv.org/abs/1707.06347))."""
 
     def __init__(self, envs, acmodel, device=None, num_frames_per_proc=None, discount=0.99, lr=0.001, gae_lambda=0.95,
-                 entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, recurrence=4,
+                 entropy_coef=0.01, value_loss_coef=0.5, max_grad_norm=0.5, recurrence=1,
                  adam_eps=1e-8, clip_eps=0.2, epochs=4, batch_size=256, preprocess_obss=None,
-                 reshape_reward=[]):
+                 reshape_reward=None):
         num_frames_per_proc = num_frames_per_proc or 128
 
         super().__init__(envs, acmodel, device, num_frames_per_proc, discount, lr, gae_lambda, entropy_coef,
@@ -124,7 +124,11 @@ class PPOAlgo(BaseAlgo):
             "value_loss": numpy.mean(log_value_losses),
             "grad_norm": numpy.mean(log_grad_norms)
         }
-
+        print("entropy:", logs["entropy"]) 
+        print("value:",logs["value"])
+        print("policy_loss:",logs["policy_loss"]) 
+        print("value_loss:",logs["value_loss"])
+        print("grad_norm:",logs["grad_norm"])
         return logs
 
     def _get_batches_starting_indexes(self):

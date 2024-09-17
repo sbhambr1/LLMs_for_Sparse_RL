@@ -136,14 +136,17 @@ def main():
     log_file = open(f'{save_dir}/log.txt', 'w')
     sys.stdout = log_file
     
-    env = gym.make(args.env)
-    env = SymbolicObsWrapper(env)
+    if args.env_name == "Mario-8x11":
+        env = Env_Mario(use_state=True, info_img=False)
+    else:
+        raise Exception("Environment not supported")
+    
     conv = Conversation(args.llm_model)
     obs, _ = env.reset()
     
 
-    env_prompter = MarioPromptConstructor(args.env, env)
-    initial_prompt = get_initial_prompt(args.env, obs, env_prompter=env_prompter, add_text_desc=args.add_text_desc)
+    env_prompter = MarioPromptConstructor(args.env_name, env)
+    initial_prompt = get_initial_prompt(args.env_name, obs, env_prompter=env_prompter, add_text_desc=args.add_text_desc)
 
     response = conv.llm_actor(initial_prompt, stop=["\n"]).lower()
     # action = [k for k, v in ACTION_DICT.items() if v in response][0]

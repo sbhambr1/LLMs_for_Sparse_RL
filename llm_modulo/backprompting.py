@@ -55,14 +55,14 @@ class LLM_Modulo:
                 elif message["up"] == "warn_ladder":
                     backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
                 else:
-                    ValueError("Bug in constrain.py file") 
+                    ValueError("Bug in env_constraints.py file") 
             elif current_llm_action == 'down':
                 if message["down"] == "wall":
                     backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
                 elif message["up"] == "warn_ladder":
                     backprompt = "Information: You cannot take 'down' action in this state as the below ladder step is broken. Please choose another action."
                 else:
-                    ValueError("Bug in constrain.py file") 
+                    ValueError("Bug in env_constraints.py file") 
             elif current_llm_action == 'left':
                 backprompt = "Information: You cannot take 'left' action in this state as you are facing a wall. Please choose another action."
             elif current_llm_action == 'right':

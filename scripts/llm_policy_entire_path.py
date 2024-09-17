@@ -10,14 +10,15 @@ from llm_modulo.backprompting import *
 from llm_modulo.prompting import *
 import warnings
 warnings.filterwarnings("ignore")
+from utils.env_mario import Env_Mario
 
 # key_file = open(os.getcwd()+'/key.txt', 'r')
 # API_KEY = key_file.readline().rstrip()
 
 parser = argparse.ArgumentParser()
 
-parser.add_argument("--env", default="MiniGrid-DoorKey-5x5-v0", help="name of the environment to get LLM policy for")
-parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
+parser.add_argument("--env_name", default="Mario-8x11", help="name of the environment to get LLM policy for")
+# parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
 parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
 parser.add_argument("--llm_model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
 parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")
@@ -27,29 +28,27 @@ parser.add_argument("--additional_expt_info", default="", help="Additional infor
 parser.add_argument("--num_agent_steps", type=int, default=30, help="Number of steps the agent can take")
 # parser.add_argument("--num_backprompt_steps", type=int, default=10, help="Number of backprompts that can be given")
 
-
-
-ACTION_DICT = {
-    0: 'left', 
-    1: 'right', 
-    2: 'forward', 
-    3: 'pickup', 
-    4: 'drop', 
-    5: 'toggle', 
-    6: 'done'}
-OBJECT_TO_IDX = {
-    "unseen": -1,
-    "empty": 1,
-    "wall": 2,
-    "floor": 3,
-    "door": 4,
-    "key": 5,
-    "ball": 6,
-    "box": 7,
-    "goal": 8,
-    "lava": 9,
-    "agent": 10,
-}
+# ACTION_DICT = {
+#     0: 'left', 
+#     1: 'right', 
+#     2: 'forward', 
+#     3: 'pickup', 
+#     4: 'drop', 
+#     5: 'toggle', 
+#     6: 'done'}
+# OBJECT_TO_IDX = {
+#     "unseen": -1,
+#     "empty": 1,
+#     "wall": 2,
+#     "floor": 3,
+#     "door": 4,
+#     "key": 5,
+#     "ball": 6,
+#     "box": 7,
+#     "goal": 8,
+#     "lava": 9,
+#     "agent": 10,
+# }
 
 
 def _convert_pos_to_3x3(pos):
@@ -129,22 +128,25 @@ def main():
     args = parser.parse_args()
     
     if args.additional_expt_info == '':
-        save_dir = f'./vanilla_llm_results/{args.llm_model}/{args.env}/entire_path/seed_{args.seed}/variation_{args.variation}'
+        save_dir = f'./vanilla_llm_results/{args.llm_model}/{args.env_name}/variation_{args.variation}'
     else:
-        save_dir = f'./vanilla_llm_results/{args.llm_model}/{args.env}/entire_path/seed_{args.seed}/{args.additional_expt_info}/variation_{args.variation}'
+        save_dir = f'./vanilla_llm_results/{args.llm_model}/{args.env_name}/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     log_file = open(f'{save_dir}/log.txt', 'w')
     sys.stdout = log_file
     
-    env = gym.make(args.env)
-    env = SymbolicObsWrapper(env)
+    if args.env_name == "Mario-8x11":
+        env = Env_Mario(use_state=True, info_img=False)
+    else:
+        raise Exception("Environment not supported")
+    
     conv = Conversation(args.llm_model)
-    obs, _ = env.reset(seed=args.seed)
+    obs, _ = env.reset()
     
 
-    env_prompter = MinigridPromptConstructor(args.env, seed=args.seed)
-    initial_prompt = get_initial_prompt(args.env, obs, env_prompter=env_prompter, add_text_desc=args.add_text_desc)
+    env_prompter = MarioPromptConstructor(args.env_name, env)
+    initial_prompt = get_initial_prompt(args.env_name, obs, env_prompter=env_prompter, add_text_desc=args.add_text_desc)
 
     response = conv.llm_actor(initial_prompt, stop=["\n"]).lower()
     # action = [k for k, v in ACTION_DICT.items() if v in response][0]

@@ -53,7 +53,7 @@ parser.add_argument("--additional_info", default='Experiment', type=str,
                     help="additional info to be added to model name for saving. E.g. - Baseline, RewardShaping, Text etc. (default: Experiment)")
 
 # Parameters for main algorithm
-parser.add_argument("--epochs", type=int, default=4,
+parser.add_argument("--epochs", type=int, default=5,
                     help="number of epochs for PPO (default: 4)")
 parser.add_argument("--batch-size", type=int, default=256,
                     help="batch size for PPO (default: 256)")
@@ -65,7 +65,7 @@ parser.add_argument("--lr", type=float, default=0.001,
                     help="learning rate (default: 0.001)")
 parser.add_argument("--gae-lambda", type=float, default=0.95,
                     help="lambda coefficient in GAE formula (default: 0.95, 1 means no gae)")
-parser.add_argument("--entropy-coef", type=float, default=0.01,
+parser.add_argument("--entropy-coef", type=float, default=0.0001,
                     help="entropy term coefficient (default: 0.01)")
 parser.add_argument("--value-loss-coef", type=float, default=0.5,
                     help="value loss term coefficient (default: 0.5)")
@@ -171,7 +171,8 @@ if __name__ == "__main__":
             llm_rs_policy = pickle.load(f)
         txt_logger.info(f"LLM reward shaping plan loaded from {llm_rs_file}.\n")
     else:
-        llm_rs_policy = []
+        #llm_rs_policy = []
+        llm_rs_policy = None
 
     # Load algo
 

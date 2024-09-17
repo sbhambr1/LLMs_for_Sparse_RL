@@ -124,11 +124,11 @@ class PPOAlgo(BaseAlgo):
             "value_loss": numpy.mean(log_value_losses),
             "grad_norm": numpy.mean(log_grad_norms)
         }
-        print("entropy:", logs["entropy"]) 
-        print("value:",logs["value"])
-        print("policy_loss:",logs["policy_loss"]) 
-        print("value_loss:",logs["value_loss"])
-        print("grad_norm:",logs["grad_norm"])
+        # print("entropy:", logs["entropy"]) 
+        # print("value:",logs["value"])
+        # print("policy_loss:",logs["policy_loss"]) 
+        # print("value_loss:",logs["value_loss"])
+        # print("grad_norm:",logs["grad_norm"])
         return logs
 
     def _get_batches_starting_indexes(self):

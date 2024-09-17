@@ -164,3 +164,5 @@ wsproto==1.2.0
 zipp @ file:///home/conda/feedstock_root/build_artifacts/zipp_1695255097490/work
 zope.event==5.0
 zope.interface==6.2
+anthropic==0.34.2
+boto3==1.35.20

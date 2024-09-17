@@ -73,6 +73,7 @@ class DoorKey5x5(EnvironmentConstraints):
                 if agent_pos[1]==1:
                     # agent has picked key already, can open door if facing it, and can move forward if door is opened
                     if agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
@@ -124,6 +125,7 @@ class DoorKey5x5(EnvironmentConstraints):
                     if agent_dir == DIRECTION_DICT['up']:
                         actions.append('move forward')
                     elif agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
@@ -160,6 +162,7 @@ class DoorKey5x5(EnvironmentConstraints):
             if agent_pos[0]==1:
                 if agent_pos[1]==1:
                     if agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
@@ -215,6 +218,7 @@ class DoorKey5x5(EnvironmentConstraints):
                                 break
                         actions.append('pickup key')
                     elif agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')
@@ -247,6 +251,7 @@ class DoorKey5x5(EnvironmentConstraints):
             if agent_pos[0]==1:
                 if agent_pos[1]==1:
                     if agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')

@@ -5,7 +5,7 @@ import warnings
 warnings.filterwarnings("ignore")
 
 env_name = "MiniGrid-DoorKey-5x5-v0"
-llm_model = "gpt-3.5-turbo" # "gpt-3.5-turbo", "None" for testing
+llm_model = "gpt-3.5-turbo" # gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0
 SEED = 0
 ACTION_DICT = {
     0: 'left', 

@@ -15,7 +15,7 @@ ACTION_DICT = {
     0: 'up', 
     1: 'down', 
     2: 'left', 
-    3: 'riight'}
+    3: 'right'}
 TEXT_ACTION_DICT = {
     'up': 0,
     'down': 1,
@@ -83,7 +83,7 @@ class Mario8x11(EnvironmentConstraints):
             elif agent_pos[1] in [5,7]:
                 actions.extend(["right","left","down"])
                 message = {"up":"wall","down":"","left":"","right":""}
-            message.append("wall")    
+            # message.append("wall")    
         elif agent_pos[0] == 6:
             if agent_pos[1] in [2,4,6,7,8]:
                 actions.extend(["right","left"])

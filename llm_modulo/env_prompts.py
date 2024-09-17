@@ -28,7 +28,7 @@ ACTION_DICT = {
     0: 'up', 
     1: 'down', 
     2: 'left', 
-    3: 'riight'}
+    3: 'right'}
     
 TEXT_ACTION_DICT = {
     'up': 0,

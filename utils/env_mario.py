@@ -6,7 +6,7 @@ import os
 import numpy as np
 import plotly.colors as colors
 from skimage.transform import resize
-# from grid_renderer import Grid_Renderer
+from utils.grid_renderer import Grid_Renderer
 
 
 class Env_Mario:
@@ -36,7 +36,7 @@ class Env_Mario:
                                                     dtype=np.uint8)
             self.obs_type = np.uint8
         # game config
-        self.hard_exploration = True    # whether to make the exploration harder
+        self.hard_exploration = False    # whether to make the exploration harder
         self.success_reward = success_reward
         self.height = 8
         self.width = 11

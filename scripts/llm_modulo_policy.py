@@ -73,7 +73,7 @@ def get_llm_policy(env, llm_model, llm_modulo, env_prompter, conv, obs='', to_pr
             action = env.action_space.sample()
         
         print('LLM Response:', response)
-        obs, reward, done, _, _ = env.step(action)
+        obs, reward, done, _ = env.step(action)
         if done:
             print('[LLM ACTIONS:] ---> ',llm_actions)
             

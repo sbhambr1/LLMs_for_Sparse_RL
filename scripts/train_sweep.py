@@ -116,7 +116,7 @@ if __name__ == "__main__":
                 'values': [16]
             },
             'frames': {
-                'values': [10**7]
+                'values': [10**6]
             },            
             'additional_info': {
                 'values': ['WANDB_sweep']

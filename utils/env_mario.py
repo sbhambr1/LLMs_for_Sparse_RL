@@ -124,12 +124,12 @@ class Env_Mario:
         self.ladder_locations = set(self.objects.ladder.locations)
         self.tube_locations = set(self.objects.tube.locations)
         # init
-        self._init()
+        self._episode_init()
         # init renderer
         color_map = {self.objects[obj].id:self.objects[obj].color for obj in self.objects}
         self.renderer = Grid_Renderer(grid_size=20, color_map=color_map)
 
-    def _init(self):
+    def _episode_init(self):
         # update flags and state info
         self.at_ladder = False
         self.visited_ladder = False
@@ -141,6 +141,9 @@ class Env_Mario:
         self.agent_dead = False
         self.visited_bottom = False
         self.back_to_upper = False
+        
+        self.max_steps = 700
+        self.count = 0
 
         self.info = dict()
         self.agent_pos = self.objects.agent.location
@@ -190,7 +193,7 @@ class Env_Mario:
             return self._get_grid_obs()
 
     def step(self, action):
-        # self.count += 1
+        self.count += 1
         def _go_to(x, y):
             old_pos = tuple(self.agent_pos)
             self.agent_pos = (x, y)
@@ -276,7 +279,7 @@ class Env_Mario:
         return self._obs(), float(reward), done, addict.Dict(self.info)
 
     def reset(self, **kwargs):
-        self._init()
+        self._episode_init()
         return self._obs()
 
 

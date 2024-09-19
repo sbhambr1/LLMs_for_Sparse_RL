@@ -30,17 +30,17 @@ class LLM_Modulo:
                 FEASIBLE=True
                 if message["door"] == "both_keys":
                     backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
-                elif messaage["door"] = "key":
+                elif message["door"] == "key":
                     backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
-                elif message["door"] = "hiidden_key":
+                elif message["door"] == "hiidden_key":
                     backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
                 return backprompt, FEASIBLE
             else:
                 if message["door"] == "both_keys":
                     backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
-                elif messaage["door"] = "key":
+                elif message["door"] == "key":
                     backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
-                elif message["door"] = "hiidden_key":
+                elif message["door"] == "hiidden_key":
                     backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
                 return backprompt, FEASIBLE
         elif current_llm_action in feasible_actions:

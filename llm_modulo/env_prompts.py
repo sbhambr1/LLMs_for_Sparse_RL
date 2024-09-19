@@ -1,7 +1,7 @@
 import numpy as np
 
 OBJECT_TO_IDX = {
-    "walkable_area": 0,
+    "empty": 0,
     "agent": 1,
     "wall": 2,
     "tube": 3,
@@ -13,7 +13,7 @@ OBJECT_TO_IDX = {
     "dead_agent": 9}
 
 IDX_TO_OBJECT = {
-    0 : "walkable_area",
+    0 : "empty",
     1 : "agent",
     2 : "wall",
     3 : "tube",
@@ -64,11 +64,7 @@ class Mario8x11Prompts(EnvPrompts):
         super().__init__(env)
         
     def get_step_prompt(self, obs, add_text_desc):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude,\
-        and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to\
-        open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The\
-        ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description\
-        of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         if add_text_desc != '':
@@ -78,11 +74,7 @@ class Mario8x11Prompts(EnvPrompts):
         return step_prompt
 
     def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, \
-        and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to \
-        open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The \
-        ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description \
-        of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."

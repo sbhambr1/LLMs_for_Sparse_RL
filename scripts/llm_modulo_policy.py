@@ -18,7 +18,6 @@ from utils.env_mario import Env_Mario
 parser = argparse.ArgumentParser()
 
 parser.add_argument("--env_name", default="Mario-8x11", help="name of the environment to get LLM policy for")
-# parser.add_argument("--seed", type=int, default=0, help="environment seed to determine configuration")
 parser.add_argument("--variation", type=int, default=0, help="Variation to prompt OpenAI's LLM (due to stochasticity at LLM's seed=0)")
 parser.add_argument("--llm-model", default="gpt-3.5-turbo", help="LLM model to use for policy generation")
 parser.add_argument("--add_text_desc", default=True, help="Whether to give additional text description of information when agent has picked up the key or opened the door")

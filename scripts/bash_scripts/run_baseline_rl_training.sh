@@ -17,7 +17,7 @@ for env_cfg_seed in 0; do
             --seed $expt_seed \
             --save-interval 10 \
             --frames 1000000 \
-            #--stochastic False \
+            # --stochastic False \
             --additional_info "Baseline"
     done
 done

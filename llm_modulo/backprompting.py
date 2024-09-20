@@ -25,7 +25,7 @@ class LLM_Modulo:
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
-        if agent_pos[0] == self.env.objects.door.location[0] and agent_pos[1] == self.envobjects.door.location[1]:
+        if agent_pos[0] == self.env.objects.door.location[0] and agent_pos[1] == self.env.objects.door.location[1]:
             if current_llm_action in feasible_actions:
                 FEASIBLE=True
                 if message["door"] == "both_keys":
@@ -52,15 +52,15 @@ class LLM_Modulo:
                     backprompt = "Information: You cannot take 'up' action in this state as you are facing a wall. Please choose another action."
                 elif message["up"] == "tube":
                     backprompt = "Information: You cannot take 'up' action in this state as you are in the tube. Please choose another action."
-                elif message["up"] == "warn_ladder":
-                    backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
+                # elif message["up"] == "worn_ladder":
+                #     backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
                 else:
                     ValueError("Bug in env_constraints.py file") 
             elif current_llm_action == 'down':
                 if message["down"] == "wall":
                     backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
-                elif message["up"] == "warn_ladder":
-                    backprompt = "Information: You cannot take 'down' action in this state as the below ladder step is broken. Please choose another action."
+                elif message["down"] == "worn_ladder":
+                    backprompt = "Information: You cannot take 'down' action in this state as you can only use ladder to go up. Please choose another action."
                 else:
                     ValueError("Bug in env_constraints.py file") 
             elif current_llm_action == 'left':

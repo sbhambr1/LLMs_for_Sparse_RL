@@ -78,13 +78,20 @@ class Mario8x11(EnvironmentConstraints):
                 actions.append("right")
                 message = {"up":"wall","down":"wall","left":"wall","right":"","door":""}    
             elif agent_pos[1] in [2,3,4,6,8]:
-                actions.extend(["right","left"])
+                actions.append("right")
+                actions.append("left")
                 message = {"up":"wall","down":"wall","left":"","right":"","door":""}
-            elif agent_pos[1] in [5,7]:
-                actions.extend(["right","left","down"])
+            elif agent_pos[1] == 5:
+                actions.append("right")
+                actions.append("left")
+                message = {"up":"wall","down":"worn_ladder","left":"","right":"","door":""}
+            elif agent_pos[1] == 7:
+                actions.append("right")
+                actions.append("left")
+                actions.append("down")
                 message = {"up":"wall","down":"","left":"","right":"","door":""}
             elif agent_pos[1] == 9:
-                actions.append(["left"])
+                actions.append("left")
                 if not self.env.picked_key and not self.env.picked_hidden_key:
                     message = {"up":"wall","down":"wall","left":"","right":"wall","door":"both_keys"}
                 elif not self.env.picked_key and self.env.picked_hidden_key:
@@ -94,7 +101,8 @@ class Mario8x11(EnvironmentConstraints):
             # message.append("wall")    
         elif agent_pos[0] == 6:
             if agent_pos[1] in [2,4,6,7,8]:
-                actions.extend(["right","left"])
+                actions.append("right")
+                actions.append("left")
                 if agent_pos[1]==7:
                     message = {"up":"tube","down":"wall","left":"","right":"","door":""}
                 else:
@@ -103,58 +111,60 @@ class Mario8x11(EnvironmentConstraints):
                 actions.append("left")
                 message = {"up":"wall","down":"wall","left":"","right":"wall","door":""}
             elif agent_pos[1] == 3:
-                actions.extend(["right","left","up"])
+                actions.append("right")
+                actions.append("left")
+                actions.append("up")
                 message = {"up":"","down":"wall","left":"","right":"","door":""}
             elif agent_pos[1] == 1:
-                actions.extend(["right","up"])
+                actions.append("right")
+                actions.append("up")
                 message = {"up":"","down":"wall","left":"wall","right":"","door":""}
             elif agent_pos[1] == 5:
-                actions.extend(["right","left"])
+                actions.append("right")
+                actions.append("left")
+                actions.append("up")
                 message = {"up":"","down":"wall","left":"","right":"","door":""}
-                if self.env.grid[5, 5] == self.env.objects.ladder.id:
-                    actions.append("up")
-                else:
-                    message["up"]="worn_ladder"
         elif agent_pos[1] == 7:
             if agent_pos[0] in [2,3,4,5]:
                 actions.append("down")
             message = {"up":"tube","down":"","left":"wall","right":"wall","door":""}
         elif agent_pos[1] == 5:
-            if agent_pos[0] == 2:
-                if self.env.grid[3, 5] == self.env.objects.ladder.id:
-                    actions.append("down")
-                    message = {"up":"worn_ladder","down":"","left":"wall","right":"wall","door":""}
-                else:
-                    actions.append("up")
-                    message = {"up":"","down":"worn_ladder","left":"wall","right":"wall","door":""}
-            elif agent_pos[0] == 3:
-                message = {"up":"","down":"","left":"wall","right":"wall","door":""}
-                if self.env.grid[2, 5] == self.env.objects.ladder.id:
-                    actions.append("up")
-                else:
-                    message["up"] = "worn_ladder"
-                if self.env.grid[4, 5] == self.env.objects.ladder.id:
-                    actions.append("down")
-                else:
-                    message["down"] = "worn_ladder"
-            elif agent_pos[0] == 4:
-                message = {"up":"","down":"","left":"wall","right":"wall","door":""}
-                if self.env.grid[3, 5] == self.env.objects.ladder.id:
-                    actions.append("up")
-                else:
-                    message["up"] = "worn_ladder"
-                if self.env.grid[5, 5] == self.env.objects.ladder.id:
-                    actions.append("down")
-                else:
-                    message["down"] = "worn_ladder"
-            elif agent_pos[0] == 5:  
-                message = {"up":"","down":"","left":"wall","right":"wall","door":""}  
-                if self.env.grid[4, 5] == self.env.objects.ladder.id:
-                    actions.append("up")
-                    message["down"] = "worn_ladder"
-                else:
-                    actions.append("down")
-                    message["up"] = "worn_ladder"
+            if agent_pos[0] in [2, 3, 4, 5]:
+                actions.append("up")
+                message = {"up":"","down":"worn_ladder","left":"wall","right":"wall","door":""}
+                # if self.env.grid[3, 5] == self.env.objects.ladder.id:
+                #     actions.append("down")
+                #     message = {"up":"worn_ladder","down":"","left":"wall","right":"wall","door":""}
+                # else:
+                    
+            # elif agent_pos[0] == 3:
+            #     message = {"up":"","down":"","left":"wall","right":"wall","door":""}
+            #     if self.env.grid[2, 5] == self.env.objects.ladder.id:
+            #         actions.append("up")
+            #     else:
+            #         message["up"] = "worn_ladder"
+            #     if self.env.grid[4, 5] == self.env.objects.ladder.id:
+            #         actions.append("down")
+            #     else:
+            #         message["down"] = "worn_ladder"
+            # elif agent_pos[0] == 4:
+            #     message = {"up":"","down":"","left":"wall","right":"wall","door":""}
+            #     if self.env.grid[3, 5] == self.env.objects.ladder.id:
+            #         actions.append("up")
+            #     else:
+            #         message["up"] = "worn_ladder"
+            #     if self.env.grid[5, 5] == self.env.objects.ladder.id:
+            #         actions.append("down")
+            #     else:
+            #         message["down"] = "worn_ladder"
+            # elif agent_pos[0] == 5:  
+            #     message = {"up":"","down":"","left":"wall","right":"wall","door":""}  
+            #     if self.env.grid[4, 5] == self.env.objects.ladder.id:
+            #         actions.append("up")
+            #         message["down"] = "worn_ladder"
+            #     else:
+            #         actions.append("down")
+            #         message["up"] = "worn_ladder"
         elif agent_pos[0]==5:
             if agent_pos[1] in [1,3]:
                 actions.append("down")

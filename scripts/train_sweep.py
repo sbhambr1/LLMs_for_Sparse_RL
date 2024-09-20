@@ -41,8 +41,8 @@ parser.add_argument("--save-interval", type=int, default=10,
                     help="number of updates between two saves (default: 10, 0 means no saving)")
 parser.add_argument("--procs", type=int, default=16,
                     help="number of processes (default: 16)")
-parser.add_argument("--frames", type=int, default=10**6,
-                    help="number of frames of training (default: 1e6)")
+parser.add_argument("--frames", type=int, default=2e5,
+                    help="number of frames of training (default: 2e5)")
 parser.add_argument("--stochastic", default=False, action="store_true",
                     help="add stochastic actions with default probability of 0.9")
 parser.add_argument("--llm_rs", default=False, action="store_true",
@@ -87,7 +87,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     
     sweep_config = {
-        'method': 'bayes',
+        'method': 'grid',
         'metric': {
             'name': 'return_mean',
             'goal': 'maximize'
@@ -116,7 +116,7 @@ if __name__ == "__main__":
                 'values': [16]
             },
             'frames': {
-                'values': [10**6]
+                'values': [2e5]
             },            
             'additional_info': {
                 'values': ['WANDB_sweep']
@@ -349,4 +349,4 @@ if __name__ == "__main__":
                     
                 wandb.log({"return_mean": return_mean})
                     
-    wandb.agent(sweep_id, function=train_agent, count=10)
+    wandb.agent(sweep_id, function=train_agent, count=20)

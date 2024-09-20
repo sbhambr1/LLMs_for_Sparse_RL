@@ -26,7 +26,7 @@ parser.add_argument("--additional_expt_info", default="", help="Additional infor
     
 def get_initial_prompt(env_name, obs, env_prompter, add_text_desc):
     if 'Mario' in env_name:
-         TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use a worn-out ladder to go back up. The ladder will break after one use, and the door can only be opened after both keys are collected. You will be given a description of the maze at the first step and you need to choose the set of actions to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+         TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use the ladder to go back up. The door can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         
     else:
         raise NotImplementedError

@@ -200,9 +200,11 @@ class Env_Mario:
             self.grid[x, y] = self.objects.agent.id
             if self.agent_pos != old_pos:
                 if old_pos in self.ladder_locations:
-                    self.grid[old_pos[0], old_pos[1]] = self.objects.worn_ladder.id
+                    self.grid[old_pos[0], old_pos[1]] = self.objects.ladder.id
                 elif old_pos in self.tube_locations:
                     self.grid[old_pos[0], old_pos[1]] = self.objects.tube.id
+                elif old_pos == self.objects.door.location:
+                    self.grid[old_pos[0], old_pos[1]] = self.objects.door.id
                 else:
                     self.grid[old_pos[0], old_pos[1]] = 0
 
@@ -215,8 +217,11 @@ class Env_Mario:
         if self.grid[next_x, next_y] == self.objects.wall.id:
             pass
         elif self.grid[next_x, next_y] == self.objects.ladder.id:
-            self.visited_ladder = True
-            _go_to(next_x, next_y)
+            if old_pos == (1,5):
+                pass
+            else:
+                self.visited_ladder = True
+                _go_to(next_x, next_y)
         elif self.grid[next_x, next_y] == self.objects.tube.id:
             # we can only go down using the tube
             if next_x > self.agent_pos[0]:
@@ -235,20 +240,23 @@ class Env_Mario:
             elif self.hard_exploration:
                 early_stop_done = True
                 _go_to(next_x, next_y)
-        elif self.grid[next_x, next_y] == self.objects.worn_ladder.id:
-            # hard exploration: not early stop, stay at the same place; otherwise terminate directly
-            if not self.hard_exploration:
+            else:
                 _go_to(next_x, next_y)
-                self.grid[next_x, next_y] = self.objects.dead_agent.id
-                early_stop_done = True
-                self.agent_dead = True
-        elif self.grid[next_x, next_y] == 0:
+        # elif self.grid[next_x, next_y] == self.objects.worn_ladder.id: # NEVER HAPPENS
+        #     # hard exploration: not early stop, stay at the same place; otherwise terminate directly
+        #     if not self.hard_exploration:
+        #         _go_to(next_x, next_y)
+        #         # self.grid[next_x, next_y] = self.objects.dead_agent.id
+        #         # early_stop_done = True
+        #         # self.agent_dead = True
+            
+        elif self.grid[next_x, next_y] == 0: # empty cell
             if not (old_pos in self.tube_locations and action == 0):
                 # edge case: the agent went one step down on the ladder and try going back to the top
-                if old_pos in self.ladder_locations and action == 0 and self.grid[old_pos[0]+1, old_pos[1]] == self.objects.ladder.id:
-                    early_stop_done = True
-                elif old_pos in self.ladder_locations and action == 1 and self.grid[old_pos[0]-1, old_pos[1]] == self.objects.ladder.id:
-                    early_stop_done = True
+                # if old_pos in self.ladder_locations and action == 0 and self.grid[old_pos[0]+1, old_pos[1]] == self.objects.ladder.id:
+                #     early_stop_done = True
+                # elif old_pos in self.ladder_locations and action == 1 and self.grid[old_pos[0]-1, old_pos[1]] == self.objects.ladder.id:
+                #     early_stop_done = True
                 _go_to(next_x, next_y)
         # update flag
         self.visited_bottom = self.visited_bottom or self.agent_pos[0] == self.height - 2

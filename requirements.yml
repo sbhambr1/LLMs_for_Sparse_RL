@@ -168,6 +168,7 @@ dependencies:
       - pytz==2024.1
       - pyyaml==6.0.1
       - ratelimit==2.2.1
+      - ray[tune]==2.36.0
       - regex==2023.12.25
       - requests==2.31.0
       - rich==13.7.1

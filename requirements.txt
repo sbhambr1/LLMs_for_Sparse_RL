@@ -156,3 +156,4 @@ zope.event==5.0
 zope.interface==6.2
 addict==2.4.0
 scikit-image==0.24.0
+ray[tune]==2.36.0

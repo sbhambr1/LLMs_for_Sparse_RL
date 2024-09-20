@@ -193,7 +193,7 @@ class Env_Mario:
             return self._get_grid_obs()
 
     def step(self, action):
-        self.count += 1
+        # self.count += 1
         def _go_to(x, y):
             old_pos = tuple(self.agent_pos)
             self.agent_pos = (x, y)

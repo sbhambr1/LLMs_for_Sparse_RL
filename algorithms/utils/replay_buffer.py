@@ -107,11 +107,11 @@ class Replay_Buffer:
             action = np.array([action]).astype(INT_ACTION_DTYPE)
         self.acts_buf = np.zeros((self.buffer_size, *action.shape), dtype=action.dtype)
         # init reward buffer
-        self.rewards_buf = np.zeros((self.buffer_size, 1), dtype=np.float)
+        self.rewards_buf = np.zeros((self.buffer_size, 1), dtype=np.float_)
         # init next observation buffer
         self.next_obs_buf = np.zeros((self.buffer_size, *state.shape), dtype=state.dtype)
         # init done buffer
-        self.done_buf = np.zeros((self.buffer_size, 1), dtype=np.float)
+        self.done_buf = np.zeros((self.buffer_size, 1), dtype=np.float_)
         # init info buffer
         self.info_buff = np.array([dict() for _ in range(self.buffer_size)], dtype=object)
 

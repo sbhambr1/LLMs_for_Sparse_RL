@@ -2,8 +2,8 @@ import wandb
 
 
 class Wandb_Logger:
-    def __init__(self, proj_name, run_name):
-        wandb.init(project=proj_name, name=run_name)
+    def __init__(self, entity_name, proj_name, run_name):
+        wandb.init(entity=entity_name, project=proj_name, name=run_name)
 
     def log(self, log_dict, prefix='', step=None):
         log_info = log_dict

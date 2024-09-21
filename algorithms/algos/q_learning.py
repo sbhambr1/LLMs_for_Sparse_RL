@@ -62,7 +62,7 @@ class Q_Learning:
     def _initialize_buffer(self):
         if not self.config.args.test:
             if self.use_sil:
-                from common.sil_replay_buffer import SIL_Replay_Buffer
+                from algorithms.utils.sil_replay_buffer import SIL_Replay_Buffer
                 self.memory = SIL_Replay_Buffer(sil_buffer_size=self.sil_buffer_size,
                                                 sil_batch_size=self.sil_batch_size,
                                                 buffer_size=self.config.replay_buffer_size,

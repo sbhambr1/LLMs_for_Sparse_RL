@@ -167,6 +167,7 @@ dependencies:
       - python-utils==3.8.2
       - pytz==2024.1
       - pyyaml==6.0.1
+      - pynvml==11.5.3
       - ratelimit==2.2.1
       - ray[tune]==2.36.0
       - regex==2023.12.25

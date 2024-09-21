@@ -9,7 +9,7 @@ os.environ["WANDB_MODE"] = "online"
 def main():
     env = Env_Mario(success_reward=1)
     config = Q_Baseline_Config()
-    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips24', run_name='household-q-baseline') if config.args.use_wandb else None
+    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_baseline')
     agent = Q_Learning(env, config, logger=logger)
     agent.train()
 

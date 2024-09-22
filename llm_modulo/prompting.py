@@ -1,18 +1,10 @@
 from llm_modulo.env_prompts import *
 
-class MinigridPromptConstructor:
+class MarioPromptConstructor:
     
-    def __init__(self, env, seed):
-        if env == 'MiniGrid-DoorKey-5x5-v0':
-            self.prompt_constructor = DoorKey5x5Prompts(env, seed)
-        elif env == 'MiniGrid-Empty-Random-5x5-v0':
-            self.prompt_constructor = EmptyRandom5x5Prompts(env, seed)
-        elif env == 'MiniGrid-LavaGapS5-v0':
-            self.prompt_constructor = LavaGapS5Prompts(env, seed)
-        elif env == 'MiniGrid-KeyCorridorS3R1-v0':
-            self.prompt_constructor = KeyCorridorS3R1Prompts(env, seed)
-        elif env == 'MiniGrid-DoorKey-6x6-v0':
-            self.prompt_constructor = DoorKey6x6Prompts(env, seed)
+    def __init__(self, env_name, env):
+        if env_name == "MineCraft-10x15":
+            self.prompt_constructor = MineCarft10x15Prompts(env)
         else:
             raise NotImplementedError 
         

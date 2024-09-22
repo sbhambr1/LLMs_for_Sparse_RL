@@ -1,19 +1,13 @@
 from llm_modulo.env_constraints import *
+from utils.env_craft import Env_Craft
 import random
 
 class LLM_Modulo:
     
-    def __init__(self, env, seed):
-        if env == 'MiniGrid-DoorKey-5x5-v0':
-            self.env_critics = DoorKey5x5(env, seed)
-        elif env == 'MiniGrid-Empty-Random-5x5-v0':
-            self.env_critics = EmptyRandom5x5(env, seed)
-        elif env == 'MiniGrid-LavaGapS5-v0':
-            self.env_critics = LavaGapS5(env, seed)
-        elif env == 'MiniGrid-KeyCorridorS3R1-v0':
-            self.env_critics = KeyCorridorS3R1(env, seed)
-        elif env == 'MiniGrid-DoorKey-6x6-v0':
-            self.env_critics = DoorKey6x6(env, seed)
+    def __init__(self, env_name, env):
+        if env_name == "MineCraft-10x15":
+            self.env = env
+            self.env_critics = MineCraft10x15(env)
         else:
             raise NotImplementedError
         
@@ -25,37 +19,57 @@ class LLM_Modulo:
                 state (symbolic observation),
         Output: backprompt (str)
         """
-        agent_pos, agent_dir = self.env_critics.get_agent_pos(state)
+        agent_pos = self.env_critics.get_agent_pos(state)
         current_llm_action = llm_response
-        feasible_actions = self.env_critics.feasible_actions(agent_pos, agent_dir, llm_actions)
+        feasible_actions,message = self.env_critics.feasible_actions(agent_pos, llm_actions)
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
-        if current_llm_action in feasible_actions:
+        if agent_pos[0] == self.env.objects.door.location[0] and agent_pos[1] == self.env.objects.door.location[1]:
+            if current_llm_action in feasible_actions:
+                FEASIBLE=True
+                if message["door"] == "both_keys":
+                    backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
+                elif message["door"] == "key":
+                    backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
+                elif message["door"] == "hiidden_key":
+                    backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
+                return backprompt, FEASIBLE
+            else:
+                if message["door"] == "both_keys":
+                    backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
+                elif message["door"] == "key":
+                    backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
+                elif message["door"] == "hiidden_key":
+                    backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
+                return backprompt, FEASIBLE
+        elif current_llm_action in feasible_actions:
             FEASIBLE=True
             return backprompt, FEASIBLE
         else:
-            if current_llm_action == 'move forward':
-                backprompt = "Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action."
-            elif current_llm_action == 'pickup key':
-                if 'pickup key' in llm_actions:
-                    backprompt = "Information: You have already picked up the key. Please choose another action."
+            if current_llm_action == 'up':
+                if message["up"] == "wall":
+                    backprompt = "Information: You cannot take 'up' action in this state as you are facing a wall. Please choose another action."
+                elif message["up"] == "tube":
+                    backprompt = "Information: You cannot take 'up' action in this state as you are in the tube. Please choose another action."
+                # elif message["up"] == "worn_ladder":
+                #     backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
                 else:
-                    backprompt = "Information: You cannot 'pickup key' in this state as you are not facing the key. Please choose another action."
-            elif current_llm_action == 'open door':
-                if 'open door' in llm_actions:
-                    backprompt = "Information: You have already opened the door. Please choose another action."
+                    ValueError("Bug in env_constraints.py file") 
+            elif current_llm_action == 'down':
+                if message["down"] == "wall":
+                    backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
+                elif message["down"] == "worn_ladder":
+                    backprompt = "Information: You cannot take 'down' action in this state as you can only use ladder to go up. Please choose another action."
                 else:
-                    backprompt = "Information: You cannot 'open door' in this state as you are not facing the door. Please choose another action."
+                    ValueError("Bug in env_constraints.py file") 
+            elif current_llm_action == 'left':
+                backprompt = "Information: You cannot take 'left' action in this state as you are facing a wall. Please choose another action."
+            elif current_llm_action == 'right':
+                backprompt = "Information: You cannot take 'right' action in this state as you are facing a wall. Please choose another action."
                             
         if give_feasible_actions:                            
             feasible = f'The following actions are feasible in this state: {feasible_actions}.'
             backprompt += feasible
             
         return backprompt, FEASIBLE
-                
-    
-    
-    
-        
-    

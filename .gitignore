@@ -20,3 +20,4 @@ events.out.tfevents*
 storage/
 wandb/
 key.txt
+.venv/*

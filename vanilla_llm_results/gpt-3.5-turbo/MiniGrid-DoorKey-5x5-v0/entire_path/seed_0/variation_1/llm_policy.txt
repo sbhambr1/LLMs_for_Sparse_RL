@@ -1,0 +1,8 @@
+turn left
+move forward
+turn right
+move forward
+pickup key
+turn right
+open door
+move forward

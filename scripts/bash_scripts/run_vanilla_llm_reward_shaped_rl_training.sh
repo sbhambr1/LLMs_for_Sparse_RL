@@ -1,5 +1,5 @@
 # env = 
-# MiniGrid-DoorKey-5x5-v0, seeds= 0 2 3 5
+# MiniGrid-DoorKey-5x5-v0, seeds= 0 3 5
 # MiniGrid-Empty-Random-5x5-v0, seeds= 0 1 2 
 # MiniGrid-LavaGapS5-v0, seeds= 0
 # MiniGrid-DoorKey-6x6-v0, seeds= 0 // 1000000 frames
@@ -11,12 +11,12 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 for env_cfg_seed in 0; do
     for expt_seed in 1 2 3 4 5; do
         python scripts/train_vanilla_llm.py \
-            --algo "ppo" \
+            --algo "a2c" \
             --env "MiniGrid-DoorKey-6x6-v0" \
             --env_config_seed $env_cfg_seed \
             --seed $expt_seed \
             --save-interval 10 \
-            --frames 100000 \
+            --frames 1000000 \
             --stochastic \
             --llm_rs \
             --llm_variation 0 \

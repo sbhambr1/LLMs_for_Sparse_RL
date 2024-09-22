@@ -43,3 +43,5 @@ class Q_Baseline_Config(Q_Learning_Config):
         self.max_episode_len = 2000
         self.lr = 0.1
         self.preprocess_experience_func = None
+        self.render = True
+        self.render_success = True

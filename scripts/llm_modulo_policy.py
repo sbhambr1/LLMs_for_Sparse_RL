@@ -10,7 +10,7 @@ from llm_modulo.backprompting import *
 from llm_modulo.prompting import *
 import warnings
 warnings.filterwarnings("ignore")
-from utils.env_mario import Env_Mario
+from utils.env_mario_llm import Env_Mario
 
 # key_file = open(os.getcwd()+'/key.txt', 'r')
 # API_KEY = key_file.readline().rstrip()

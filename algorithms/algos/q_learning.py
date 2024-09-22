@@ -21,7 +21,7 @@ class Q_Learning:
         self.i_episode = 0      # current episode id
         self.episode_step = 0       # number of steps in curr episode
         self.is_greedy = False      # whether to use greedy action selection
-        self.is_eval = config.args.test
+        self.is_eval = config.test
 
         ##################
         ##### Config #####
@@ -60,7 +60,7 @@ class Q_Learning:
         self.min_score = np.inf
 
     def _initialize_buffer(self):
-        if not self.config.args.test:
+        if not self.config.test:
             if self.use_sil:
                 from algorithms.utils.sil_replay_buffer import SIL_Replay_Buffer
                 self.memory = SIL_Replay_Buffer(sil_buffer_size=self.sil_buffer_size,
@@ -188,7 +188,7 @@ class Q_Learning:
         if self.use_sil and self.should_add_to_sil(score, done):
             self.add_experience_to_sil_buffer(curr_traj)
         # reset is_eval
-        self.is_eval = self.config.args.test
+        self.is_eval = self.config.test
         self.post_episode_update(episode_done=done, episode_score=score)
 
         self.max_score = max(self.max_score, score)
@@ -224,6 +224,6 @@ class Q_Learning:
     def train(self):
         for i_episode in range(self.n_episode):
             init_state = self.env.reset()
-            is_rendering = self.config.args.render and (i_episode + 1) % self.config.render_freq == 0
-            self.train_episode(init_state=init_state, step_func=self.step, is_rendering=is_rendering)
+            is_rendering = self.config.render and (i_episode + 1) % self.config.render_freq == 0
+            self.train_episode(init_state=init_state, step_func=self.step, is_rendering=is_rendering, return_rgb=True)
 

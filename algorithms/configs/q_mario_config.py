@@ -45,3 +45,4 @@ class Q_Baseline_Config(Q_Learning_Config):
         self.preprocess_experience_func = None
         self.render = True
         self.render_success = True
+        self.test = False

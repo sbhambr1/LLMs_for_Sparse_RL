@@ -1,5 +1,5 @@
 from llm_modulo.env_constraints import *
-from utils.env_mario import Env_Mario
+from utils.env_mario_llm import Env_Mario
 import random
 
 class LLM_Modulo:

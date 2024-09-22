@@ -6,7 +6,6 @@ import os
 import numpy as np
 import plotly.colors as colors
 from skimage.transform import resize
-
 from utils.grid_renderer import Grid_Renderer
 
 
@@ -25,6 +24,8 @@ class Env_Mario:
 
         self.img_h = 84
         self.img_w = 84
+        self.max_steps = 700
+        self.count = 0
         self.use_state = use_state
         if self.use_state:
             self.observation_space = spaces.Box(low=0, high=1, shape=(88, ), dtype=np.int16)
@@ -35,7 +36,7 @@ class Env_Mario:
                                                     dtype=np.uint8)
             self.obs_type = np.uint8
         # game config
-        self.hard_exploration = True    # whether to make the exploration harder
+        self.hard_exploration = False    # whether to make the exploration harder
         self.success_reward = success_reward
         self.height = 8
         self.width = 11
@@ -123,12 +124,12 @@ class Env_Mario:
         self.ladder_locations = set(self.objects.ladder.locations)
         self.tube_locations = set(self.objects.tube.locations)
         # init
-        self._init()
+        self._episode_init()
         # init renderer
         color_map = {self.objects[obj].id:self.objects[obj].color for obj in self.objects}
         self.renderer = Grid_Renderer(grid_size=20, color_map=color_map)
 
-    def _init(self):
+    def _episode_init(self):
         # update flags and state info
         self.at_ladder = False
         self.visited_ladder = False
@@ -140,6 +141,9 @@ class Env_Mario:
         self.agent_dead = False
         self.visited_bottom = False
         self.back_to_upper = False
+        
+        self.max_steps = 700
+        self.count = 0
 
         self.info = dict()
         self.agent_pos = self.objects.agent.location
@@ -189,15 +193,18 @@ class Env_Mario:
             return self._get_grid_obs()
 
     def step(self, action):
+        # self.count += 1
         def _go_to(x, y):
             old_pos = tuple(self.agent_pos)
             self.agent_pos = (x, y)
             self.grid[x, y] = self.objects.agent.id
             if self.agent_pos != old_pos:
                 if old_pos in self.ladder_locations:
-                    self.grid[old_pos[0], old_pos[1]] = self.objects.worn_ladder.id
+                    self.grid[old_pos[0], old_pos[1]] = self.objects.ladder.id
                 elif old_pos in self.tube_locations:
                     self.grid[old_pos[0], old_pos[1]] = self.objects.tube.id
+                elif old_pos == self.objects.door.location:
+                    self.grid[old_pos[0], old_pos[1]] = self.objects.door.id
                 else:
                     self.grid[old_pos[0], old_pos[1]] = 0
 
@@ -210,8 +217,11 @@ class Env_Mario:
         if self.grid[next_x, next_y] == self.objects.wall.id:
             pass
         elif self.grid[next_x, next_y] == self.objects.ladder.id:
-            self.visited_ladder = True
-            _go_to(next_x, next_y)
+            if old_pos == (1,5):
+                pass
+            else:
+                self.visited_ladder = True
+                _go_to(next_x, next_y)
         elif self.grid[next_x, next_y] == self.objects.tube.id:
             # we can only go down using the tube
             if next_x > self.agent_pos[0]:
@@ -230,20 +240,23 @@ class Env_Mario:
             elif self.hard_exploration:
                 early_stop_done = True
                 _go_to(next_x, next_y)
-        elif self.grid[next_x, next_y] == self.objects.worn_ladder.id:
-            # hard exploration: not early stop, stay at the same place; otherwise terminate directly
-            if not self.hard_exploration:
+            else:
                 _go_to(next_x, next_y)
-                self.grid[next_x, next_y] = self.objects.dead_agent.id
-                early_stop_done = True
-                self.agent_dead = True
-        elif self.grid[next_x, next_y] == 0:
+        # elif self.grid[next_x, next_y] == self.objects.worn_ladder.id: # NEVER HAPPENS
+        #     # hard exploration: not early stop, stay at the same place; otherwise terminate directly
+        #     if not self.hard_exploration:
+        #         _go_to(next_x, next_y)
+        #         # self.grid[next_x, next_y] = self.objects.dead_agent.id
+        #         # early_stop_done = True
+        #         # self.agent_dead = True
+            
+        elif self.grid[next_x, next_y] == 0: # empty cell
             if not (old_pos in self.tube_locations and action == 0):
                 # edge case: the agent went one step down on the ladder and try going back to the top
-                if old_pos in self.ladder_locations and action == 0 and self.grid[old_pos[0]+1, old_pos[1]] == self.objects.ladder.id:
-                    early_stop_done = True
-                elif old_pos in self.ladder_locations and action == 1 and self.grid[old_pos[0]-1, old_pos[1]] == self.objects.ladder.id:
-                    early_stop_done = True
+                # if old_pos in self.ladder_locations and action == 0 and self.grid[old_pos[0]+1, old_pos[1]] == self.objects.ladder.id:
+                #     early_stop_done = True
+                # elif old_pos in self.ladder_locations and action == 1 and self.grid[old_pos[0]-1, old_pos[1]] == self.objects.ladder.id:
+                #     early_stop_done = True
                 _go_to(next_x, next_y)
         # update flag
         self.visited_bottom = self.visited_bottom or self.agent_pos[0] == self.height - 2
@@ -264,12 +277,17 @@ class Env_Mario:
         self.info['next_tuple_state'] = tuple(self._get_grid_obs().tolist())
         if self.info_img:
             self.info['next_img_state'] = np.copy(self._get_img_obs())
-        done = early_stop_done or self.door_opened
+        # done = early_stop_done or self.door_opened
         reward = self.success_reward if self.door_opened else 0
+        if self.count >= self.max_steps:
+            truncated = True
+        else: 
+            truncated = False
+        done = early_stop_done or self.door_opened or truncated
         return self._obs(), float(reward), done, addict.Dict(self.info)
 
     def reset(self, **kwargs):
-        self._init()
+        self._episode_init()
         return self._obs()
 
 

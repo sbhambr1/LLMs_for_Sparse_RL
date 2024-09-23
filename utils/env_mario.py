@@ -1,4 +1,5 @@
 import cv2
+import numpy as np
 import gym
 from addict import addict
 from gym import spaces
@@ -11,7 +12,7 @@ from utils.grid_renderer import Grid_Renderer
 
 
 class Env_Mario:
-    def __init__(self, use_state=True, info_img=False, success_reward=0):
+    def __init__(self, use_state=True, info_img=False, success_reward=0, stochastic=False):
         """
         Success_reward is 0 by default since in ASGRL & other
             Planning+RL baselines, the reward is given by the symbolic model (not from the env)
@@ -22,6 +23,7 @@ class Env_Mario:
         # actions: up, down, left, right
         self.action_space = spaces.Discrete(4)
         self.actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
+        self.stochastic = stochastic
 
         self.img_h = 84
         self.img_w = 84
@@ -200,6 +202,13 @@ class Env_Mario:
                     self.grid[old_pos[0], old_pos[1]] = self.objects.tube.id
                 else:
                     self.grid[old_pos[0], old_pos[1]] = 0
+                    
+        if self.stochastic:
+            self.prob = 0.9
+            if np.random.uniform() < self.prob:
+                action = action
+            else:
+                action = np.random.choice([i for i in range(4) if i != action])
 
         assert action <= 3
         old_pos = tuple(self.agent_pos)

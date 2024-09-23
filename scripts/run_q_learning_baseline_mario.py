@@ -11,14 +11,18 @@ os.environ["WANDB_MODE"] = "online"
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", type=int, default=0,
                     help="random seed (default: 0)")
+parser.add_argument("--stochastic", action='store_true',
+                    help="use stochastic environment")
+parser.add_argument("--additional_info", type=str, default='',
+                    help="additional info for the run")
 
 def main():
     
     args = parser.parse_args()
     utils.seed(args.seed)
-    env = Env_Mario(success_reward=1)
+    env = Env_Mario(success_reward=1, stochastic=args.stochastic)
     config = Q_Baseline_Config()
-    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_learning_baseline')
+    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_learning_baseline'+args.additional_info)
     agent = Q_Learning(env, config, logger=logger)
     agent.train()
 

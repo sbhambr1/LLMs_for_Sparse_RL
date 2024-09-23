@@ -25,44 +25,17 @@ class LLM_Modulo:
         random.shuffle(feasible_actions)  # Shuffle the list of feasible actions
         backprompt = ''
         FEASIBLE=False
-        if agent_pos[0] == self.env.objects.door.location[0] and agent_pos[1] == self.env.objects.door.location[1]:
-            if current_llm_action in feasible_actions:
-                FEASIBLE=True
-                if message["door"] == "both_keys":
-                    backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
-                elif message["door"] == "key":
-                    backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
-                elif message["door"] == "hiidden_key":
-                    backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
-                return backprompt, FEASIBLE
-            else:
-                if message["door"] == "both_keys":
-                    backprompt = "Information: you are at door position but you can not open the door because you do not have both keys. Please find both keys first which are located down-stairs"
-                elif message["door"] == "key":
-                    backprompt = "Information: you are at door position and you have hidden key with you but you can not open the door because you do not have the other key. Please find the other key first which are located down-stairs"
-                elif message["door"] == "hiidden_key":
-                    backprompt = "Information: you are at door position and you have the key with you but you can not open the door because you do not have the hidden key. Please find the hidden key first which are located down-stairs"
-                return backprompt, FEASIBLE
-        elif current_llm_action in feasible_actions:
+    
+        if current_llm_action in feasible_actions:
             FEASIBLE=True
+            if 'extra' in message:
+                backprompt = message['extra']
             return backprompt, FEASIBLE
         else:
             if current_llm_action == 'up':
-                if message["up"] == "wall":
-                    backprompt = "Information: You cannot take 'up' action in this state as you are facing a wall. Please choose another action."
-                elif message["up"] == "tube":
-                    backprompt = "Information: You cannot take 'up' action in this state as you are in the tube. Please choose another action."
-                # elif message["up"] == "worn_ladder":
-                #     backprompt = "Information: You cannot take 'up' action in this state as the above ladder step is broken. Please choose another action."
-                else:
-                    ValueError("Bug in env_constraints.py file") 
+                backprompt = "Information: You cannot take 'up' action in this state as you are facing a wall. Please choose another action."
             elif current_llm_action == 'down':
-                if message["down"] == "wall":
-                    backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
-                elif message["down"] == "worn_ladder":
-                    backprompt = "Information: You cannot take 'down' action in this state as you can only use ladder to go up. Please choose another action."
-                else:
-                    ValueError("Bug in env_constraints.py file") 
+                backprompt = "Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action."
             elif current_llm_action == 'left':
                 backprompt = "Information: You cannot take 'left' action in this state as you are facing a wall. Please choose another action."
             elif current_llm_action == 'right':

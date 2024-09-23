@@ -1,3 +1,4 @@
+import numpy as np
 OBJECT_TO_IDX = {
     "walkable_area": 0,
     "agent": 1,
@@ -64,15 +65,40 @@ class MineCraft10x15(EnvironmentConstraints):
             actions.extend(["up","left"])
             message = {"up":"","down":"wall","left":"","right":"wall"}
         elif agent_pos[1] == 1:
-            agent_pos[0] in [2,3,4,5,6,7]:
-            actions.extend(["up","right","down"])
-            message = {"up":"","down":"","left":"wall","right":""}
+            if agent_pos[0] in [2,3,4,5,6,7]:
+                actions.extend(["up","right","down"])
+                message = {"up":"","down":"","left":"wall","right":""}
         elif agent_pos[1] == 13:
-            agent_pos[0] in [2,3,4,5,6,7]:
-            actions.extend(["up","left","down"])
-            message = {"up":"","down":"","left":"","right":"wall"}
+            if agent_pos[0] in [2,3,4,5,6,7]:
+                actions.extend(["up","left","down"])
+                message = {"up":"","down":"","left":"","right":"wall"}
         else:
             actions.extend(["up","right","down","left"])
+            if agent_pos == (7,1): # at workshop_1
+                if self.env.is_stick_made:
+                    message['extra'] = "You are at workshop-1. And you have already made sticks."
+                else:
+                    if self.env.n_processed_wood == 0:
+                        message['extra'] = "You are at workshop-1. And you can not make sticks because you do not have processed sticks."
+            elif agent_pos == (7,3): # at workshop_2
+                if self.env.is_plank_made:
+                    message['extra'] = "You are at workshop-2. And you have already made planks."
+                else:
+                    if self.env.n_processed_wood == 0:
+                        message['extra'] = "You are at workshop-2. And you can not make planks because you do not have processed sticks."
+            elif agent_pos == (7,5): # at workshop_3
+                if not self.env.is_stick_made and not self.env.is_plank_made:
+                    message['extra'] = "You are at workshop-3. And you can not make ladder because you do not have sticks and planks with you."
+                elif self.env.is_stick_made and not self.env.is_plank_made:
+                    message['extra'] = "You are at workshop-3 and you have sticks with you. But you can not make ladder because you do not have planks with you."
+                elif not self.env.is_stick_made and self.env.is_plank_made:
+                    message['extra'] = "You are at workshop-3 and you have planks with you. But you can not make ladder because you do not have sticks with you."
+            elif agent_pos == (7,8): # at processing_unit
+                if self.env.all_wood_collected:
+                    message['extra'] = "You are at wood processing unit. And you have alreaady processed all the woods."
+                else:
+                    if self.carry_list['wood'] == 0:
+                        message['extra'] = "You are at wood processing unit. But you can not process wood because you do not have any raw wood blocks."
             #raise ValueError("Agent position not recognized.")
     
         return actions,message

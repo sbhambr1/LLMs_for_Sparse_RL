@@ -1,6 +1,7 @@
 import os
 import utils
 import argparse
+import pickle
 from utils.env_mario import Env_Mario
 from algorithms.configs.q_mario_config import Q_Baseline_Config
 from algorithms.algos.q_learning import Q_Learning
@@ -24,8 +25,16 @@ def main():
     utils.seed(args.seed)
     env = Env_Mario(success_reward=1, stochastic=args.stochastic)
     config = Q_Baseline_Config()
-    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_learning_baseline'+args.additional_info)
-    llm_rs_policy = None
+    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_learning_pbrs'+args.additional_info)
+    
+    if args.reshape_reward != '':
+        llm_rs_file = args.reshape_reward
+        with open(llm_rs_file, 'rb') as f:
+            llm_rs_policy = pickle.load(f)
+        print(f"[INFO] LLM reward shaping plan loaded from {llm_rs_file}.\n")
+    else:
+        llm_rs_policy = None
+    
     agent = Q_Learning(env, config, logger=logger, reshape_reward=llm_rs_policy)
     agent.train()
 

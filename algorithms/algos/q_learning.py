@@ -8,7 +8,7 @@ from algorithms.utils.default_addict import Default_Addict
 
 
 class Q_Learning:
-    def __init__(self, env, config, agent_id=0, logger=None, agent_name=''):
+    def __init__(self, env, config, agent_id=0, logger=None, agent_name='', reshape_reward=None):
         self.q_table = Default_Addict()
         self.env = env
         self.logger = logger
@@ -22,6 +22,7 @@ class Q_Learning:
         self.episode_step = 0       # number of steps in curr episode
         self.is_greedy = False      # whether to use greedy action selection
         self.is_eval = config.test
+        self.reshape_reward = reshape_reward
 
         ##################
         ##### Config #####
@@ -128,6 +129,14 @@ class Q_Learning:
             for i in range(states.shape[0]):
                 state, next_state = self._preprocess_state(states[i]), self._preprocess_state(next_states[i])
                 action, reward, done = actions[i][0], rewards[i][0], dones[i][0]
+                if self.reshape_reward is not None: 
+                    for j in range(i, states.shape[0]):
+                        temp = self._preprocess_state(states[j])
+                        next_action = None
+                        if temp == next_state:
+                            next_action = actions[j][0]
+                            break
+                    reward = self.get_potential_based_shaped_reward(state, action, reward, next_state, next_action)
                 self.q_update(experience=(state, action, reward, next_state, done, info))
         # sample from 1 step buffer
         experiences = self.memory.sample(is_to_tensor=False)
@@ -136,6 +145,34 @@ class Q_Learning:
             experiences = self.preprocess_experience_func(experiences)
         _update_with_sampled_experiences(experiences)
         return None
+    
+    def get_potential_based_shaped_reward(self, state, action, reward, next_state, next_action):
+        """
+        Look-ahead potential-based shaped reward
+        F(s, a, s', a') =  γΦ(s',a') - Φ(s, a)
+        """
+        #todo: test this function with actual reward shaping plan
+        # assumes reshape_reward is a list of tuples (state, action, potential)
+        
+        current_state_potential = 0
+        next_state_potential = 0
+        
+        if next_action is None:
+            next_state_potential = 0
+        else:
+            for i in range(len(self.reshape_reward)):
+                temp = self._preprocess_state(self.reshape_reward[i][0])
+                if temp == state and self.reshape_reward[i][1] == action:
+                    current_state_potential = self.reshape_reward[i][2]
+                    break
+            for i in range(len(self.reshape_reward)):
+                temp = self._preprocess_state(self.reshape_reward[i][0])
+                if temp == next_state and self.reshape_reward[i][1] == next_action:
+                    next_state_potential = self.reshape_reward[i][2]
+                    break
+            reshaped_reward = reward + self.gamma * next_state_potential - current_state_potential
+        return reshaped_reward
+        
 
     def _render(self):
         self.env.render()

@@ -16,7 +16,7 @@ class Env_Craft:
         # actions: up, down, left, right
         self.action_space = spaces.Discrete(4)
         self.actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
-        self.observation_space = spaces.Box(low=0, high=1, shape=(104, ), dtype=np.float16)
+        self.observation_space = spaces.Box(low=0, high=1, shape=(154, ), dtype=np.float16)
         self.obs_type = np.int16
         self.success_reward = 0
         # object config
@@ -87,6 +87,8 @@ class Env_Craft:
 
     def _init(self):
         # update flags and state info
+        self.count = 0
+        self.max_steps = 1500
         self.is_stick_made = False
         self.is_plank_made = False
         self.is_ladder_made = False
@@ -142,6 +144,7 @@ class Env_Craft:
             return self._get_grid_obs()
 
     def step(self, action):
+        self.count += 1
         def _go_to(x, y):
             old_pos = tuple(self.agent_pos)
             self.agent_pos = (x, y)
@@ -174,7 +177,8 @@ class Env_Craft:
                 self.is_stick_made = True
                 self.n_processed_wood -= 1
             else:
-                early_stop_done = True
+                self.at_workshop_1 = False
+                early_stop_done = False
             _go_to(next_x, next_y)
         elif self.grid[next_x, next_y] == self.objects.workshop2.id:
             self.at_workshop_2 = True
@@ -182,33 +186,36 @@ class Env_Craft:
                 self.is_plank_made = True
                 self.n_processed_wood -= 1
             else:
-                early_stop_done = True
+                self.at_workshop_2 = False
+                early_stop_done = False
             _go_to(next_x, next_y)
         elif self.grid[next_x, next_y] == self.objects.workshop3.id:
             self.at_workshop_3 = True
             if self.is_plank_made and self.is_stick_made and not self.is_ladder_made:
                 self.is_ladder_made = True
             else:
-                early_stop_done = True
+                self.at_workshop_3 = False
+                early_stop_done = False
             _go_to(next_x, next_y)
         elif self.grid[next_x, next_y] == self.objects.wood_process.id:
             self.at_wood_process = True
             if self.carry_list['wood'] > 0:
                 if self.carry_list['wood'] != 2 and self.wood_early_stop:
-                    early_stop_done = True
+                    early_stop_done = False
                 # process raw wood
-                if not self.wood_collected:
-                    self.wood_collected = True
+                #if not self.wood_collected:
+                if not self.all_wood_collected:
+                    #self.wood_collected = True
                     self.n_processed_wood += self.carry_list['wood']
-                    self.carry_list['wood'] = 0
+                    self.carry_list['wood'] -= 1
                     if self.n_processed_wood == 2:
                         self.all_wood_collected = True
                 else:
                     # not allow visiting the processing workshop twice
-                    early_stop_done = True
+                    early_stop_done = False
             else:
                 # not allow visiting the processing workshop with empty hand
-                early_stop_done = True
+                early_stop_done = False
             _go_to(next_x, next_y)
         else:
             _go_to(next_x, next_y)
@@ -225,7 +232,11 @@ class Env_Craft:
         self.info['is_plank_made'] = int(self.is_plank_made)
         self.info['is_ladder_made'] = int(self.is_ladder_made)
         self.info['next_tuple_state'] = tuple(self._get_grid_obs().tolist())
-        done = early_stop_done or self.is_ladder_made
+        if self.count >= self.max_steps:
+            truncated = True
+        else:
+            truncated = False
+        done = early_stop_done or self.is_ladder_made or truncated
         reward = self.success_reward if self.is_ladder_made else 0
 
         return self._obs(), float(reward), done, addict.Dict(self.info)

@@ -150,12 +150,10 @@ class Q_Learning:
         """
         Look-ahead potential-based shaped reward
         F(s, a, s', a') =  γΦ(s',a') - Φ(s, a)
-        """
-        #todo: test this function with actual reward shaping plan
-        # assumes reshape_reward is a list of tuples (state, action, potential)
-        
+        """        
         current_state_potential = 0
         next_state_potential = 0
+        reshaped_reward = 0
         
         if next_action is None:
             next_state_potential = 0

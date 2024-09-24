@@ -26,6 +26,7 @@ parser.add_argument("--give_tried_actions", default=True, help="Whether to give 
 parser.add_argument("--additional_expt_info", default="", help="Additional information for experiment")
 parser.add_argument("--num_agent_steps", type=int, default=30, help="Number of steps the agent can take")
 parser.add_argument("--num_backprompt_steps", type=int, default=10, help="Number of backprompts that can be given")
+parser.add_argument("--prompt_version", type=int, default=1, help="Version of the prompt to use")
     
 def get_llm_policy(env, llm_model, llm_modulo, env_prompter, conv, obs='', to_print=True, grid_text=False, give_add_text_desc=True, give_feasible_actions=True, give_tried_actions=True, save_dir=None, num_agent_steps=30, num_backprompt_steps=10):
     if to_print:
@@ -44,11 +45,11 @@ def get_llm_policy(env, llm_model, llm_modulo, env_prompter, conv, obs='', to_pr
             tried_actions = []
             for j in range(num_backprompt_steps):
                 if len(tried_actions) == 0: # move to next step
-                    prompt = env_prompter.get_step_prompt(obs, add_text_desc)
+                    prompt = env_prompter.get_step_prompt(obs, add_text_desc, args.prompt_version)
                     print('-----------------')
                     print('[STEP PROMPTING]---->')
                 else:
-                    prompt = env_prompter.get_prompt_with_backprompt(obs, backprompt, tried_actions, give_tried_actions=give_tried_actions)
+                    prompt = env_prompter.get_prompt_with_backprompt(obs, backprompt, tried_actions, give_tried_actions=give_tried_actions, version=args.prompt_version)
                     print('------[BACK PROMPTING]---->')
                 
                 print(prompt)
@@ -109,7 +110,7 @@ if __name__ == "__main__":
         save_dir = f'./llm_modulo_results/{args.llm_model}/{args.env_name}/{args.additional_expt_info}/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
-    log_file = open(f'{save_dir}/log.txt', 'w')
+    log_file = open(f'{save_dir}/log_version.txt', 'w')
     sys.stdout = log_file
     if args.env_name == "Mario-8x11":
         env = Env_Mario(use_state=True, info_img=False)

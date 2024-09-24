@@ -63,8 +63,31 @@ class Mario8x11Prompts(EnvPrompts):
     def __init__(self, env):
         super().__init__(env)
         
-    def get_step_prompt(self, obs, add_text_desc):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+    def get_step_prompt(self, obs, add_text_desc, version=1):
+        #version 1:
+        if version == 1:
+            TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        
+        elif version == 2:
+        #version 2:
+            TASK_DESC = "You are tasked with solving a 6x9 maze. In this maze, you will encounter objects such as a 'key', a 'hidden key', a 'ladder', a 'tube', a 'door', and 'walls'. Your task is to first collect both the keys (one regular and one hidden) from the downstairs area, and then use both keys to open the door located upstairs. You can move through 'empty' cells.\n\n\t• Use the 'tube' to go downstairs to collect the keys.\n\t• Use the 'ladder' to go back upstairs after you have both keys.\n\t• The 'door' can only be opened after you have collected both keys.\n\t• You can move using 'left', 'right', 'up', or 'down'.\n\nAt each step, you will receive a description of the maze and must decide which direction to move.\n"
+
+        elif version == 3:
+        #version 3:
+            TASK_DESC = "You are navigating a 6x9 maze. There are objects like 'keys', a 'hidden key', a 'ladder', a 'tube', a 'door', and 'walls'. Your goal is to first collect both keys from downstairs and then use them to unlock the door upstairs. The steps are:\n\n\t• Use the 'tube' to go downstairs to collect the keys.\n\t• Use the 'ladder' to go back upstairs after you have both keys.\n\t• The 'door' can only be opened after you have collected both keys.\n\t• You can move using 'left', 'right', 'up', or 'down'.\n\nAt each step, you will receive a description of the maze and must decide which direction to move.\n"
+
+        elif version == 4:
+        #version 4:
+            TASK_DESC = "Your task is to solve a 6x9 maze with objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Here's what you need to do:\n\n\t1. Use the 'tube' to go downstairs.\n\t2.	Collect both keys: one regular key and one hidden key.\n\t3. Once both keys are collected, find the ladder and climb back upstairs.\n\t4. Use both keys to unlock the door upstairs.\nYou can walk on 'empty' cells and move using 'left', 'right', 'up', or 'down'.\nYou will be given a description of the maze at every step. Choose the next direction based on the maze layout."
+
+        elif version == 5:
+        #version 5:
+            TASK_DESC = "You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:\n\n\t•	First, use the tube to go downstairs.\n\t•	Find both the regular and hidden keys. You must collect both before proceeding.\n\t•	After collecting both keys, use the ladder to go back upstairs.\n\t•	Only after collecting both keys can you unlock the door upstairs.\nYou will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time."
+
+        elif version == 6:
+        #version 6:
+            TASK_DESC = "You are navigating a 6x9 maze. Objects in the maze include a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps:\n\n\t• Start by finding the tube to go downstairs.\n\t• Once downstairs, collect both keys: the regular key and the hidden key.\n\t• When you have both keys, find the ladder to go back upstairs.\n\t• After climbing back upstairs, use the keys to unlock the door.\n\t• The door cannot be unlocked unless both keys are collected.\n\nAt each step, you will receive a maze description. You can move 'left', 'right', 'up', or 'down' through 'empty' cells."
+        
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         if add_text_desc != '':
@@ -73,8 +96,30 @@ class Mario8x11Prompts(EnvPrompts):
             step_prompt = f"{TASK_DESC}\n{OBS_DESC}\n{QUERY_DESC}\n"
         return step_prompt
 
-    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+    def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True, version=1):
+        #version 1:
+        if version == 1:
+            TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        
+        elif version == 2:
+        #version 2:
+            TASK_DESC = "You are tasked with solving a 6x9 maze. In this maze, you will encounter objects such as a 'key', a 'hidden key', a 'ladder', a 'tube', a 'door', and 'walls'. Your task is to first collect both the keys (one regular and one hidden) from the downstairs area, and then use both keys to open the door located upstairs. You can move through 'empty' cells.\n\n\t• Use the 'tube' to go downstairs to collect the keys.\n\t• Use the 'ladder' to go back upstairs after you have both keys.\n\t• The 'door' can only be opened after you have collected both keys.\n\t• You can move using 'left', 'right', 'up', or 'down'.\n\nAt each step, you will receive a description of the maze and must decide which direction to move.\n"
+
+        elif version == 3:
+        #version 3:
+            TASK_DESC = "You are navigating a 6x9 maze. There are objects like 'keys', a 'hidden key', a 'ladder', a 'tube', a 'door', and 'walls'. Your goal is to first collect both keys from downstairs and then use them to unlock the door upstairs. The steps are:\n\n\t• Use the 'tube' to go downstairs to collect the keys.\n\t• Use the 'ladder' to go back upstairs after you have both keys.\n\t• The 'door' can only be opened after you have collected both keys.\n\t• You can move using 'left', 'right', 'up', or 'down'.\n\nAt each step, you will receive a description of the maze and must decide which direction to move.\n"
+
+        elif version == 4:
+        #version 4:
+            TASK_DESC = "Your task is to solve a 6x9 maze with objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Here's what you need to do:\n\n\t1. Use the 'tube' to go downstairs.\n\t2.	Collect both keys: one regular key and one hidden key.\n\t3. Once both keys are collected, find the ladder and climb back upstairs.\n\t4. Use both keys to unlock the door upstairs.\nYou can walk on 'empty' cells and move using 'left', 'right', 'up', or 'down'.\nYou will be given a description of the maze at every step. Choose the next direction based on the maze layout."
+
+        elif version == 5:
+        #version 5:
+            TASK_DESC = "You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:\n\n\t•	First, use the tube to go downstairs.\n\t•	Find both the regular and hidden keys. You must collect both before proceeding.\n\t•	After collecting both keys, use the ladder to go back upstairs.\n\t•	Only after collecting both keys can you unlock the door upstairs.\nYou will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time."
+
+        elif version == 6:
+        #version 6:
+            TASK_DESC = "You are navigating a 6x9 maze. Objects in the maze include a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps:\n\n\t• Start by finding the tube to go downstairs.\n\t• Once downstairs, collect both keys: the regular key and the hidden key.\n\t• When you have both keys, find the ladder to go back upstairs.\n\t• After climbing back upstairs, use the keys to unlock the door.\n\t• The door cannot be unlocked unless both keys are collected.\n\nAt each step, you will receive a maze description. You can move 'left', 'right', 'up', or 'down' through 'empty' cells."
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
@@ -140,7 +185,7 @@ class Mario8x11Prompts(EnvPrompts):
         grid_text = f"{' '.join(row0)}\n{' '.join(row1)}\n{' '.join(row2)}\n{' '.join(row3)}\n{' '.join(row4)}\n{' '.join(row5)}\n"
         
         if self.env.picked_hidden_key and self.env.picked_key:
-            ADDITIONAL_INFO = "You have picked both keys. Try going to the door now.\n"
+            ADDITIONAL_INFO = "You have picked both keys. Try going to the ladder to reach the door located upstairs.\n"
         elif self.env.picked_hidden_key:
             ADDITIONAL_INFO = "You have already picked up the hidden key. Try picking the other key now.\n"
         elif self.env.picked_key:

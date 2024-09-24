@@ -12,12 +12,12 @@ for seed in 0; do
             --env "MiniGrid-DoorKey-5x5-v0" \
             --seed $seed \
             --variation $variation \
-            --llm-model "gpt-4" \
+            --llm-model "claude-3-haiku-20240307" \
             --add_text_desc "True" \
             --give_feasible_actions "True" \
             --give_tried_actions "True" \
             --additional_expt_info "" \
-            --num_agent_steps 50 \
+            --num_agent_steps 30 \
             --num_backprompt_steps 10
     done
 done

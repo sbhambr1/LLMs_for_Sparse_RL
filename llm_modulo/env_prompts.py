@@ -64,7 +64,7 @@ class Mario8x11Prompts(EnvPrompts):
         super().__init__(env)
         
     def get_step_prompt(self, obs, add_text_desc):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use the ladder to go back up. The door can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         if add_text_desc != '':
@@ -74,7 +74,7 @@ class Mario8x11Prompts(EnvPrompts):
         return step_prompt
 
     def get_prompt_with_backprompt(self, obs, backprompt, tried_actions, give_tried_actions=True):
-        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a key, a hidden key, a ladder, a tude, and a door along with walls. Your task is 'first collect both the keys one of which is hidden in a red rock and then use them to open the door located at upstairs'. You can only go down through the tube and must use the ladder to go back up. The door can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
+        TASK_DESC = "You are tasked with solving a 6x9 maze where you will encounter objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door' along with 'walls'. Your task is to 'first collect both the keys located downstairs, and then use them to open the door located upstairs'. You can walk using the 'empty' cells. You can use the 'tube' to go down. You must use the 'ladder' to go back up. The 'door' can only be opened after both keys are collected. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'left', 'right', 'up', 'down'.\n"
         OBS_DESC = self.convert_obs_to_grid_text(obs)
         QUERY_DESC = "What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response."
         RETRY = "You have already tried the following actions: " + ', '.join(tried_actions) + ". Please choose another action."
@@ -89,7 +89,6 @@ class Mario8x11Prompts(EnvPrompts):
 
     def convert_obs_to_text(self, observation):
         # Convert observation to text
-        # this has bugs due to the way the observation is structured (rows and cols are inverse in the observation array)
         obs_array = observation['image']
         
         walls = []
@@ -119,7 +118,7 @@ class Mario8x11Prompts(EnvPrompts):
         KEY_DESC = f"The key is at position {key_pos}."
         DOOR_DESC = f"The door is at position {door_pos}."
         GOAL_DESC = f"The goal is at position {goal_pos}."
-        MISC_DESC = f"There are walls at positions {walls}. There are unseen areas at positions {unseen}."
+        MISC_DESC = f"There are walls at positions {walls}. There are empty areas at positions {unseen}."
         OBS_DESC = f"The current observation is: \n{AGENT_DESC}\n{KEY_DESC}\n{DOOR_DESC}\n{GOAL_DESC}\n{MISC_DESC}\n"
         return OBS_DESC
 
@@ -141,11 +140,11 @@ class Mario8x11Prompts(EnvPrompts):
         grid_text = f"{' '.join(row0)}\n{' '.join(row1)}\n{' '.join(row2)}\n{' '.join(row3)}\n{' '.join(row4)}\n{' '.join(row5)}\n"
         
         if self.env.picked_hidden_key and self.env.picked_key:
-            ADDITIONAL_INFO = "You have picked both keys.\n"
+            ADDITIONAL_INFO = "You have picked both keys. Try going to the door now.\n"
         elif self.env.picked_hidden_key:
-            ADDITIONAL_INFO = "You have already picked up the hidden key.\n"
+            ADDITIONAL_INFO = "You have already picked up the hidden key. Try picking the other key now.\n"
         elif self.env.picked_key:
-            ADDITIONAL_INFO = "You have already picked up the key.\n"
+            ADDITIONAL_INFO = "You have already picked up the key. Try picking the hidden key now.\n"
         else:
             ADDITIONAL_INFO = ""
         

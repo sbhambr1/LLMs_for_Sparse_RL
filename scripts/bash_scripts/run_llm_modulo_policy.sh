@@ -12,7 +12,7 @@ for seed in 0; do
             --env "MiniGrid-DoorKey-6x6-v0" \
             --seed $seed \
             --variation $variation \
-            --llm_model "claude-3-opus-20240229" \
+            --llm_model "meta.llama3-1-405b-instruct-v1:0" \
             --add_text_desc "True" \
             --give_feasible_actions "True" \
             --give_tried_actions "True" \

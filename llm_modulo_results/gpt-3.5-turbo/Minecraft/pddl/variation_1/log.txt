@@ -1,0 +1,58 @@
+[STEP-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain minecraft)
+    (:requirements :strips :typing)
+    (:types wood - object)
+    (:predicates (wood0-picked)
+                (wood1-picked)
+                (wood0-processed)
+                (wood1-processed)
+                (at-starting-location)
+                (plank_made)
+                (stick_made)
+                (ladder_made))
+    (:action get_wood0
+            :parameters ()
+            :precondition (and )
+            :effect (and (wood0-picked)))
+    (:action get_wood1
+            :parameters ()
+            :precondition (and )
+            :effect (and (wood1-picked)))
+    (:action get_processed_wood
+            :parameters ()
+            :precondition (and (wood0-picked)(wood1-picked))
+            :effect (and (wood0-processed)(wood1-processed)))
+    (:action make_plank
+            :parameters ()
+            :precondition (and (wood0-processed)(wood1-processed))
+            :effect (and (plank_made)))
+    (:action make_stick
+            :parameters ()
+            :precondition (and (wood0-processed)(wood1-processed))
+            :effect (and (stick_made)))
+    (:action make_ladder
+            :parameters ()
+            :precondition (and (stick_made) (plank_made))
+            :effect (and (ladder_made)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain minecraft)
+    (:objects
+        wood0 wood1 - wood)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (ladder_made))
+))
+
+[YOUR RESPONSE]
+
+LLM Response: (make_ladder)
+[BACK-PROMPTING]---->
+

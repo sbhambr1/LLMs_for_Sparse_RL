@@ -12,7 +12,7 @@ for seed in 0; do
             --env "MiniGrid-DoorKey-6x6-v0" \
             --seed $seed \
             --variation $variation \
-            --llm_model "meta.llama3-8b-instruct-v1:0" \
+            --llm_model "gpt-4o-mini" \
             --add_text_desc "True" \
             --additional_expt_info "" \
             --num_agent_steps 30 

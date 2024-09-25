@@ -80,7 +80,7 @@ def get_planning_constraints(llm_response, llm_plan_so_far):
 
 def get_backprompt(pddl_domain, pddl_problem, llm_response, llm_plan_so_far):
     
-    step_prompt = get_initial_prompt(pddl_domain, pddl_problem)
+    step_prompt = get_initial_prompt(pddl_domain, pddl_problem, llm_plan_so_far)
     FEASIBLE, backprompt = get_planning_constraints(llm_response, llm_plan_so_far)
     
     if not FEASIBLE:

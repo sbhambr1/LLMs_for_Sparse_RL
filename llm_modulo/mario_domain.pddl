@@ -1,0 +1,31 @@
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)

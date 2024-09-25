@@ -37,8 +37,8 @@ class Conversation:
         new_message = {"role": role, "content": prompt}
         self.llm_prompt = []
         message = self.llm_prompt + [new_message]
-        input_tokens = self.count_tokens(message[0]['content'],  'cl100k_base')
-        self.total_cost += self.input_token_cost * input_tokens
+        # input_tokens = self.count_tokens(message[0]['content'],  'cl100k_base')
+        # self.total_cost += self.input_token_cost * input_tokens
         return message
 
     def llm_actor(self, prompt, stop, temperature=0, role="user"): 
@@ -61,8 +61,8 @@ class Conversation:
             )
 
         answer = response.choices[0].message.content
-        output_tokens = self.count_tokens(answer, 'cl100k_base')
-        self.total_cost += self.output_token_cost * output_tokens
+        # output_tokens = self.count_tokens(answer, 'cl100k_base')
+        # self.total_cost += self.output_token_cost * output_tokens
         self.log_history.append(answer)
         self.llm_prompt.append(prompt + answer + "\n")
         return answer

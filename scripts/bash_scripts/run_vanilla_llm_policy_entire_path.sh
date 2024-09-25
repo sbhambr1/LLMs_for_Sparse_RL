@@ -9,10 +9,10 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 for seed in 0; do
     for variation in 1 2 3; do
         python3 scripts/llm_policy_entire_path.py \
-            --env "MiniGrid-LavaGapS5-v0" \
+            --env "MiniGrid-DoorKey-6x6-v0" \
             --seed $seed \
             --variation $variation \
-            --llm_model "claude-3-haiku-20240307" \
+            --llm_model "meta.llama3-8b-instruct-v1:0" \
             --add_text_desc "True" \
             --additional_expt_info "" \
             --num_agent_steps 30 

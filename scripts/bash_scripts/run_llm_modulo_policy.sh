@@ -7,12 +7,12 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for seed in 0; do
-    for variation in 0 1 2 3; do
+    for variation in 0 1 2 ; do
         python3 scripts/llm_modulo_policy.py \
-            --env "MiniGrid-DoorKey-5x5-v0" \
+            --env "MiniGrid-DoorKey-6x6-v0" \
             --seed $seed \
             --variation $variation \
-            --llm-model "claude-3-haiku-20240307" \
+            --llm_model "meta.llama3-8b-instruct-v1:0" \
             --add_text_desc "True" \
             --give_feasible_actions "True" \
             --give_tried_actions "True" \

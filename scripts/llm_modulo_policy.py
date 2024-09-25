@@ -113,12 +113,19 @@ if __name__ == "__main__":
     obs, _ = env.reset(seed=args.seed)
     llm_modulo = LLM_Modulo(args.env, seed=args.seed)
     env_prompter = MinigridPromptConstructor(args.env, seed=args.seed)
-    total_reward, llm_actions, all_actions = get_llm_policy(env=env, llm_model=args.llm_model, llm_modulo=llm_modulo, env_prompter=env_prompter, conv=conv, obs=obs, to_print=False, grid_text=True, give_add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions, save_dir=save_dir, num_agent_steps=args.num_agent_steps, num_backprompt_steps=args.num_backprompt_steps)
+    returned_stuff = get_llm_policy(env=env, llm_model=args.llm_model, llm_modulo=llm_modulo, env_prompter=env_prompter, conv=conv, obs=obs, to_print=False, grid_text=True, give_add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions, save_dir=save_dir, num_agent_steps=args.num_agent_steps, num_backprompt_steps=args.num_backprompt_steps)
+    if type(returned_stuff) == float or type(returned_stuff) == int:
+        total_reward = returned_stuff
+    else:
+        # when it fails
+        total_reward, llm_actions, all_actions = returned_stuff
+        print('-----------------')
+        print(f"LLM actions: {llm_actions}")
+        print('-----------------')
+        print(f"All actions tried by LLM: {all_actions}")
+    # total_reward, llm_actions, all_actions = get_llm_policy(env=env, llm_model=args.llm_model, llm_modulo=llm_modulo, env_prompter=env_prompter, conv=conv, obs=obs, to_print=False, grid_text=True, give_add_text_desc=args.add_text_desc, give_feasible_actions=args.give_feasible_actions, give_tried_actions=args.give_tried_actions, save_dir=save_dir, num_agent_steps=args.num_agent_steps, num_backprompt_steps=args.num_backprompt_steps)
 
-    print('-----------------')
-    print(f"LLM actions: {llm_actions}")
-    print('-----------------')
-    print(f"All actions tried by LLM: {all_actions}")
+   
     
     print('-----------------')
     print(f"Total reward: {total_reward}")

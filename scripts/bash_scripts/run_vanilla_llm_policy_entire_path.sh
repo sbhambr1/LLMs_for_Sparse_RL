@@ -7,12 +7,12 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for seed in 0; do
-    for variation in 1 2 3 4 5; do
+    for variation in 1; do
         python3 scripts/llm_policy_entire_path.py \
-            --env "MiniGrid-DoorKey-6x6-v0" \
+            --env "MiniGrid-DoorKey-5x5-v0" \
             --seed $seed \
             --variation $variation \
-            --llm_model "gpt-3.5-turbo" \
+            --llm_model "meta.llama3-1-8b-instruct-v1:0" \
             --add_text_desc "True" \
             --additional_expt_info "" \
             --num_agent_steps 30 

@@ -15,7 +15,7 @@ from tenacity import (
 )  # for exponential backoff
 
 
-# llm_models: gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0
+# llm_models: gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0, meta.llama3-1-8b-instruct-v1:0
 
 class Conversation:
     def __init__(self, llm_model) -> None:
@@ -54,7 +54,7 @@ class Conversation:
             self.max_tokens_per_day = 1000000
             
         elif 'llama3' in llm_model:
-            self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
+            self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
         
     def count_tokens(self, string: str, encoding_name: str) -> int:
         encoding = tiktoken.get_encoding(encoding_name)

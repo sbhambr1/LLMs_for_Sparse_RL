@@ -9,10 +9,10 @@ export PYTHONPATH=$PYTHONPATH:$(pwd)
 for seed in 0; do
     for variation in 0 1 2 ; do
         python3 scripts/llm_modulo_policy.py \
-            --env "MiniGrid-Empty-Random-5x5-v0" \
+            --env "MiniGrid-DoorKey-6x6-v0" \
             --seed $seed \
             --variation $variation \
-            --llm_model "meta.llama3-1-8b-instruct-v1" \
+            --llm_model "claude-3-opus-20240229" \
             --add_text_desc "True" \
             --give_feasible_actions "True" \
             --give_tried_actions "True" \

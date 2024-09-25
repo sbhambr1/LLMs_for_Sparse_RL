@@ -3,7 +3,7 @@ import utils
 import argparse
 import pickle
 from utils.env_craft import Env_Craft
-from algorithms.configs.q_mario_config import Q_Baseline_Config
+from algorithms.configs.q_minecraft_config import Q_Baseline_Config
 from algorithms.algos.q_learning import Q_Learning
 from algorithms.utils.experiment_manager import Wandb_Logger
 
@@ -29,10 +29,10 @@ def main():
     utils.seed(args.seed)
     env = Env_Craft(success_reward=1, stochastic=args.stochastic)
     config = Q_Baseline_Config()
-    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MARIO_q_learning_pbrs'+args.additional_info)
+    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MINECRAFT_q_learning_baseline'+args.additional_info)
     
     if args.reshape_reward:
-        file_path = f"./storage/vanilla_llm_visualization/{args.llm_model}/Mario-8x11/variation_{args.variation}/vanilla_llm_policy.pkl"
+        file_path = f"./storage/vanilla_llm_visualization/{args.llm_model}/Minecraft/variation_{args.variation}/vanilla_llm_policy.pkl"
         with open(file_path, 'rb') as f:
             llm_rs_policy = pickle.load(f)
         print(f"[INFO] LLM reward shaping plan loaded from {file_path}.\n")

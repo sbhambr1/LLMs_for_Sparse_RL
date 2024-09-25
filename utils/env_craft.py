@@ -11,14 +11,15 @@ from utils.grid_renderer import Grid_Renderer
 
 
 class Env_Craft:
-    def __init__(self, use_img_state=False):
+    def __init__(self, use_img_state=False, success_reward=1, stochastic=False):
         self.use_img_state = use_img_state
         # actions: up, down, left, right
         self.action_space = spaces.Discrete(4)
         self.actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
         self.observation_space = spaces.Box(low=0, high=1, shape=(104, ), dtype=np.float16)
         self.obs_type = np.int16
-        self.success_reward = 0
+        self.success_reward = success_reward
+        self.stochastic = stochastic
         # object config
         self.height = 10
         self.width = 15
@@ -153,6 +154,13 @@ class Env_Craft:
                     self.grid[old_pos[0], old_pos[1]] = self.objects.wood_process.id
                 else:
                     self.grid[old_pos[0], old_pos[1]] = 0
+                    
+        if self.stochastic:
+            self.prob = 0.9
+            if np.random.uniform() < self.prob:
+                action = action
+            else:
+                action = np.random.choice([i for i in range(4) if i != action])
 
         assert action <= 3
         next_x, next_y = self.agent_pos[0] + self.actions[action][0], self.agent_pos[1] + self.actions[action][1]

@@ -1,0 +1,9 @@
+export PYTHONPATH=$PYTHONPATH:$(pwd)
+
+for variation in 1 2 3; do
+    python3 scripts/pddl_llm_modulo_plan.py \
+        --llm_model "gpt-3.5-turbo" \
+        --variation $variation  \
+        --num_agent_steps 20 \
+        --num_backprompt_steps 5
+done

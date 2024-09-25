@@ -123,7 +123,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty agent empty empty empty empty empty door
@@ -151,6 +151,102 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
 You have moved to right cell.
+The current maze looks like this:
+
+empty empty empty agent empty empty empty empty door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+empty empty empty empty empty empty empty empty empty
+
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
+
+------[BACK PROMPTING]---->
+You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
+
+	•	First, use the tube to go downstairs.
+	•	Find both the regular and hidden keys. You must collect both before proceeding.
+	•	After collecting both keys, use the ladder to go back upstairs.
+	•	Only after collecting both keys can you unlock the door upstairs.
+You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+The current maze looks like this:
+
+empty empty empty agent empty empty empty empty door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+empty empty empty empty empty empty empty empty empty
+
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
+You have already tried the following actions: down. Please choose another action.
+
+LLM Response: right
+Done: False
+Reward: 0.0
+-----------------
+-----------------
+[STEP PROMPTING]---->
+You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
+
+	•	First, use the tube to go downstairs.
+	•	Find both the regular and hidden keys. You must collect both before proceeding.
+	•	After collecting both keys, use the ladder to go back upstairs.
+	•	Only after collecting both keys can you unlock the door upstairs.
+You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
+You have moved to right cell.
+The current maze looks like this:
+
+empty empty empty empty agent empty empty empty door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+empty empty empty empty empty empty empty empty empty
+
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
+
+------[BACK PROMPTING]---->
+You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
+
+	•	First, use the tube to go downstairs.
+	•	Find both the regular and hidden keys. You must collect both before proceeding.
+	•	After collecting both keys, use the ladder to go back upstairs.
+	•	Only after collecting both keys can you unlock the door upstairs.
+You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
+Information: You cannot take 'down' action in this state as you can only use ladder to go up. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+The current maze looks like this:
+
+empty empty empty empty agent empty empty empty door
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+wall wall wall wall ladder wall tube wall wall
+key wall hidden_key wall ladder wall tube wall wall
+empty empty empty empty empty empty empty empty empty
+
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
+You have already tried the following actions: down. Please choose another action.
+
+LLM Response: left
+Done: False
+Reward: 0.0
+-----------------
+-----------------
+[STEP PROMPTING]---->
+You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
+
+	•	First, use the tube to go downstairs.
+	•	Find both the regular and hidden keys. You must collect both before proceeding.
+	•	After collecting both keys, use the ladder to go back upstairs.
+	•	Only after collecting both keys can you unlock the door upstairs.
+You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
+You have moved to left cell.
 The current maze looks like this:
 
 empty empty empty agent empty empty empty empty door
@@ -267,7 +363,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty agent empty empty door
@@ -341,7 +437,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'right' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['down'].
+Information: You cannot take 'up' action in this state as you are in the tube. Please choose another action.The following actions are feasible in this state: ['down'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -353,7 +449,7 @@ empty empty empty empty empty empty empty empty empty
 
 
 What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
-You have already tried the following actions: right. Please choose another action.
+You have already tried the following actions: up. Please choose another action.
 
 LLM Response: down
 Done: False
@@ -655,7 +751,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -943,7 +1039,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1039,7 +1135,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1519,7 +1615,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1615,7 +1711,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1711,7 +1807,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1807,7 +1903,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -1903,7 +1999,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -2767,7 +2863,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -2863,7 +2959,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -2959,7 +3055,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -3151,7 +3247,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -3247,7 +3343,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -3631,7 +3727,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -3823,7 +3919,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -3919,7 +4015,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4015,7 +4111,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4111,7 +4207,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4207,7 +4303,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4303,7 +4399,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4399,7 +4495,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4687,7 +4783,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -4783,7 +4879,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5071,7 +5167,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5167,7 +5263,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5359,7 +5455,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5551,7 +5647,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5743,7 +5839,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -5935,7 +6031,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -6127,7 +6223,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -6223,7 +6319,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -6607,7 +6703,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -6703,7 +6799,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -6991,7 +7087,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -7183,7 +7279,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -7375,7 +7471,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -7663,7 +7759,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -7855,7 +7951,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -7951,7 +8047,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8047,7 +8143,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8239,7 +8335,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8335,7 +8431,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8431,7 +8527,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8623,7 +8719,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8719,7 +8815,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8815,7 +8911,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -8911,7 +9007,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -9103,7 +9199,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -9295,7 +9391,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -9583,7 +9679,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -9679,7 +9775,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -9967,7 +10063,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -10447,7 +10543,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -10543,7 +10639,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -10639,7 +10735,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -10735,7 +10831,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -10831,7 +10927,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11023,7 +11119,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11119,7 +11215,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11311,7 +11407,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11503,7 +11599,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11695,7 +11791,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11887,7 +11983,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -11983,7 +12079,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -12079,7 +12175,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -12175,7 +12271,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -12271,7 +12367,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -12367,7 +12463,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -12847,7 +12943,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -13039,7 +13135,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -13231,7 +13327,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -13615,7 +13711,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -13807,7 +13903,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -14095,7 +14191,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -14287,7 +14383,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -14575,7 +14671,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -14671,7 +14767,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -14767,7 +14863,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -15151,7 +15247,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -15343,7 +15439,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -15439,7 +15535,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -15535,7 +15631,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -15631,7 +15727,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16015,7 +16111,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16111,7 +16207,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16303,7 +16399,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16591,7 +16687,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16687,7 +16783,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -16783,7 +16879,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -17071,7 +17167,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -17551,7 +17647,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -17647,7 +17743,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -17743,7 +17839,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -17839,7 +17935,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18223,7 +18319,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18415,7 +18511,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18511,7 +18607,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18607,7 +18703,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18703,7 +18799,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -18895,7 +18991,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19087,7 +19183,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19183,7 +19279,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19567,7 +19663,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19759,7 +19855,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19855,7 +19951,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -19952,102 +20048,6 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
 Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
-The current maze looks like this:
-
-empty empty empty empty empty empty empty empty door
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-key wall hidden_key wall ladder wall tube wall wall
-empty empty empty empty empty empty empty agent empty
-
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
-You have already tried the following actions: down. Please choose another action.
-
-LLM Response: right
-Done: False
-Reward: 0.0
------------------
------------------
-[STEP PROMPTING]---->
-You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
-
-	•	First, use the tube to go downstairs.
-	•	Find both the regular and hidden keys. You must collect both before proceeding.
-	•	After collecting both keys, use the ladder to go back upstairs.
-	•	Only after collecting both keys can you unlock the door upstairs.
-You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-You have moved to right cell.
-The current maze looks like this:
-
-empty empty empty empty empty empty empty empty door
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-key wall hidden_key wall ladder wall tube wall wall
-empty empty empty empty empty empty empty empty agent
-
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
-
-------[BACK PROMPTING]---->
-You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
-
-	•	First, use the tube to go downstairs.
-	•	Find both the regular and hidden keys. You must collect both before proceeding.
-	•	After collecting both keys, use the ladder to go back upstairs.
-	•	Only after collecting both keys can you unlock the door upstairs.
-You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left'].
-The current maze looks like this:
-
-empty empty empty empty empty empty empty empty door
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-key wall hidden_key wall ladder wall tube wall wall
-empty empty empty empty empty empty empty empty agent
-
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
-You have already tried the following actions: down. Please choose another action.
-
-LLM Response: left
-Done: False
-Reward: 0.0
------------------
------------------
-[STEP PROMPTING]---->
-You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
-
-	•	First, use the tube to go downstairs.
-	•	Find both the regular and hidden keys. You must collect both before proceeding.
-	•	After collecting both keys, use the ladder to go back upstairs.
-	•	Only after collecting both keys can you unlock the door upstairs.
-You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-You have moved to left cell.
-The current maze looks like this:
-
-empty empty empty empty empty empty empty empty door
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-wall wall wall wall ladder wall tube wall wall
-key wall hidden_key wall ladder wall tube wall wall
-empty empty empty empty empty empty empty agent empty
-
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'up', then only write 'up' in your response.
-
-------[BACK PROMPTING]---->
-You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden key', a 'ladder', a 'tube', and a 'door'. Follow these steps to complete the task:
-
-	•	First, use the tube to go downstairs.
-	•	Find both the regular and hidden keys. You must collect both before proceeding.
-	•	After collecting both keys, use the ladder to go back upstairs.
-	•	Only after collecting both keys can you unlock the door upstairs.
-You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -20239,7 +20239,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -20431,7 +20431,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -20527,7 +20527,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -20719,7 +20719,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -21007,7 +21007,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -21103,7 +21103,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -21487,7 +21487,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -22063,7 +22063,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -22447,7 +22447,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -22735,7 +22735,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -23023,7 +23023,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -23215,7 +23215,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -23407,7 +23407,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door
@@ -23503,7 +23503,7 @@ You need to solve a 6x9 maze. The maze contains objects like a 'key', a 'hidden 
 	•	After collecting both keys, use the ladder to go back upstairs.
 	•	Only after collecting both keys can you unlock the door upstairs.
 You will be given a description of the maze at each step. You can move in four directions: 'left', 'right', 'up', or 'down'. Focus on using objects (tube, ladder, door) correctly at the right time.
-Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['right', 'left'].
+Information: You cannot take 'down' action in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['left', 'right'].
 The current maze looks like this:
 
 empty empty empty empty empty empty empty empty door

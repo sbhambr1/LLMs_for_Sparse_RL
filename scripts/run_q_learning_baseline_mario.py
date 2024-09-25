@@ -6,7 +6,7 @@ from algorithms.configs.q_mario_config import Q_Baseline_Config
 from algorithms.algos.q_learning import Q_Learning
 from algorithms.utils.experiment_manager import Wandb_Logger
 
-os.environ["WANDB_MODE"] = "offline"
+os.environ["WANDB_MODE"] = "online"
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--seed", type=int, default=0,

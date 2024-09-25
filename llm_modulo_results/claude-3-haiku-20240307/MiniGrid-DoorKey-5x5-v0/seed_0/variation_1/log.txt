@@ -46,6 +46,254 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left', 'pickup key'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'pickup key', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
 Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'pickup key', 'turn left'].
 The current maze looks like this:
 
@@ -108,223 +356,6 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing down.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['pickup key', 'turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn left
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned left.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['pickup key', 'turn right', 'turn left'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing right.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing right.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing down.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing down.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
 Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
 The current maze looks like this:
 
@@ -332,7 +363,7 @@ unseen door unseen
 key wall unseen
 agent wall goal
 
-You (agent) are currently facing left.
+You (agent) are currently facing down.
 
 What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
 You have already tried the following actions: move forward. Please choose another action.
@@ -343,37 +374,6 @@ LLM Response: turn right
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
 You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['pickup key', 'turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn left
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned left.
 The current maze looks like this:
 
 unseen door unseen
@@ -418,7 +418,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right', 'pickup key'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'pickup key', 'turn right'].
 The current maze looks like this:
 
 unseen door unseen
@@ -480,7 +480,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
 The current maze looks like this:
 
 unseen door unseen
@@ -604,7 +604,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
 The current maze looks like this:
 
 unseen door unseen
@@ -636,6 +636,130 @@ What is the next action that the agent should take? Only choose from the list of
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
 Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'pickup key', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing up.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing right.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing down.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+You have already tried the following actions: move forward. Please choose another action.
+
+LLM Response: turn right
+-----------------
+[STEP PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+You have turned right.
+The current maze looks like this:
+
+unseen door unseen
+key wall unseen
+agent wall goal
+
+You (agent) are currently facing left.
+
+What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
+
+------[BACK PROMPTING]---->
+You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
+
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
 The current maze looks like this:
 
 unseen door unseen
@@ -728,130 +852,6 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing down.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing left.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['pickup key', 'turn right', 'turn left'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing up.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing right.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing right.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-You have already tried the following actions: move forward. Please choose another action.
-
-LLM Response: turn right
------------------
-[STEP PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
-You have turned right.
-The current maze looks like this:
-
-unseen door unseen
-key wall unseen
-agent wall goal
-
-You (agent) are currently facing down.
-
-What is the next action that the agent should take? Only choose from the list of available actions. Do not include anything else in your response. For example, if you choose 'move forward', then only write 'move forward' in your response.
-
-------[BACK PROMPTING]---->
-You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
-
 Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
 The current maze looks like this:
 
@@ -914,7 +914,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter objects like a key and a door along with walls. Your task is 'use the key to open the door and then get to the goal'. You can be facing in any of the four directions. To move in any direction, to pick up the key, and to open the door, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward', 'pickup key', 'open door'.
 
-Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'pickup key', 'turn right'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'pickup key', 'turn left'].
 The current maze looks like this:
 
 unseen door unseen
@@ -927,5 +927,9 @@ What is the next action that the agent should take? Only choose from the list of
 You have already tried the following actions: move forward. Please choose another action.
 
 LLM Response: turn right
+-----------------
+LLM actions: ['turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right', 'turn right']
+-----------------
+All actions tried by LLM: ['move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward', 'move forward']
 -----------------
 Total reward: 0

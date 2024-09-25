@@ -7,7 +7,7 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for seed in 0; do
-    for variation in 1; do
+    for variation in 1 2 3; do
         python3 scripts/llm_policy_entire_path.py \
             --env "MiniGrid-DoorKey-5x5-v0" \
             --seed $seed \

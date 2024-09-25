@@ -501,6 +501,7 @@ class DoorKey6x6(EnvironmentConstraints):
                         actions.append('move forward')
                 elif agent_pos[1]==2:
                     if agent_dir == DIRECTION_DICT['right']:
+                        DOOR_OPENED = False
                         for j in range(len(action_history)):
                             if action_history[j] == 'open door':
                                 actions.append('move forward')

@@ -29,7 +29,7 @@ class Env_Mario:
         self.img_w = 84
         self.use_state = use_state
         if self.use_state:
-            self.observation_space = spaces.Box(low=0, high=1, shape=(88, ), dtype=np.int16)
+            self.observation_space = spaces.Box(low=0, high=1, shape=(92, ), dtype=np.int16)
             self.obs_type = np.int16
         else:
             self.observation_space = gym.spaces.Box(low=0, high=255,
@@ -182,6 +182,7 @@ class Env_Mario:
 
     def _get_grid_obs(self):
         grid_obs = np.copy(self.grid).flatten()
+        grid_obs = np.append(grid_obs,[int(self.visited_bottom),int(self.picked_key),int(self.picked_hidden_key),int(self.back_to_upper)])
         return grid_obs.astype(self.obs_type)
 
     def _obs(self):

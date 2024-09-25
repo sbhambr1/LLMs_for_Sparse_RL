@@ -100,7 +100,7 @@ class Mario8x11(EnvironmentConstraints):
                     message = {"up":"wall","down":"wall","left":"","right":"wall","door":"hidden_key"}
             # message.append("wall")    
         elif agent_pos[0] == 6:
-            if agent_pos[1] in [2,4,6,7,8]:
+            if agent_pos[1] in [6,7,8]:
                 actions.append("right")
                 actions.append("left")
                 if agent_pos[1]==7:
@@ -110,7 +110,7 @@ class Mario8x11(EnvironmentConstraints):
             elif agent_pos[1] == 9:
                 actions.append("left")
                 message = {"up":"wall","down":"wall","left":"","right":"wall","door":""}
-            elif agent_pos[1] == 3:
+            elif agent_pos[1] in [2,3,4]:
                 actions.append("right")
                 actions.append("left")
                 actions.append("up")
@@ -166,9 +166,15 @@ class Mario8x11(EnvironmentConstraints):
             #         actions.append("down")
             #         message["up"] = "worn_ladder"
         elif agent_pos[0]==5:
-            if agent_pos[1] in [1,3]:
+            if agent_pos[1] == 1:
                 actions.append("down")
-            message = {"up":"wall","down":"","left":"wall","right":"wall","door":""}
+                actions.append("right")
+                message = {"up":"wall","down":"","left":"wall","right":"","door":""}
+            elif agent_pos[1] in [2,3,4]:
+                actions.append("down")
+                actions.append("left")
+                actions.append("right")
+                message = {"up":"wall","down":"","left":"","right":"","door":""}
         else:
             raise ValueError("Agent position not recognized.")
     

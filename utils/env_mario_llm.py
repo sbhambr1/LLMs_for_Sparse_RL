@@ -167,6 +167,12 @@ class Env_Mario:
         # place the door
         self.grid[self.objects.door.location[0], self.objects.door.location[1]] = self.objects.door.id
 
+        ############### removing wall near keys ###################
+        self.grid[5,2] = 0
+        self.grid[5,4] = 0
+        self.grid[5,5] = 0 
+        ############################################################
+
     def render(self, mode='rgb_array'):
         return self.renderer.render_2d_grid(self.grid)
 

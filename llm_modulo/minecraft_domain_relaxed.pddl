@@ -10,7 +10,7 @@
                 (ladder_made)
                 (processed-to-plank ?w - wood)
                 (processed-to-stick ?w - wood))
-    (:action get_wood0
+    (:action get_wood
             :parameters (?w - wood)
             :precondition (not (wood-picked ?w))
             :effect (and (wood-picked ?w)))

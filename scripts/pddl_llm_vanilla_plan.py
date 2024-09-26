@@ -11,9 +11,6 @@ parser = argparse.ArgumentParser()
 parser.add_argument("--llm_model", type=str, default="gpt-3.5-turbo", help="Model to use for LLM")
 parser.add_argument("--variation", type=int, default=1, help="Variation of the LLM query if seed != 0.")
 
-#SOLUTION1 bfws-ff plan: (get_wood1), (get_wood0), (get_processed_wood), (make_stick), (make_plank), (make_ladder)
-#SOLUTION2 bfws-ff plan: (get_wood0), (get_wood1), (get_processed_wood), (make_stick), (make_plank), (make_ladder)
-
 def get_initial_prompt(pddl_domain, pddl_problem):
     
     TASK_DESC = "Here is a pddl domain, a planning problem. Provide the plan for the query problem. Provide only the pddl syntax for the plan where each action is represented as (ACTION_NAME OBJECTS).\n\n"
@@ -45,8 +42,8 @@ def main():
     
     conv = Conversation(args.llm_model)
 
-    pddl_domain_text = open('./llm_modulo/minecraft_domain.pddl', 'r').read()
-    pddl_problem_text = open('./llm_modulo/minecraft_problem.pddl', 'r').read()
+    pddl_domain_text = open('./llm_modulo/minecraft_domain_relaxed.pddl', 'r').read()
+    pddl_problem_text = open('./llm_modulo/minecraft_problem_relaxed.pddl', 'r').read()
     
     initial_prompt = get_initial_prompt(pddl_domain_text, pddl_problem_text)
 

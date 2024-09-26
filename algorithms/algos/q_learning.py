@@ -204,7 +204,7 @@ class Q_Learning:
         self.reshape_reward[3] = T/F -> reward for plank
         """
         
-        if (self.reshape_reward[0] and reward_for == 'processed_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[1] and reward_for == 'stick') or (self.reshape_reward[2] and reward_for == 'plank'):
+        if (self.reshape_reward[0] and reward_for == 'processed_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[2] and reward_for == 'stick') or (self.reshape_reward[3] and reward_for == 'plank'):
             return 1
         
         return 0.0

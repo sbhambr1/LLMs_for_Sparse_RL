@@ -22,7 +22,7 @@ class Q_Learning:
         self.episode_step = 0       # number of steps in curr episode
         self.is_greedy = False      # whether to use greedy action selection
         self.is_eval = config.test
-        self.reshape_reward = reshape_reward
+        self.reshape_reward = reshape_reward # list of 3 flags to tell which reward to give
 
         ##################
         ##### Config #####
@@ -129,14 +129,14 @@ class Q_Learning:
             for i in range(states.shape[0]):
                 state, next_state = self._preprocess_state(states[i]), self._preprocess_state(next_states[i])
                 action, reward, done = actions[i][0], rewards[i][0], dones[i][0]
-                if self.reshape_reward is not None: 
-                    for j in range(i, states.shape[0]):
-                        temp = self._preprocess_state(states[j])
-                        next_action = None
-                        if temp == next_state:
-                            next_action = actions[j][0]
-                            break
-                    reward = self.get_potential_based_shaped_reward(state, action, reward, next_state, next_action)
+                # if self.reshape_reward is not None: 
+                #     for j in range(i, states.shape[0]):
+                #         temp = self._preprocess_state(states[j])
+                #         next_action = None
+                #         if temp == next_state:
+                #             next_action = actions[j][0]
+                #             break
+                #     reward = self.get_potential_based_shaped_reward(state, action, reward, next_state, next_action)
                 self.q_update(experience=(state, action, reward, next_state, done, info))
         # sample from 1 step buffer
         experiences = self.memory.sample(is_to_tensor=False)
@@ -146,30 +146,30 @@ class Q_Learning:
         _update_with_sampled_experiences(experiences)
         return None
     
-    def get_potential_based_shaped_reward(self, state, action, reward, next_state, next_action):
-        """
-        Look-ahead potential-based shaped reward
-        F(s, a, s', a') =  γΦ(s',a') - Φ(s, a)
-        """        
-        current_state_potential = 0
-        next_state_potential = 0
-        reshaped_reward = 0
+    # def get_potential_based_shaped_reward(self, state, action, reward, next_state, next_action):
+    #     """
+    #     Look-ahead potential-based shaped reward
+    #     F(s, a, s', a') =  γΦ(s',a') - Φ(s, a)
+    #     """        
+    #     current_state_potential = 0
+    #     next_state_potential = 0
+    #     reshaped_reward = 0
         
-        if next_action is None:
-            next_state_potential = 0
-        else:
-            for i in range(len(self.reshape_reward)):
-                temp = self._preprocess_state(self.reshape_reward[i][0])
-                if temp == state and self.reshape_reward[i][1] == action:
-                    current_state_potential = self.reshape_reward[i][2]
-                    break
-            for i in range(len(self.reshape_reward)):
-                temp = self._preprocess_state(self.reshape_reward[i][0])
-                if temp == next_state and self.reshape_reward[i][1] == next_action:
-                    next_state_potential = self.reshape_reward[i][2]
-                    break
-            reshaped_reward = reward + self.gamma * next_state_potential - current_state_potential
-        return reshaped_reward
+    #     if next_action is None:
+    #         next_state_potential = 0
+    #     else:
+    #         for i in range(len(self.reshape_reward)):
+    #             temp = self._preprocess_state(self.reshape_reward[i][0])
+    #             if temp == state and self.reshape_reward[i][1] == action:
+    #                 current_state_potential = self.reshape_reward[i][2]
+    #                 break
+    #         for i in range(len(self.reshape_reward)):
+    #             temp = self._preprocess_state(self.reshape_reward[i][0])
+    #             if temp == next_state and self.reshape_reward[i][1] == next_action:
+    #                 next_state_potential = self.reshape_reward[i][2]
+    #                 break
+    #         reshaped_reward = reward + self.gamma * next_state_potential - current_state_potential
+    #     return reshaped_reward
         
 
     def _render(self):
@@ -188,6 +188,20 @@ class Q_Learning:
     def should_add_to_sil(self, score, done):
         """ decide whether to add current trajectory to the SIL buffer """
         return done and score > 0
+    
+    def get_shaped_reward(self, reward_for=None):
+        """
+        In this function, we can define the reward shaping for the agent.
+        Input: self.env, self.reshape_reward (3 flags to tell which to reward), all self flags
+        self.reshape_reward[0] = T/F -> reward for processed_wood
+        self.reshape_reward[1] = T/F -> reward for stick
+        self.reshape_reward[2] = T/F -> reward for plank
+        """
+        
+        if (self.reshape_reward[0] and reward_for == 'processed_wood') or (self.reshape_reward[1] and reward_for == 'stick') or (self.reshape_reward[2] and reward_for == 'plank'):
+            return 0.1
+        
+        return 0.0
 
     def train_episode(self, init_state, step_func, is_rendering=False, return_rgb=False, is_eval=False):
         self.is_eval = is_eval
@@ -200,6 +214,10 @@ class Q_Learning:
         state = init_state
         sampled_rgb_traj = []
         curr_traj = []
+        
+        self.processed_wood_done = False
+        self.stick_made = False
+        self.plank_made = False
 
         while not done and self.episode_step <= self.max_episode_len:
             if is_rendering:
@@ -209,12 +227,32 @@ class Q_Learning:
 
             action = self.select_action(state)
             next_state, reward, done, info = step_func(action)
-            self.add_transition_to_memory(transition=(state, action, reward, next_state, done, info))
+            # add reward shaping here
+            
+            memory_reward = reward
+            
+            # check for first time flags are raised, only then give shaped reward to that state
+            if not self.processed_wood_done and self.env.n_processed_wood == 2:
+                self.processed_wood_done = True
+                shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
+                memory_reward = reward + shaped_reward
+            
+            if not self.stick_made and self.env.is_stick_made == 1:
+                self.stick_made = True
+                shaped_reward = self.get_shaped_reward(reward_for = 'stick')
+                memory_reward = reward + shaped_reward
+                
+            if not self.plank_made and self.env.is_plank_made == 1:
+                self.plank_made = True
+                shaped_reward = self.get_shaped_reward(reward_for = 'plank')
+                memory_reward = reward + shaped_reward
+            
+            self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))
             curr_traj.append((state, action, reward, next_state, done, info))
             # Q update
             if len(self.memory) >= self.update_start_from and self.total_step % self.train_freq == 0:
                 self.update()
-            # post update
+            # post update (log only env reward)
             score += reward
             state = next_state
             self.episode_step += 1

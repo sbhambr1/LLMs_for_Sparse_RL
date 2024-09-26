@@ -59,6 +59,11 @@ class Q_Learning:
         self.score_moving_avg = deque(maxlen=5)
         self.max_score = -np.inf
         self.min_score = np.inf
+        self.memory_reward = []
+        self.processed_wood_shaped = 0
+        self.stick_shaped = 0
+        self.plank_shaped = 0
+        
 
     def _initialize_buffer(self):
         if not self.config.test:
@@ -199,7 +204,7 @@ class Q_Learning:
         """
         
         if (self.reshape_reward[0] and reward_for == 'processed_wood') or (self.reshape_reward[1] and reward_for == 'stick') or (self.reshape_reward[2] and reward_for == 'plank'):
-            return 0.1
+            return 1
         
         return 0.0
 
@@ -214,6 +219,7 @@ class Q_Learning:
         state = init_state
         sampled_rgb_traj = []
         curr_traj = []
+        total_memory_reward = 0
         
         self.processed_wood_done = False
         self.stick_made = False
@@ -236,16 +242,19 @@ class Q_Learning:
                 self.processed_wood_done = True
                 shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
                 memory_reward = reward + shaped_reward
+                self.processed_wood_shaped += 1
             
             if not self.stick_made and self.env.is_stick_made == 1:
                 self.stick_made = True
                 shaped_reward = self.get_shaped_reward(reward_for = 'stick')
                 memory_reward = reward + shaped_reward
+                self.stick_shaped += 1
                 
             if not self.plank_made and self.env.is_plank_made == 1:
                 self.plank_made = True
                 shaped_reward = self.get_shaped_reward(reward_for = 'plank')
                 memory_reward = reward + shaped_reward
+                self.plank_shaped += 1
             
             self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))
             curr_traj.append((state, action, reward, next_state, done, info))
@@ -257,6 +266,7 @@ class Q_Learning:
             state = next_state
             self.episode_step += 1
             self.total_step += 1
+            total_memory_reward += memory_reward
 
         if self.use_sil and self.should_add_to_sil(score, done):
             self.add_experience_to_sil_buffer(curr_traj)
@@ -267,6 +277,8 @@ class Q_Learning:
         self.max_score = max(self.max_score, score)
         self.min_score = min(self.min_score, score)
 
+        self.memory_reward.append(total_memory_reward)
+    
         # logging (episodic)
         self.score_moving_avg.append(score)
         if self.logger is not None:
@@ -276,6 +288,7 @@ class Q_Learning:
             log_info.lr = self.lr
             log_info.epsilon = agent_eps
             log_info.score = score
+            log_info.avg_memory_reward = sum(self.memory_reward)/len(self.memory_reward)
             log_info.agent_episode = self.i_episode
             log_info.agent_step = self.total_step
             log_info.episode_step = self.episode_step
@@ -289,7 +302,7 @@ class Q_Learning:
                   f'(avg: {np.round(np.mean(self.score_moving_avg), 5)}, min: {self.min_score}, max: {self.max_score}), '
                   f'epsilon: {np.round(agent_eps, 5)}, sil buffer size: {sil_buffer_size}, '
                   f'episode steps: {self.episode_step}, q table size: {len(self.q_table)}, '
-                  f'total steps: {self.total_step}, lr: {self.lr}.')
+                  f'total steps: {self.total_step}, lr: {self.lr}, total memory reward: {sum(self.memory_reward)}, processed_wood_shaped: {self.processed_wood_shaped}, stick_shaped: {self.stick_shaped}, plank_shaped: {self.plank_shaped}\n')
             self.max_score = -np.inf
             self.min_score = np.inf
         return sampled_rgb_traj

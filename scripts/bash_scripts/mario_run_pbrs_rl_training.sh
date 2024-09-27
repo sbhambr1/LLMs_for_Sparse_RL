@@ -1,7 +1,7 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for variation in 1; do
-    for expt_seed in 1 2 3; do
+    for expt_seed in 7; do
         python3 scripts/run_q_learning_pbrs_mario.py \
             --seed $expt_seed \
             --stochastic \

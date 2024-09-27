@@ -234,26 +234,28 @@ class Q_Learning:
             action = self.select_action(state)
             next_state, reward, done, info = step_func(action)
             
-            #check for subgoals reached
-            
             memory_reward = reward
             
-            if not self.visited_bottom and self.env.visited_bottom:
-                self.visited_bottom = True
-                memory_reward += self.get_shaped_reward(reward_for='visited_bottom')  
+            if self.reshape_reward is not None:
             
-            if not self.picked_key and self.env.picked_key:
-                self.picked_key = True
-                memory_reward += self.get_shaped_reward(reward_for='picked_key')
+                #check for subgoals reached
                 
-            if not self.picked_hidden_key and self.env.picked_hidden_key:
-                self.picked_hidden_key = True
-                memory_reward += self.get_shaped_reward(reward_for='picked_hidden_key')
+                if not self.visited_bottom and self.env.visited_bottom:
+                    self.visited_bottom = True
+                    memory_reward += self.get_shaped_reward(reward_for='visited_bottom')  
                 
-            if self.visited_bottom: # if visited bottom in the episode, then only check for back_to_upper
-                if not self.back_to_upper and self.env.back_to_upper:
-                    self.back_to_upper = True
-                    memory_reward += self.get_shaped_reward(reward_for='back_to_upper')         
+                if not self.picked_key and self.env.picked_key:
+                    self.picked_key = True
+                    memory_reward += self.get_shaped_reward(reward_for='picked_key')
+                    
+                if not self.picked_hidden_key and self.env.picked_hidden_key:
+                    self.picked_hidden_key = True
+                    memory_reward += self.get_shaped_reward(reward_for='picked_hidden_key')
+                    
+                if self.visited_bottom: # if visited bottom in the episode, then only check for back_to_upper
+                    if not self.back_to_upper and self.env.back_to_upper:
+                        self.back_to_upper = True
+                        memory_reward += self.get_shaped_reward(reward_for='back_to_upper')         
             
             
             self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))

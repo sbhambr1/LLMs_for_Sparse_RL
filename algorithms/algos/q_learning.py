@@ -180,6 +180,10 @@ class Q_Learning:
         self.i_episode += 1
         if self.epsilon_success_decay and episode_done and episode_score > 0:
             self._curr_eps = max(self.min_eps, self._curr_eps * self.epsilon_decay)
+        # epsilon decay after subgoals are reached
+        if self.epsilon_success_decay:
+            if self.visited_bottom or self.picked_key or self.picked_hidden_key or self.back_to_upper:
+                self._curr_eps = max(self.min_eps, self._curr_eps * 0.99)
 
     def step(self, action):
         next_state, reward, done, info = self.env.step(action)

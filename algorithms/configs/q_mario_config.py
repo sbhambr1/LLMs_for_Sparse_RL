@@ -37,7 +37,7 @@ class Q_Baseline_Config(Q_Learning_Config):
     def __init__(self):
         super(Q_Baseline_Config, self).__init__()
 
-        self.n_episode = 5000
+        self.n_episode = 2000
         self.max_step = 500000
         self.greedy_episode = np.inf    # no greedy episode
         self.max_episode_len = 2000

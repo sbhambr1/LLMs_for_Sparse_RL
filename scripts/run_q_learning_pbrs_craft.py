@@ -18,7 +18,7 @@ parser.add_argument("--additional_info", type=str, default='',
                     help="additional info for the run")
 parser.add_argument("--reshape_reward", type=bool, default=True,
                     help="pass a path to the reward shaping plan if True")
-parser.add_argument("--variation", type=int, default=1,
+parser.add_argument("--variation", type=int, default=2,
                     help="variation of the reward shaping plan")
 parser.add_argument("--llm_model", type=str, default='gpt-4o',
                     help="LLM model name")

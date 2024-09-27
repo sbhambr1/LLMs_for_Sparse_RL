@@ -59,7 +59,10 @@ class Q_Learning:
         self.score_moving_avg = deque(maxlen=5)
         self.max_score = -np.inf
         self.min_score = np.inf
+        
+        #tracking for reward shaping
         self.memory_reward = []
+        self.get_wood_shaped = 0
         self.processed_wood_shaped = 0
         self.stick_shaped = 0
         self.plank_shaped = 0
@@ -183,8 +186,14 @@ class Q_Learning:
     def post_episode_update(self, episode_done=True, episode_score=0):
         """ this function is called whenever an episode ends """
         self.i_episode += 1
+        # decay epsilon after an episode ends in success
         if self.epsilon_success_decay and episode_done and episode_score > 0:
             self._curr_eps = max(self.min_eps, self._curr_eps * self.epsilon_decay)
+        # decay epsilon after a subgoal is reached
+        if self.epsilon_success_decay:
+            if self.all_wood_collected or self.processed_wood_done or self.stick_made or self.plank_made:
+                self._curr_eps = max(self.min_eps, self._curr_eps * 0.999)
+                
 
     def step(self, action):
         next_state, reward, done, info = self.env.step(action)
@@ -198,13 +207,13 @@ class Q_Learning:
         """
         In this function, we can define the reward shaping for the agent.
         Input: self.env, self.reshape_reward (3 flags to tell which to reward), all self flags
-        self.reshape_reward[0] = T/F -> reward for processed_wood0
-        self.reshape_reward[1] = T/F -> reward for processed_wood1
+        self.reshape_reward[0] = T/F -> reward for get_wood0 and get_wood1
+        self.reshape_reward[1] = T/F -> reward for processed_wood (both)
         self.reshape_reward[2] = T/F -> reward for stick
         self.reshape_reward[3] = T/F -> reward for plank
         """
         
-        if (self.reshape_reward[0] and reward_for == 'processed_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[2] and reward_for == 'stick') or (self.reshape_reward[3] and reward_for == 'plank'):
+        if (self.reshape_reward[0] and reward_for == 'get_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[2] and reward_for == 'stick') or (self.reshape_reward[3] and reward_for == 'plank'):
             return 1
         
         return 0.0
@@ -222,7 +231,8 @@ class Q_Learning:
         curr_traj = []
         total_memory_reward = 0
         
-        self.processed_wood_done = 0
+        self.all_wood_collected = False
+        self.processed_wood_done = False
         self.stick_made = False
         self.plank_made = False
 
@@ -238,34 +248,29 @@ class Q_Learning:
             
             memory_reward = reward
             
-            # check for first time flags are raised, only then give shaped reward to that state
-            if self.env.n_processed_wood == 1:
-                if self.processed_wood_done == 0:
-                    shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
-                    memory_reward = reward + shaped_reward
-                    self.processed_wood_done += 1 
-                    self.processed_wood_shaped += 1
-                    
-            if self.env.n_processed_wood == 2:
-                if self.processed_wood_done == 1:
-                    shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
-                    memory_reward = reward + shaped_reward
-                    self.processed_wood_done += 1
-                    self.processed_wood_shaped += 1
+            if self.env.carry_list['wood'] == 2 and self.all_wood_collected == False:
+                shaped_reward = self.get_shaped_reward(reward_for = 'get_wood')
+                memory_reward = reward + shaped_reward
+                self.all_wood_collected = True
+                self.get_wood_shaped += 1
                 
-            if not self.stick_made and self.env.is_stick_made == 1:
-                self.stick_made = True
+            if self.env.n_processed_wood == 2 and self.processed_wood_done == False:
+                shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
+                memory_reward = reward + shaped_reward
+                self.processed_wood_done = True
+                self.processed_wood_shaped += 1
+                
+            if self.env.is_stick_made == 1 and self.stick_made == False:
                 shaped_reward = self.get_shaped_reward(reward_for = 'stick')
                 memory_reward = reward + shaped_reward
+                self.stick_made = True
                 self.stick_shaped += 1
-                self.processed_wood_done -= 1
                 
-            if not self.plank_made and self.env.is_plank_made == 1:
-                self.plank_made = True
+            if self.env.is_plank_made == 1 and self.plank_made == False:
                 shaped_reward = self.get_shaped_reward(reward_for = 'plank')
                 memory_reward = reward + shaped_reward
+                self.plank_made = True
                 self.plank_shaped += 1
-                self.processed_wood_done -= 1
             
             self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))
             curr_traj.append((state, action, memory_reward, next_state, done, info))

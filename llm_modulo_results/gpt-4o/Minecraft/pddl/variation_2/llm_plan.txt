@@ -1,0 +1,6 @@
+(get_wood0)
+(get_wood1)
+(get_processed_wood)
+(make_plank)
+(make_stick)
+(make_ladder)

@@ -48,7 +48,7 @@ Here is a pddl domain, a planning problem. Provide the plan for the query proble
 
 [YOUR RESPONSE]
 
-LLM Response: ```
+LLM Response: (make_stick wood0)
 -----------------
-LLM Plan: ['```']
+LLM Plan: ['(make_stick wood0)']
 -----------------

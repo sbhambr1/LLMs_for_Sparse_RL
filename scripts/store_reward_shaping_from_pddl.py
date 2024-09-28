@@ -33,6 +33,8 @@ if __name__ == '__main__':
     
     index_get_wood0, index_get_wood1, index_process_wood0, index_process_wood1, index_plank, index_stick = -1, -1, -1, -1, -1, -1
     
+    w1, w2, m1, m2 = -1, -1, -1, -1
+    
     """
     example plan: processwood1, make_plank, processwood2, make_stick, make_ladder
     

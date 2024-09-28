@@ -1,6 +1,6 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
-for expt_seed in 3; do
+for expt_seed in 7; do
     python3 scripts/run_q_learning_baseline_craft.py \
         --seed $expt_seed \
         --stochastic \

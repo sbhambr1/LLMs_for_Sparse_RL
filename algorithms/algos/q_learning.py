@@ -214,7 +214,7 @@ class Q_Learning:
         """
         
         if (self.reshape_reward[0] and reward_for == 'get_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[2] and reward_for == 'stick') or (self.reshape_reward[3] and reward_for == 'plank'):
-            return 1
+            return 0.5
         
         return 0.0
 
@@ -248,29 +248,31 @@ class Q_Learning:
             
             memory_reward = reward
             
-            if self.env.carry_list['wood'] == 2 and self.all_wood_collected == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'get_wood')
-                memory_reward = reward + shaped_reward
-                self.all_wood_collected = True
-                self.get_wood_shaped += 1
-                
-            if self.env.n_processed_wood == 2 and self.processed_wood_done == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
-                memory_reward = reward + shaped_reward
-                self.processed_wood_done = True
-                self.processed_wood_shaped += 1
-                
-            if self.env.is_stick_made == 1 and self.stick_made == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'stick')
-                memory_reward = reward + shaped_reward
-                self.stick_made = True
-                self.stick_shaped += 1
-                
-            if self.env.is_plank_made == 1 and self.plank_made == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'plank')
-                memory_reward = reward + shaped_reward
-                self.plank_made = True
-                self.plank_shaped += 1
+            if self.reshape_reward is not None:
+            
+                if self.env.carry_list['wood'] == 2 and self.all_wood_collected == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'get_wood')
+                    memory_reward = reward + shaped_reward
+                    self.all_wood_collected = True
+                    self.get_wood_shaped += 1
+                    
+                if self.env.n_processed_wood == 2 and self.processed_wood_done == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
+                    memory_reward = reward + shaped_reward
+                    self.processed_wood_done = True
+                    self.processed_wood_shaped += 1
+                    
+                if self.env.is_stick_made == 1 and self.stick_made == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'stick')
+                    memory_reward = reward + shaped_reward
+                    self.stick_made = True
+                    self.stick_shaped += 1
+                    
+                if self.env.is_plank_made == 1 and self.plank_made == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'plank')
+                    memory_reward = reward + shaped_reward
+                    self.plank_made = True
+                    self.plank_shaped += 1
             
             self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))
             curr_traj.append((state, action, memory_reward, next_state, done, info))

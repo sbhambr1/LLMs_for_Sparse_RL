@@ -1,0 +1,2 @@
+(get_key0)
+(open_door0)

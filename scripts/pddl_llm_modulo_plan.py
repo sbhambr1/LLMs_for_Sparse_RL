@@ -1,5 +1,6 @@
 import os
 import sys
+import random
 import argparse
 sys.path.insert(0,os.getcwd())
 from utils.conversation import Conversation
@@ -13,14 +14,15 @@ parser.add_argument("--variation", type=int, default=1, help="Variation of the L
 parser.add_argument("--num_agent_steps", type=int, default=10, help="Number of steps the agent can take")
 parser.add_argument("--num_backprompt_steps", type=int, default=5, help="Number of backprompts that can be given") 
 
-class LLM_Modulo_Minecraft_PDDL:
+class LLM_Modulo_Household_PDDL:
     
     def __init__(self) -> None:
-        self.num_woods_collected = 0
-        self.num_woods_processed = 0
-        self.stick_made = False
-        self.plank_made = False
-
+        self.carrying_target_key_0 = False
+        self.door_0_unlocked = False
+        self.carrying_target_key_1 = False
+        self.door_1_unlocked = False
+        self.is_charged = False
+        
     def get_initial_prompt(self, pddl_domain, pddl_problem, llm_plan_so_far):
         
         TASK_DESC = "Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.\n\n"
@@ -40,45 +42,52 @@ class LLM_Modulo_Minecraft_PDDL:
         FEASIBLE = False
         backprompt = ''
         
-        valid_actions = ['(get_wood)', '(get_processed_wood)', '(make_stick)', '(make_plank)', '(make_ladder)']
+        valid_actions = ['(get_key0)', '(get_key1)', '(open_door0)', '(open_door1)', '(is_charged)', '(goal)']
+        
+        random.shuffle(valid_actions)
         
         if llm_response not in valid_actions:
             FEASIBLE = False
             backprompt = 'Your response: ' + llm_response + '\n\n' + 'The action provided is not a valid action. Please choose a valid action from the list ' + str(valid_actions) + '\n.'
         else:
-            if '(get_wood)' in llm_response:
-                self.num_woods_collected += 1
+            if '(get_key0)' in llm_response:
+                self.carrying_target_key_0 = True
                 FEASIBLE = True
-                    
-            elif '(get_processed_wood)' in llm_response:
-                if self.num_woods_collected > 0:
+                
+            elif '(open_door0)' in llm_response:
+                if self.carrying_target_key_0:
+                    self.door_0_unlocked = True
                     FEASIBLE = True
-                    self.num_woods_collected -= 1
-                    self.num_woods_processed += 1
                 else:
                     FEASIBLE = False
                     backprompt = 'Your plan so far: ' + str(llm_plan_so_far) + '\n\n' + 'Your response: ' + llm_response + '\n\n' + 'The action provided is not feasible. Please choose a valid action from the list ' + str(valid_actions) + '\n.'
                     
-            elif '(make_stick)' in llm_response:
-                if self.num_woods_processed > 0:
+            elif '(get_key1)' in llm_response:
+                if self.door_0_unlocked:
+                    self.carrying_target_key_1 = True
                     FEASIBLE = True
-                    self.num_woods_processed -= 1
-                    self.stick_made = True
                 else:
                     FEASIBLE = False
                     backprompt = 'Your plan so far: ' + str(llm_plan_so_far) + '\n\n' + 'Your response: ' + llm_response + '\n\n' + 'The action provided is not feasible. Please choose a valid action from the list ' + str(valid_actions) + '\n.'
                     
-            elif '(make_plank)' in llm_response:
-                if self.num_woods_processed > 0:
+            elif '(open_door1)' in llm_response:
+                if self.carrying_target_key_1:
+                    self.door_1_unlocked = True
                     FEASIBLE = True
-                    self.num_woods_processed -= 1
-                    self.plank_made = True
                 else:
                     FEASIBLE = False
                     backprompt = 'Your plan so far: ' + str(llm_plan_so_far) + '\n\n' + 'Your response: ' + llm_response + '\n\n' + 'The action provided is not feasible. Please choose a valid action from the list ' + str(valid_actions) + '\n.'
                     
-            elif '(make_ladder)' in llm_response:
-                if self.stick_made and self.plank_made:
+            elif '(is_charged)' in llm_response:
+                if self.door_1_unlocked and self.door_0_unlocked:
+                    self.is_charged = True
+                    FEASIBLE = True
+                else:
+                    FEASIBLE = False
+                    backprompt = 'Your plan so far: ' + str(llm_plan_so_far) + '\n\n' + 'Your response: ' + llm_response + '\n\n' + 'The action provided is not feasible. Please choose a valid action from the list ' + str(valid_actions) + '\n.'
+                    
+            elif '(goal)' in llm_response:
+                if self.is_charged:
                     FEASIBLE = True
                 else:
                     FEASIBLE = False
@@ -113,7 +122,7 @@ def main():
 
     args = parser.parse_args()
     
-    save_dir = f'./llm_modulo_results/{args.llm_model}/Minecraft/pddl/variation_{args.variation}'
+    save_dir = f'./llm_modulo_results/{args.llm_model}/Household/pddl/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     
@@ -123,12 +132,12 @@ def main():
     
     conv = Conversation(args.llm_model)
 
-    pddl_domain_text = open('./llm_modulo/minecraft_domain_relaxed.pddl', 'r').read()
-    pddl_problem_text = open('./llm_modulo/minecraft_problem_relaxed.pddl', 'r').read()
+    pddl_domain_text = open('./llm_modulo/household_domain.pddl', 'r').read()
+    pddl_problem_text = open('./llm_modulo/household_problem.pddl', 'r').read()
     
     llm_plan_so_far = []
     
-    runner = LLM_Modulo_Minecraft_PDDL()
+    runner = LLM_Modulo_Household_PDDL()
     
     for i in range(args.num_agent_steps):
         
@@ -162,7 +171,7 @@ def main():
             print('LLM could not find a feasible action.')
             break
         
-        if llm_plan_so_far[-1] == '(make_ladder)':
+        if '(goal)' in llm_plan_so_far[-1]:
             print('LLM has found the solution plan.')
             break
             

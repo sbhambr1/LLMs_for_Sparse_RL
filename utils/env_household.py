@@ -23,7 +23,7 @@ class Env_Household:
         self.actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
         self.observation_space = spaces.Box(low=0, high=1,
-                                            shape=(229,),
+                                            shape=(231,),
                                             dtype=np.int16)
         self.obs_type = np.int16
         # game config
@@ -255,7 +255,7 @@ class Env_Household:
     def _get_grid_obs(self):
         # To Do - add flags 
         grid_obs = np.copy(self.grid).flatten()
-        obs = np.append(grid_obs,[int(self.door_0_unlocked),int(self.door_1_unlocked),int(self.is_charged),int(self.at_destination)])
+        obs = np.append(grid_obs,[int(self.carrying_target_key_0),int(self.door_0_unlocked),int(self.carrying_target_key_1),int(self.door_1_unlocked),int(self.is_charged),int(self.at_destination)])
         #obs = np.append(grid_obs, [int(self.is_charged)])
         return obs.astype(self.obs_type)
 

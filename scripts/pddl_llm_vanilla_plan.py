@@ -32,7 +32,7 @@ def main():
 
     args = parser.parse_args()
     
-    save_dir = f'./vanilla_llm_results/{args.llm_model}/Minecraft/pddl/variation_{args.variation}'
+    save_dir = f'./vanilla_llm_results/{args.llm_model}/Household/pddl/variation_{args.variation}'
     if not os.path.exists(save_dir):
         os.makedirs(save_dir)
     
@@ -42,8 +42,8 @@ def main():
     
     conv = Conversation(args.llm_model)
 
-    pddl_domain_text = open('./llm_modulo/minecraft_domain_relaxed.pddl', 'r').read()
-    pddl_problem_text = open('./llm_modulo/minecraft_problem_relaxed.pddl', 'r').read()
+    pddl_domain_text = open('./llm_modulo/household_domain.pddl', 'r').read()
+    pddl_problem_text = open('./llm_modulo/household_problem.pddl', 'r').read()
     
     initial_prompt = get_initial_prompt(pddl_domain_text, pddl_problem_text)
 

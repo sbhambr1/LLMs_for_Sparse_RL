@@ -1,8 +1,8 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
-for variation in 2; do
-    for expt_seed in 1 2 3; do
-        python3 scripts/run_q_learning_pbrs_craft.py \
+for variation in 3; do
+    for expt_seed in 4; do
+        python3 scripts/run_q_learning_pbrs_household.py \
             --seed $expt_seed \
             --stochastic \
             --additional_info "_stochastic_llm_vanilla_Variation_${variation}" \

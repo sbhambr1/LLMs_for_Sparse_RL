@@ -1,8 +1,8 @@
 import os
 import utils
 import argparse
-from utils.env_craft import Env_Craft
-from algorithms.configs.q_minecraft_config import Q_Baseline_Config
+from utils.env_household import Env_Household
+from algorithms.configs.q_household_config import Q_Baseline_Config
 from algorithms.algos.q_learning import Q_Learning
 from algorithms.utils.experiment_manager import Wandb_Logger
 
@@ -22,9 +22,9 @@ def main():
     
     args = parser.parse_args()
     utils.seed(args.seed)
-    env = Env_Craft(success_reward=1, stochastic=args.stochastic)
+    env = Env_Household(success_reward=1, stochastic=args.stochastic)
     config = Q_Baseline_Config()
-    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='MINECRAFT_q_learning_baseline'+args.additional_info)
+    logger = Wandb_Logger(entity_name='llm_modulo_sparse_rl' ,proj_name='neurips_24', run_name='HOUSEHOLD_q_learning_baseline'+args.additional_info)
     llm_rs_policy = None
     agent = Q_Learning(env, config, logger=logger, reshape_reward=llm_rs_policy)
     agent.train()

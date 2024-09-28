@@ -12,13 +12,14 @@ from utils.grid_renderer import Grid_Renderer
 
 class Env_Household:
     # noinspection PySetFunctionToLiteral
-    def __init__(self, success_reward=0):
+    def __init__(self, success_reward=0, stochastic=False):
         """
         Success_reward is 0 by default since in ASGRL & other
                 Planning+RL baselines, the reward is given by the symbolic model (not from the env)
         But to run Vanilla Q-Learning, success_reward should be set to 1.
         """
         # actions: up, down, left, right
+        self.stochastic = stochastic
         self.action_space = spaces.Discrete(4)      
         self.actions = [(-1, 0), (1, 0), (0, -1), (0, 1)]
 
@@ -278,6 +279,14 @@ class Env_Household:
                     self.grid[_old_pos[0], _old_pos[1]] = self.objects.unlock_door_1.id
                 else:
                     self.grid[_old_pos[0], _old_pos[1]] = 0
+        
+        if self.stochastic:
+            self.prob = 0.9
+            if np.random.uniform() < self.prob:
+                action = action
+            else:
+                action = np.random.choice([i for i in range(4) if i != action])
+        
         assert action <= 3
         old_pos = tuple(self.agent_pos)
         next_x, next_y = self.agent_pos[0] + self.actions[action][0], self.agent_pos[1] + self.actions[action][1]

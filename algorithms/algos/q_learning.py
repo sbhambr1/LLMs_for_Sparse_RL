@@ -62,10 +62,11 @@ class Q_Learning:
         
         #tracking for reward shaping
         self.memory_reward = []
-        self.get_wood_shaped = 0
-        self.processed_wood_shaped = 0
-        self.stick_shaped = 0
-        self.plank_shaped = 0
+        self.get_key0_shaped = 0
+        self.get_key1_shaped = 0
+        self.open_door0_shaped = 0
+        self.open_door1_shaped = 0
+        self.is_charged_shaped = 0
         
 
     def _initialize_buffer(self):
@@ -190,8 +191,9 @@ class Q_Learning:
         if self.epsilon_success_decay and episode_done and episode_score > 0:
             self._curr_eps = max(self.min_eps, self._curr_eps * self.epsilon_decay)
         # decay epsilon after a subgoal is reached
+        
         if self.epsilon_success_decay:
-            if self.all_wood_collected or self.processed_wood_done or self.stick_made or self.plank_made:
+            if self.key0_shaped or self.door0_shaped or self.key1_shaped or self.door1_shaped or self.is_charged_shaped:
                 self._curr_eps = max(self.min_eps, self._curr_eps * 0.999)
                 
 
@@ -206,15 +208,16 @@ class Q_Learning:
     def get_shaped_reward(self, reward_for=None):
         """
         In this function, we can define the reward shaping for the agent.
-        Input: self.env, self.reshape_reward (3 flags to tell which to reward), all self flags
-        self.reshape_reward[0] = T/F -> reward for get_wood0 and get_wood1
-        self.reshape_reward[1] = T/F -> reward for processed_wood (both)
-        self.reshape_reward[2] = T/F -> reward for stick
-        self.reshape_reward[3] = T/F -> reward for plank
+        Input: self.env, self.reshape_reward (5 flags to tell which to reward), all self flags
+        self.reshape_reward[0] = T/F -> reward for get_key0
+        self.reshape_reward[1] = T/F -> reward for open_door0
+        self.reshape_reward[2] = T/F -> reward for get_key1
+        self.reshape_reward[3] = T/F -> reward for open_door1
+        self.reshape_reward[4] = T/F -> reward for is_charged
         """
         
-        if (self.reshape_reward[0] and reward_for == 'get_wood') or (self.reshape_reward[1] and reward_for == 'processed_wood')  or (self.reshape_reward[2] and reward_for == 'stick') or (self.reshape_reward[3] and reward_for == 'plank'):
-            return 1
+        if (self.reshape_reward[0] and reward_for == 'get_key0') or (self.reshape_reward[1] and reward_for == 'open_door0')  or (self.reshape_reward[2] and reward_for == 'get_key1') or (self.reshape_reward[3] and reward_for == 'open_door1') or (self.reshape_reward[4] and reward_for == 'is_charged'):
+            return 0.5
         
         return 0.0
 
@@ -231,10 +234,11 @@ class Q_Learning:
         curr_traj = []
         total_memory_reward = 0
         
-        self.all_wood_collected = False
-        self.processed_wood_done = False
-        self.stick_made = False
-        self.plank_made = False
+        self.key0_shaped = False
+        self.door0_shaped = False
+        self.key1_shaped = False
+        self.door1_shaped = False
+        self.is_charged_shaped = False
 
         while not done and self.episode_step <= self.max_episode_len:
             if is_rendering:
@@ -248,30 +252,38 @@ class Q_Learning:
             
             memory_reward = reward
             
-            if self.env.carry_list['wood'] == 2 and self.all_wood_collected == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'get_wood')
-                memory_reward = reward + shaped_reward
-                self.all_wood_collected = True
-                self.get_wood_shaped += 1
+            if self.reshape_reward is not None:
                 
-            if self.env.n_processed_wood == 2 and self.processed_wood_done == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'processed_wood')
-                memory_reward = reward + shaped_reward
-                self.processed_wood_done = True
-                self.processed_wood_shaped += 1
-                
-            if self.env.is_stick_made == 1 and self.stick_made == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'stick')
-                memory_reward = reward + shaped_reward
-                self.stick_made = True
-                self.stick_shaped += 1
-                
-            if self.env.is_plank_made == 1 and self.plank_made == False:
-                shaped_reward = self.get_shaped_reward(reward_for = 'plank')
-                memory_reward = reward + shaped_reward
-                self.plank_made = True
-                self.plank_shaped += 1
-            
+                if self.env.carrying_target_key_0 == True and self.key0_shaped == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'get_key0')
+                    memory_reward = reward + shaped_reward
+                    self.key0_shaped = True
+                    self.get_key0_shaped += 1
+                    
+                if self.env.door_0_unlocked == True and self.door0_shaped == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'open_door0')
+                    memory_reward = reward + shaped_reward
+                    self.door0_shaped = True
+                    self.open_door0_shaped += 1
+                    
+                if self.env.carrying_target_key_1 == True and self.key1_shaped == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'get_key1')
+                    memory_reward = reward + shaped_reward
+                    self.key1_shaped = True
+                    self.get_key1_shaped += 1
+                    
+                if self.env.door_1_unlocked == True and self.door1_shaped == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'open_door1')
+                    memory_reward = reward + shaped_reward
+                    self.door1_shaped = True
+                    self.open_door1_shaped += 1
+                    
+                if self.env.is_charged == True and self.is_charged_shaped == False:
+                    shaped_reward = self.get_shaped_reward(reward_for = 'is_charged')
+                    memory_reward = reward + shaped_reward
+                    self.is_charged_shaped = True
+                    self.is_charged_shaped += 1
+                 
             self.add_transition_to_memory(transition=(state, action, memory_reward, next_state, done, info))
             curr_traj.append((state, action, memory_reward, next_state, done, info))
             # Q update
@@ -318,7 +330,7 @@ class Q_Learning:
                   f'(avg: {np.round(np.mean(self.score_moving_avg), 5)}, min: {self.min_score}, max: {self.max_score}), '
                   f'epsilon: {np.round(agent_eps, 5)}, sil buffer size: {sil_buffer_size}, '
                   f'episode steps: {self.episode_step}, q table size: {len(self.q_table)}, '
-                  f'total steps: {self.total_step}, lr: {self.lr}, total memory reward: {sum(self.memory_reward)}, processed_wood_shaped: {self.processed_wood_shaped}, stick_shaped: {self.stick_shaped}, plank_shaped: {self.plank_shaped}\n')
+                  f'total steps: {self.total_step}, lr: {self.lr}, total memory reward: {sum(self.memory_reward)}, get_key0_shaped: {self.get_key0_shaped}, open_door0_shaped: {self.open_door0_shaped}, get_key1_shaped: {self.get_key1_shaped}, open_door1_shaped: {self.open_door1_shaped}, is_charged_shaped: {self.is_charged_shaped} \n')
             self.max_score = -np.inf
             self.min_score = np.inf
         return sampled_rgb_traj

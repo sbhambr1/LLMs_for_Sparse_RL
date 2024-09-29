@@ -18,10 +18,11 @@ from tenacity import (
 # llm_models: gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0, meta.llama3-1-8b-instruct-v1:0
 
 class Conversation:
-    def __init__(self, llm_model) -> None:
+    def __init__(self, llm_model, temp) -> None:
         self.llm_prompt = []
         self.log_history = []
         self.llm_model =  llm_model
+        self.temp = temp
         self.tokens_per_min = 0
         self.max_tokens = 256
         self.input_token_cost = 0.5 / 1e6 # only for gpt-3.5-turbo
@@ -86,7 +87,7 @@ class Conversation:
                 response = self.client.chat.completions.create(
                 model=self.llm_model,
                 messages = message,
-                temperature=temperature,
+                temperature=self.temp,
                 max_tokens=100,
                 top_p=1,
                 frequency_penalty=0,
@@ -101,7 +102,7 @@ class Conversation:
         elif 'claude' in self.llm_model:
         
             anthropic_client = self.anthropic_client
-            local_config = {"max_tokens": 100, "temperature": 0}
+            local_config = {"max_tokens": 100, "temperature": self.temp}
             
             
             @retry(wait=wait_random_exponential(min=10, max=60), stop=stop_after_attempt(6))
@@ -146,7 +147,7 @@ class Conversation:
             native_request = {
                 "prompt": formatted_prompt,
                 "max_gen_len": 512,
-                "temperature": 0.5,
+                "temperature": self.temp,
             }
             
             request = json.dumps(native_request)

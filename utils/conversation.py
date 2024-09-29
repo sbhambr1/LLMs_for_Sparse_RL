@@ -34,9 +34,9 @@ class Conversation:
         
     def _setup_client(self, llm_model):
         if llm_model == "gpt-3.5-turbo" or llm_model == "gpt-4o-mini" or llm_model == "gpt-4o":
-            api_key = os.environ["OPENAI_API_KEY"]
-            # key_file = open(os.getcwd()+'/key.txt', 'r')
-            # api_key = key_file.readline().rstrip()
+            # api_key = os.environ["OPENAI_API_KEY"]
+            key_file = open(os.getcwd()+'/key.txt', 'r')
+            api_key = key_file.readline().rstrip()
 
             if api_key is None:
                 raise Exception("Please insert your OpenAI API key in conversation.py")
@@ -53,8 +53,11 @@ class Conversation:
             self.max_tokens_per_min = 50000 #TODO: get this from the API
             self.max_tokens_per_day = 1000000
             
-        elif 'llama3' in llm_model:
+        elif 'llama3-1' in llm_model:
             self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
+        elif 'llama3' in llm_model:
+            self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
+
         
     def count_tokens(self, string: str, encoding_name: str) -> int:
         encoding = tiktoken.get_encoding(encoding_name)

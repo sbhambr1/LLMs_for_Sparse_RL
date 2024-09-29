@@ -36,7 +36,9 @@ class LLM_Modulo:
             return backprompt, FEASIBLE
         else:
             if current_llm_action == 'move forward':
-                backprompt = "Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action."
+                # backprompt = "Information: You cannot 'move forward' in this state as you are either facing a wall or an object. Please choose another action."
+                backprompt = "Information: You cannot 'move forward' in this state as you are either facing a wall or an object. You can 'pickup key' if you are facing the key. You can 'open door' if you are facing the door. Please choose another action."
+
             elif current_llm_action == 'pickup key':
                 if 'pickup key' in llm_actions:
                     backprompt = "Information: You have already picked up the key. Please choose another action."

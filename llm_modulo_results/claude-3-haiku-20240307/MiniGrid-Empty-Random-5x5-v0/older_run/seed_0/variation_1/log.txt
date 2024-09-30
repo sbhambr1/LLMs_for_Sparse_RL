@@ -47,7 +47,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
 
-Information: You cannot 'move forward' in this state as you are either facing a wall or an object. You can 'pickup key' if you are facing the key. You can 'open door' if you are facing the door. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
 The current maze looks like this:
 
 unseen unseen unseen
@@ -94,7 +94,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
 
-Information: You cannot 'move forward' in this state as you are either facing a wall or an object. You can 'pickup key' if you are facing the key. You can 'open door' if you are facing the door. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
 The current maze looks like this:
 
 unseen unseen unseen
@@ -157,7 +157,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
 
-Information: You cannot 'move forward' in this state as you are either facing a wall or an object. You can 'pickup key' if you are facing the key. You can 'open door' if you are facing the door. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
 The current maze looks like this:
 
 agent unseen unseen
@@ -220,7 +220,7 @@ What is the next action that the agent should take? Only choose from the list of
 ------[BACK PROMPTING]---->
 You are tasked with solving a 3x3 maze where you will encounter walls. Your task is 'get to the goal'. You can be facing in any of the four directions. To move in any direction, you need to face in the correct direction. You will be given a description of the maze at every step and you need to choose the next action to take. The available actions are 'turn left', 'turn right', 'move forward'.
 
-Information: You cannot 'move forward' in this state as you are either facing a wall or an object. You can 'pickup key' if you are facing the key. You can 'open door' if you are facing the door. Please choose another action.The following actions are feasible in this state: ['turn left', 'turn right'].
+Information: You cannot 'move forward' in this state as you are facing a wall. Please choose another action.The following actions are feasible in this state: ['turn right', 'turn left'].
 The current maze looks like this:
 
 unseen unseen agent
@@ -266,7 +266,5 @@ What is the next action that the agent should take? Only choose from the list of
 
 LLM Response: move forward
 [LLM ACTIONS:] --->  ['move forward', 'move forward', 'turn right', 'move forward', 'turn right', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward', 'turn right', 'move forward', 'move forward']
-LLM policy has been saved to: ./llm_modulo_results/claude-3-haiku-20240307/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_2/llm_policy.txt
-All actions tried by the LLM have been saved to: ./llm_modulo_results/claude-3-haiku-20240307/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_2/all_tried_actions.txt
------------------
-Total reward: 0.883
+LLM policy has been saved to: ./llm_modulo_results/claude-3-haiku-20240307/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_1/llm_policy.txt
+All actions tried by the LLM have been saved to: ./llm_modulo_results/claude-3-haiku-20240307/MiniGrid-Empty-Random-5x5-v0/seed_0/variation_1/all_tried_actions.txt

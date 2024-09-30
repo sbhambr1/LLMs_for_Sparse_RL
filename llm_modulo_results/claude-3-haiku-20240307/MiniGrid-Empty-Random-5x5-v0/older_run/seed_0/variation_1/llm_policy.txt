@@ -1,10 +1,13 @@
+move forward
+move forward
 turn right
 move forward
 turn right
-turn left
 move forward
-turn left
 move forward
 turn right
-turn left
+move forward
+move forward
+turn right
+move forward
 move forward

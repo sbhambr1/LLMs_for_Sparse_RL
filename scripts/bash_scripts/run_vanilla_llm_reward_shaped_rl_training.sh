@@ -9,7 +9,7 @@
 export PYTHONPATH=$PYTHONPATH:$(pwd)
 
 for env_cfg_seed in 0; do
-    for expt_seed in 1 2 3 4 5; do
+    for expt_seed in 7; do
         python scripts/train_vanilla_llm.py \
             --algo "a2c" \
             --env "MiniGrid-DoorKey-6x6-v0" \

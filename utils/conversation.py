@@ -57,7 +57,7 @@ class Conversation:
         elif 'llama3-1' in llm_model:
             self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
         elif 'llama3' in llm_model:
-            self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
+            self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
 
         
     def count_tokens(self, string: str, encoding_name: str) -> int:

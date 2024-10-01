@@ -1,0 +1,1 @@
+here is the plan for the given problem in pddl syntax:

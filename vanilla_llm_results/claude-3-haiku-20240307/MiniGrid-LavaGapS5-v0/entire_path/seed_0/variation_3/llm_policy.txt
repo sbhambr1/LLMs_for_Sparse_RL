@@ -1,4 +1,3 @@
-move forward
-move forward
+turn left
 move forward
 move forward

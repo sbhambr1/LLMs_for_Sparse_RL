@@ -121,7 +121,7 @@ def main():
     plan_file = f'{save_dir}/llm_plan.txt'
     sys.stdout = log_file
     
-    conv = Conversation(args.llm_model)
+    conv = Conversation(args.llm_model, temp=0)
 
     pddl_domain_text = open('./llm_modulo/minecraft_domain_relaxed.pddl', 'r').read()
     pddl_problem_text = open('./llm_modulo/minecraft_problem_relaxed.pddl', 'r').read()

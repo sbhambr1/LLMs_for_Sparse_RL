@@ -15,13 +15,14 @@ from tenacity import (
 )  # for exponential backoff
 
 
-# llm_models: gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0
+# llm_models: gpt-3.5-turbo, gpt-4o-mini, gpt-4o, claude-3-haiku-20240307 (small), claude-3-sonnet-20240229 (medium), claude-3-opus-20240229 (large), meta.llama3-8b-instruct-v1:0, meta.llama3-1-8b-instruct-v1:0
 
 class Conversation:
-    def __init__(self, llm_model) -> None:
+    def __init__(self, llm_model, temp) -> None:
         self.llm_prompt = []
         self.log_history = []
         self.llm_model =  llm_model
+        self.temp = temp
         self.tokens_per_min = 0
         self.max_tokens = 256
         self.input_token_cost = 0.5 / 1e6 # only for gpt-3.5-turbo
@@ -33,7 +34,7 @@ class Conversation:
         self._setup_client(llm_model)
         
     def _setup_client(self, llm_model):
-        if llm_model == "gpt-3.5-turbo" or llm_model == "gpt-4o-mini" or llm_model == "gpt-4o":
+        if llm_model == "gpt-3.5-turbo" or llm_model == "gpt-4o-mini" or llm_model == "gpt-4o" or llm_model == "gpt-4":
             api_key = os.environ["OPENAI_API_KEY"]
             # key_file = open(os.getcwd()+'/key.txt', 'r')
             # api_key = key_file.readline().rstrip()
@@ -53,8 +54,11 @@ class Conversation:
             self.max_tokens_per_min = 50000 #TODO: get this from the API
             self.max_tokens_per_day = 1000000
             
+        elif 'llama3-1' in llm_model:
+            self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
         elif 'llama3' in llm_model:
-            self.client = boto3.client("bedrock-runtime", region_name="us-east-1")
+            self.client = boto3.client("bedrock-runtime", region_name="us-west-2")
+
         
     def count_tokens(self, string: str, encoding_name: str) -> int:
         encoding = tiktoken.get_encoding(encoding_name)
@@ -75,7 +79,7 @@ class Conversation:
         
         message = self.construct_message(prompt, role) 
         
-        if self.llm_model == "gpt-3.5-turbo" or self.llm_model == "gpt-4o-mini" or self.llm_model == "gpt-4o": 
+        if self.llm_model == "gpt-3.5-turbo" or self.llm_model == "gpt-4o-mini" or self.llm_model == "gpt-4o" or self.llm_model == "gpt-4": 
         
             if self.total_cost > self.cost_limit:
                 return {"response_message": "[WARNING] COST LIMIT REACHED!"}
@@ -83,7 +87,7 @@ class Conversation:
                 response = self.client.chat.completions.create(
                 model=self.llm_model,
                 messages = message,
-                temperature=temperature,
+                temperature=self.temp,
                 max_tokens=100,
                 top_p=1,
                 frequency_penalty=0,
@@ -98,7 +102,7 @@ class Conversation:
         elif 'claude' in self.llm_model:
         
             anthropic_client = self.anthropic_client
-            local_config = {"max_tokens": 100, "temperature": 0}
+            local_config = {"max_tokens": 100, "temperature": self.temp}
             
             
             @retry(wait=wait_random_exponential(min=10, max=60), stop=stop_after_attempt(6))
@@ -143,7 +147,7 @@ class Conversation:
             native_request = {
                 "prompt": formatted_prompt,
                 "max_gen_len": 512,
-                "temperature": 0.5,
+                "temperature": self.temp,
             }
             
             request = json.dumps(native_request)

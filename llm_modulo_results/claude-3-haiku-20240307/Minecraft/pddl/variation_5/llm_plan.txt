@@ -1,0 +1,6 @@
+(get_wood wood0)
+(get_wood wood1)
+(get_processed_wood wood0)
+(get_processed_wood wood1)
+(make_plank wood0)
+(make_plank wood1)

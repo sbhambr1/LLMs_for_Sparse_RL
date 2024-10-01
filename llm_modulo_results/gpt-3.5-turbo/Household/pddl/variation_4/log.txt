@@ -1,0 +1,605 @@
+[STEP-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+[YOUR RESPONSE]
+
+LLM Response: (:plan
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+[YOUR RESPONSE]
+Your response: (:plan
+
+The action provided is not a valid action. Please choose a valid action from the list ['(goal)', '(open_door1)', '(get_key0)', '(is_charged)', '(get_key1)', '(open_door0)']
+.
+LLM Response: (:plan
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+[YOUR RESPONSE]
+Your response: (:plan
+
+The action provided is not a valid action. Please choose a valid action from the list ['(open_door0)', '(get_key1)', '(is_charged)', '(goal)', '(get_key0)', '(open_door1)']
+.
+LLM Response: (:plan
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+[YOUR RESPONSE]
+Your response: (:plan
+
+The action provided is not a valid action. Please choose a valid action from the list ['(get_key1)', '(get_key0)', '(open_door1)', '(goal)', '(open_door0)', '(is_charged)']
+.
+LLM Response: (get_key0)
+[STEP-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)']
+
+[YOUR RESPONSE]
+
+LLM Response: '(open_door0)'
+[STEP-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)', "'(open_door0)'"]
+
+[YOUR RESPONSE]
+
+LLM Response: '(open_door1)'
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)', "'(open_door0)'"]
+
+[YOUR RESPONSE]
+Your response: '(open_door1)'
+
+The action provided is not a valid action. Please choose a valid action from the list ['(get_key1)', '(open_door1)', '(open_door0)', '(is_charged)', '(get_key0)', '(goal)']
+.
+LLM Response: '(open_door1)'
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)', "'(open_door0)'"]
+
+[YOUR RESPONSE]
+Your response: '(open_door1)'
+
+The action provided is not a valid action. Please choose a valid action from the list ['(get_key0)', '(get_key1)', '(is_charged)', '(goal)', '(open_door1)', '(open_door0)']
+.
+LLM Response: '(open_door1)'
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)', "'(open_door0)'"]
+
+[YOUR RESPONSE]
+Your response: '(open_door1)'
+
+The action provided is not a valid action. Please choose a valid action from the list ['(get_key0)', '(open_door1)', '(open_door0)', '(is_charged)', '(goal)', '(get_key1)']
+.
+LLM Response: '(open_door1)'
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+Your plan so far: ['(get_key0)', "'(open_door0)'"]
+
+[YOUR RESPONSE]
+Your response: '(open_door1)'
+
+The action provided is not a valid action. Please choose a valid action from the list ['(goal)', '(get_key0)', '(get_key1)', '(open_door1)', '(open_door0)', '(is_charged)']
+.
+LLM Response: '(open_door1)'
+LLM could not find a feasible action.
+LLM plan has been saved to: ./llm_modulo_results/gpt-3.5-turbo/Household/pddl/variation_4/llm_plan.txt

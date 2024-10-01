@@ -1,0 +1,65 @@
+Here is a pddl domain, a planning problem. Provide the plan for the query problem. Provide only the pddl syntax for the plan where each action is represented as (ACTION_NAME OBJECTS).
+
+[DOMAIN]
+(define (domain household)
+    (:requirements :strips :typing :negative-preconditions)
+    (:types key door - object)
+    (:predicates (key0-picked)
+                 (key1-picked)
+                 (holding-key)
+                 (door0-opened)
+                 (door1-opened)
+                 (at-starting-location)
+                 (charged)
+                 (at-destination))
+    (:action get_key0
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key0-picked) (holding-key)))
+    (:action get_key1
+            :parameters ()
+            :precondition (and (not(holding-key)))
+            :effect (and (key1-picked) (holding-key)))
+    (:action open_door0
+            :parameters ()
+            :precondition (and (not (door0-opened)) (holding-key) (key0-picked))
+            :effect (and (door0-opened) (not(holding-key)) (not (key0-picked))))
+    (:action open_door1
+            :parameters ()
+            :precondition (and (not (door1-opened)) (holding-key) (key1-picked) (door0-opened))
+            :effect (and (door1-opened) (not(holding-key)) (not (key1-picked))))
+    (:action is_charged
+            :parameters ()
+            :precondition (and (door0-opened)(door1-opened))
+            :effect (and (charged)))
+    (:action goal
+            :parameters ()
+            :precondition (and (charged) )
+            :effect (and (at-destination)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain household)
+    (:objects
+        key0 key1 - key
+        door0 door1 - door)
+    (:init
+        (at-starting-location))
+    (:goal
+        (and (at-destination))
+))
+
+[YOUR RESPONSE]
+
+LLM Response: here is the pddl plan for the given problem:
+
+(get_key0)
+(open_door0)
+(get_key1)
+(open_door1)
+(is_charged)
+(goal)
+-----------------
+LLM Plan: ['here is the pddl plan for the given problem:', '(get_key0)', '(open_door0)', '(get_key1)', '(open_door1)', '(is_charged)', '(goal)']
+-----------------

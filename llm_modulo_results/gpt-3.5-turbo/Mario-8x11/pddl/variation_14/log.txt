@@ -1,0 +1,539 @@
+[STEP-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+
+LLM Response: (plan
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+[BACK-PROMPTING]---->
+
+Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+Your response: (plan (unlock_door))
+
+The action provided is not a valid action. Please choose a valid action from the list ['(go_down_the_tube)', '(pickup_hidden_key)', '(pickup_key)', '(go_up_the_ladder)', '(unlock_door)']
+.
+LLM Response: (plan (unlock_door))
+LLM could not find a feasible action.
+LLM plan has been saved to: ./llm_modulo_results/gpt-3.5-turbo/Mario-8x11/pddl/variation_14/llm_plan.txt

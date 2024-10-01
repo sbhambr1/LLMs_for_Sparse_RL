@@ -1,0 +1,6 @@
+here is the plan for the given pddl domain and problem:
+(go_down_the_tube)
+(pickup_key)
+(pickup_hidden_key)
+(go_up_the_ladder)
+(unlock_door)

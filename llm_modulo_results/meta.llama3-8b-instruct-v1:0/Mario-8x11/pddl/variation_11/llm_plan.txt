@@ -1,0 +1,4 @@
+(go_down_the_tube)
+(pickup_key)
+(pickup_key)
+(pickup_key)

@@ -1,0 +1,7 @@
+here is the pddl syntax for the plan:
+(get_key0)
+(open_door0)
+(get_key1)
+(open_door1)
+(is_charged)
+(goal)

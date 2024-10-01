@@ -1,0 +1,15 @@
+here is the plan in pddl syntax:
+(get_key0)
+(get_key1)
+(open_door0)
+(open_door1)
+(is_charged)
+(goal)
+this plan consists of the following actions:
+1. `get_key0`: pick up key0
+2. `get_key1`: pick up key1
+3. `open_door0`: open door0 with key0
+4. `open_door1`: open door1 with key1 and door0 already open
+5. `is_charged`: check if both doors are open and charged
+6. `goal`: reach the destination
+note that this plan assumes that the `get_key0` and `get_key1` actions are executed before `open_door0` and `open_door1`, respectively. this is because the preconditions of `open_door0` and `open_door1` require the corresponding keys to be picked up first.

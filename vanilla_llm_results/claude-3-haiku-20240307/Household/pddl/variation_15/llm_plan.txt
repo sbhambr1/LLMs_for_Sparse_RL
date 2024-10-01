@@ -1,0 +1,7 @@
+here is the plan for the given pddl domain and problem:
+(get_key0)
+(open_door0)
+(get_key1)
+(open_door1)
+(is_charged)
+(goal)

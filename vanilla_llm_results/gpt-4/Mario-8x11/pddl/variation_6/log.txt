@@ -1,0 +1,52 @@
+Here is a pddl domain, a planning problem. Provide the plan for the query problem. Provide only the pddl syntax for the plan where each action is represented as (ACTION_NAME OBJECTS).
+
+[DOMAIN]
+(define (domain Mario)
+    (:requirements :strips :typing)
+    (:types key - object)
+    (:predicates (has-key)
+                (has-hidden-key)
+                (at-upper-platform)
+                (at-bottom)
+                (at-upper-platform-with-key)
+                (at-upper-platform-with-hidden-key)
+                (door-open))
+    (:action go_down_the_tube
+            :parameters ()
+            :precondition (and (at-upper-platform))
+            :effect (and (at-bottom) ))
+    (:action pickup_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-key) ))
+    (:action pickup_hidden_key
+            :parameters ()
+            :precondition (and (at-bottom))
+            :effect (and (has-hidden-key) ))
+    (:action go_up_the_ladder
+            :parameters ()
+            :precondition (and (has-key) (has-hidden-key) (at-bottom))
+            :effect (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) ))
+    (:action unlock_door
+            :parameters ()
+            :precondition (and (at-upper-platform-with-key) (at-upper-platform-with-hidden-key) )
+            :effect (and (door-open)))
+)
+
+[PROBLEM]
+(define (problem prob)
+    (:domain Mario)
+    (:objects
+    )
+    (:init
+        (at-upper-platform))
+    (:goal
+        (and (door-open))
+))
+
+[YOUR RESPONSE]
+
+LLM Response: the plan for the given problem would be:
+-----------------
+LLM Plan: ['the plan for the given problem would be:']
+-----------------

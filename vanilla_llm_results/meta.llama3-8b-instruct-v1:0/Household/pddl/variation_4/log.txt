@@ -1,6 +1,4 @@
-[STEP-PROMPTING]---->
-
-Here is a pddl domain, a planning problem. Provide only the next action for the query problem. Provide only the pddl syntax for the plan where the action is represented as (ACTION_NAME OBJECTS). Do not provide anything else in your response.
+Here is a pddl domain, a planning problem. Provide the plan for the query problem. Provide only the pddl syntax for the plan where each action is represented as (ACTION_NAME OBJECTS).
 
 [DOMAIN]
 (define (domain household)
@@ -54,4 +52,16 @@ Here is a pddl domain, a planning problem. Provide only the next action for the 
 
 [YOUR RESPONSE]
 
-ERROR: Can't invoke 'llama3-8b-instruct-v1:0'. Reason: An error occurred (ValidationException) when calling the InvokeModel operation: The provided model identifier is invalid.
+LLM Response: here is the plan for the given problem in pddl syntax:
+
+(get_key0)
+(open_door0)
+(is_charged)
+(open_door1)
+(get_key1)
+(goal)
+
+this plan achieves the goal by first picking up key0, then opening door0, then charging, then opening door1, then picking up key1, and finally reaching the destination.
+-----------------
+LLM Plan: ['here is the plan for the given problem in pddl syntax:', '(get_key0)', '(open_door0)', '(is_charged)', '(open_door1)', '(get_key1)', '(goal)', 'this plan achieves the goal by first picking up key0, then opening door0, then charging, then opening door1, then picking up key1, and finally reaching the destination.']
+-----------------

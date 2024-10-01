@@ -1,1 +1,0 @@
-ERROR: Can't invoke 'llama3-8b-instruct-v1:0'. Reason: An error occurred (ValidationException) when calling the InvokeModel operation: The provided model identifier is invalid.

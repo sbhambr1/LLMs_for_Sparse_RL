@@ -74,7 +74,7 @@ class Conversation:
         self.total_cost += self.input_token_cost * input_tokens
         return message
 
-    def llm_actor(self, prompt, stop, temperature=0, role="user"): 
+    def llm_actor(self, prompt, stop='', temperature=0, role="user"): 
         # chat model       
         
         message = self.construct_message(prompt, role) 
@@ -178,16 +178,16 @@ class Conversation:
 
 
 if __name__ == "__main__":
-    c = Conversation("gpt-3.5-turbo")
+    c = Conversation("gpt-3.5-turbo", 0)
     PROMPT_1 = "Hello, how are you?"
     PROMPT_2 = "I've been better."
 
     print(f"User : {PROMPT_1}")
-    x1 = c.get_response(PROMPT_1)
-    print("LLM : ", x1['response_message'])
+    x1 = c.llm_actor(PROMPT_1)
+    print("LLM : ", x1)
     
     print(f"User : {PROMPT_2}")
-    x2 = c.get_response(PROMPT_2)
-    print("LLM : ", x2['response_message'])
+    x2 = c.llm_actor(PROMPT_2)
+    print("LLM : ", x2)
 
     print("done")
